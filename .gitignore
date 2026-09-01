@@ -1,0 +1,12 @@
+# Ignore local environment files
+.vscode/
+.idea/
+*.log
+*.tmp
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore local data (optional, jika ingin data tetap di local)
+# *.xlsx

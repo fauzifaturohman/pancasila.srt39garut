@@ -17,7 +17,6 @@
             box-sizing: border-box;
             font-family: 'Inter', sans-serif;
         }
-
         :root {
             --primary: #1a4b8c;
             --primary-light: #2d6bb8;
@@ -43,14 +42,11 @@
             --radius-sm: 8px;
             --transition: all 0.3s ease;
         }
-
         body {
             background: var(--gray-50);
             color: var(--gray-800);
             min-height: 100vh;
         }
-
-        /* ========== LOGIN ========== */
         #loginPage {
             display: flex;
             justify-content: center;
@@ -59,7 +55,6 @@
             background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
             padding: 20px;
         }
-
         #loginPage .login-box {
             background: white;
             border-radius: var(--radius);
@@ -69,7 +64,6 @@
             box-shadow: var(--shadow-lg);
             animation: fadeUp 0.6s ease;
         }
-
         @keyframes fadeUp {
             from {
                 opacity: 0;
@@ -80,33 +74,27 @@
                 transform: translateY(0);
             }
         }
-
         #loginPage .login-box .logo {
             text-align: center;
             margin-bottom: 32px;
         }
-
         #loginPage .login-box .logo h1 {
             font-size: 22px;
             font-weight: 800;
             color: var(--primary);
             letter-spacing: -0.5px;
         }
-
         #loginPage .login-box .logo h1 span {
             color: var(--secondary);
         }
-
         #loginPage .login-box .logo p {
             font-size: 13px;
             color: var(--gray-600);
             margin-top: 4px;
         }
-
         #loginPage .login-box .form-group {
             margin-bottom: 20px;
         }
-
         #loginPage .login-box label {
             display: block;
             font-size: 13px;
@@ -114,7 +102,6 @@
             color: var(--gray-700);
             margin-bottom: 6px;
         }
-
         #loginPage .login-box input {
             width: 100%;
             padding: 12px 16px;
@@ -124,14 +111,12 @@
             transition: var(--transition);
             background: var(--gray-50);
         }
-
         #loginPage .login-box input:focus {
             outline: none;
             border-color: var(--primary);
             background: white;
             box-shadow: 0 0 0 4px rgba(26, 75, 140, 0.1);
         }
-
         #loginPage .login-box .btn-login {
             width: 100%;
             padding: 14px;
@@ -145,13 +130,11 @@
             transition: var(--transition);
             margin-top: 8px;
         }
-
         #loginPage .login-box .btn-login:hover {
             background: var(--primary-dark);
             transform: translateY(-1px);
             box-shadow: 0 4px 15px rgba(26, 75, 140, 0.3);
         }
-
         #loginPage .login-box .login-error {
             color: var(--danger);
             font-size: 13px;
@@ -159,13 +142,10 @@
             margin-top: 12px;
             display: none;
         }
-
-        /* ========== APP LAYOUT ========== */
         #app {
             display: none;
             min-height: 100vh;
         }
-
         .app-header {
             background: white;
             border-bottom: 1px solid var(--gray-200);
@@ -178,23 +158,19 @@
             z-index: 100;
             box-shadow: var(--shadow);
         }
-
         .app-header .brand {
             display: flex;
             align-items: center;
             gap: 12px;
         }
-
         .app-header .brand h2 {
             font-size: 18px;
             font-weight: 700;
             color: var(--primary);
         }
-
         .app-header .brand h2 span {
             color: var(--secondary);
         }
-
         .app-header .brand .badge {
             background: var(--secondary);
             color: white;
@@ -204,18 +180,15 @@
             border-radius: 20px;
             text-transform: uppercase;
         }
-
         .app-header .user-info {
             display: flex;
             align-items: center;
             gap: 16px;
         }
-
         .app-header .user-info .name {
             font-weight: 600;
             font-size: 14px;
         }
-
         .app-header .user-info .logout-btn {
             background: none;
             border: none;
@@ -226,18 +199,14 @@
             padding: 6px;
             border-radius: 50%;
         }
-
         .app-header .user-info .logout-btn:hover {
             color: var(--danger);
             background: rgba(220, 53, 69, 0.08);
         }
-
         .app-body {
             display: flex;
             min-height: calc(100vh - 72px);
         }
-
-        /* ========== SIDEBAR ========== */
         .sidebar {
             width: 250px;
             background: white;
@@ -249,7 +218,6 @@
             position: sticky;
             top: 72px;
         }
-
         .sidebar .menu-item {
             display: flex;
             align-items: center;
@@ -263,31 +231,26 @@
             transition: var(--transition);
             border-left: 3px solid transparent;
         }
-
         .sidebar .menu-item:hover {
             background: var(--gray-50);
             color: var(--primary);
         }
-
         .sidebar .menu-item.active {
             background: rgba(26, 75, 140, 0.06);
             color: var(--primary);
             border-left-color: var(--primary);
             font-weight: 600;
         }
-
         .sidebar .menu-item i {
             width: 20px;
             text-align: center;
             font-size: 16px;
         }
-
         .sidebar .menu-divider {
             height: 1px;
             background: var(--gray-200);
             margin: 12px 24px;
         }
-
         .sidebar .menu-label {
             font-size: 11px;
             font-weight: 700;
@@ -296,45 +259,36 @@
             letter-spacing: 0.5px;
             padding: 8px 24px;
         }
-
-        /* ========== MAIN CONTENT ========== */
         .main-content {
             flex: 1;
             padding: 28px 32px;
             overflow-y: auto;
             max-height: calc(100vh - 72px);
         }
-
         .page-section {
             display: none;
             animation: fadeUp 0.4s ease;
         }
-
         .page-section.active {
             display: block;
         }
-
         .page-title {
             font-size: 24px;
             font-weight: 700;
             color: var(--gray-900);
             margin-bottom: 4px;
         }
-
         .page-subtitle {
             color: var(--gray-600);
             font-size: 14px;
             margin-bottom: 24px;
         }
-
-        /* ========== CARDS ========== */
         .stat-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 16px;
             margin-bottom: 28px;
         }
-
         .stat-card {
             background: white;
             border-radius: var(--radius);
@@ -342,27 +296,23 @@
             box-shadow: var(--shadow);
             border: 1px solid var(--gray-200);
         }
-
         .stat-card .stat-label {
             font-size: 13px;
             color: var(--gray-600);
             font-weight: 500;
         }
-
         .stat-card .stat-value {
             font-size: 28px;
             font-weight: 800;
             color: var(--gray-900);
             margin-top: 4px;
         }
-
         .stat-card .stat-icon {
             float: right;
             font-size: 28px;
             opacity: 0.2;
             color: var(--primary);
         }
-
         .stat-card.green .stat-value {
             color: var(--success);
         }
@@ -375,8 +325,6 @@
         .stat-card.blue .stat-value {
             color: var(--info);
         }
-
-        /* ========== TABLES ========== */
         .table-wrap {
             background: white;
             border-radius: var(--radius);
@@ -385,7 +333,6 @@
             box-shadow: var(--shadow);
             margin-bottom: 20px;
         }
-
         .table-wrap .table-header {
             padding: 16px 24px;
             border-bottom: 1px solid var(--gray-200);
@@ -396,24 +343,20 @@
             gap: 12px;
             background: var(--gray-50);
         }
-
         .table-wrap .table-header h3 {
             font-size: 16px;
             font-weight: 600;
         }
-
         .table-wrap .table-header .actions {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
         }
-
         .table-wrap table {
             width: 100%;
             border-collapse: collapse;
             font-size: 14px;
         }
-
         .table-wrap table th {
             background: var(--gray-50);
             text-align: left;
@@ -425,17 +368,14 @@
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
-
         .table-wrap table td {
             padding: 10px 16px;
             border-bottom: 1px solid var(--gray-100);
             vertical-align: middle;
         }
-
         .table-wrap table tr:hover td {
             background: var(--gray-50);
         }
-
         .badge-status {
             display: inline-block;
             padding: 2px 12px;
@@ -443,7 +383,6 @@
             font-size: 12px;
             font-weight: 600;
         }
-
         .badge-status.hadir {
             background: #d4edda;
             color: #155724;
@@ -460,12 +399,9 @@
             background: #d1ecf1;
             color: #0c5460;
         }
-
-        /* ========== FORMS ========== */
         .form-group {
             margin-bottom: 16px;
         }
-
         .form-group label {
             display: block;
             font-size: 13px;
@@ -473,7 +409,6 @@
             color: var(--gray-700);
             margin-bottom: 4px;
         }
-
         .form-group input,
         .form-group select,
         .form-group textarea {
@@ -485,7 +420,6 @@
             transition: var(--transition);
             background: white;
         }
-
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
@@ -493,12 +427,10 @@
             border-color: var(--primary);
             box-shadow: 0 0 0 4px rgba(26, 75, 140, 0.08);
         }
-
         .form-group textarea {
             resize: vertical;
             min-height: 80px;
         }
-
         .btn {
             padding: 10px 20px;
             border: none;
@@ -511,61 +443,48 @@
             align-items: center;
             gap: 8px;
         }
-
         .btn-primary {
             background: var(--primary);
             color: white;
         }
-
         .btn-primary:hover {
             background: var(--primary-dark);
             box-shadow: 0 4px 12px rgba(26, 75, 140, 0.25);
         }
-
         .btn-success {
             background: var(--success);
             color: white;
         }
-
         .btn-success:hover {
             background: #1a8a4a;
         }
-
         .btn-danger {
             background: var(--danger);
             color: white;
         }
-
         .btn-danger:hover {
             background: #b02a37;
         }
-
         .btn-warning {
             background: var(--warning);
             color: white;
         }
-
         .btn-warning:hover {
             background: #d39e00;
         }
-
         .btn-outline {
             background: transparent;
             border: 2px solid var(--gray-300);
             color: var(--gray-700);
         }
-
         .btn-outline:hover {
             background: var(--gray-50);
             border-color: var(--gray-400);
         }
-
         .btn-sm {
             padding: 6px 14px;
             font-size: 12px;
         }
-
-        /* ========== QR CODE ========== */
         .qr-container {
             background: white;
             border-radius: var(--radius);
@@ -575,7 +494,6 @@
             box-shadow: var(--shadow);
             max-width: 640px;
         }
-
         .qr-container .qr-header {
             display: flex;
             justify-content: space-between;
@@ -584,7 +502,6 @@
             gap: 12px;
             margin-bottom: 16px;
         }
-
         .qr-scanner-box {
             background: var(--gray-900);
             border-radius: var(--radius-sm);
@@ -592,15 +509,12 @@
             position: relative;
             min-height: 300px;
         }
-
         .qr-scanner-box #qr-reader {
             width: 100%;
         }
-
         .qr-scanner-box #qr-reader video {
             border-radius: var(--radius-sm);
         }
-
         .qr-scanner-box .qr-overlay {
             position: absolute;
             top: 50%;
@@ -612,14 +526,12 @@
             border-radius: 16px;
             pointer-events: none;
         }
-
         .qr-status {
             margin-top: 12px;
             font-size: 14px;
             color: var(--gray-600);
             text-align: center;
         }
-
         .qr-code-display {
             background: white;
             border-radius: var(--radius-sm);
@@ -627,12 +539,10 @@
             text-align: center;
             border: 2px dashed var(--gray-300);
         }
-
         .qr-code-display canvas {
             max-width: 200px;
             height: auto;
         }
-
         .qr-actions {
             display: flex;
             gap: 12px;
@@ -640,8 +550,6 @@
             margin-top: 12px;
             justify-content: center;
         }
-
-        /* ========== MATERIALS ========== */
         .material-card {
             background: white;
             border-radius: var(--radius);
@@ -651,12 +559,10 @@
             transition: var(--transition);
             cursor: pointer;
         }
-
         .material-card:hover {
             box-shadow: var(--shadow);
             border-color: var(--primary-light);
         }
-
         .material-card .material-title {
             font-weight: 600;
             font-size: 16px;
@@ -667,54 +573,50 @@
             flex-wrap: wrap;
             gap: 8px;
         }
-
         .material-card .material-title .badge-level {
             font-size: 11px;
             font-weight: 700;
             padding: 2px 12px;
             border-radius: 20px;
-            background: var(--secondary);
             color: white;
         }
-
-        .material-card .material-title .badge-level.sd {
-            background: var(--info);
+        .badge-fase-a {
+            background: #6c757d;
         }
-        .material-card .material-title .badge-level.smp {
-            background: var(--primary-light);
+        .badge-fase-b {
+            background: #28a745;
         }
-        .material-card .material-title .badge-level.sma {
-            background: var(--success);
+        .badge-fase-c {
+            background: #17a2b8;
         }
-
+        .badge-fase-d {
+            background: #007bff;
+        }
+        .badge-fase-e {
+            background: #6f42c1;
+        }
         .material-card .material-desc {
             color: var(--gray-600);
             font-size: 14px;
             margin-top: 6px;
         }
-
         .material-card .material-body {
             display: none;
             margin-top: 16px;
             padding-top: 16px;
             border-top: 1px solid var(--gray-200);
         }
-
         .material-card .material-body.open {
             display: block;
         }
-
         .material-card .material-body ul,
         .material-card .material-body ol {
             padding-left: 20px;
             margin-top: 8px;
         }
-
         .material-card .material-body li {
             margin-bottom: 4px;
         }
-
-        /* ========== AGENDA ========== */
         .agenda-item {
             background: white;
             border-radius: var(--radius-sm);
@@ -728,26 +630,21 @@
             flex-wrap: wrap;
             gap: 12px;
         }
-
         .agenda-item .agenda-info .agenda-date {
             font-size: 12px;
             color: var(--gray-500);
             font-weight: 500;
         }
-
         .agenda-item .agenda-info .agenda-title {
             font-weight: 600;
             font-size: 15px;
             color: var(--gray-800);
         }
-
         .agenda-item .agenda-info .agenda-desc {
             font-size: 13px;
             color: var(--gray-600);
             margin-top: 2px;
         }
-
-        /* ========== ADMIN ========== */
         .admin-card {
             background: white;
             border-radius: var(--radius);
@@ -755,14 +652,12 @@
             padding: 20px 24px;
             margin-bottom: 16px;
         }
-
         .admin-card .admin-title {
             font-weight: 600;
             font-size: 16px;
             color: var(--gray-800);
             margin-bottom: 12px;
         }
-
         .file-upload-area {
             border: 2px dashed var(--gray-300);
             border-radius: var(--radius-sm);
@@ -772,19 +667,162 @@
             transition: var(--transition);
             cursor: pointer;
         }
-
         .file-upload-area:hover {
             border-color: var(--primary);
             background: rgba(26, 75, 140, 0.02);
         }
-
         .file-upload-area i {
             font-size: 40px;
             color: var(--gray-400);
             margin-bottom: 8px;
         }
-
-        /* ========== RESPONSIVE ========== */
+        .filter-bar {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .filter-bar select,
+        .filter-bar input {
+            padding: 8px 14px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            background: white;
+        }
+        .filter-bar select:focus,
+        .filter-bar input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-overlay.show {
+            display: flex;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .modal-box {
+            background: white;
+            border-radius: var(--radius);
+            padding: 32px;
+            max-width: 560px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .modal-box .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .modal-box .modal-close {
+            float: right;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--gray-500);
+            cursor: pointer;
+        }
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .template-grid .btn {
+            justify-content: center;
+        }
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--gray-900);
+            color: white;
+            padding: 14px 24px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-lg);
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 999;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            max-width: 400px;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .toast.success {
+            background: var(--success);
+        }
+        .toast.error {
+            background: var(--danger);
+        }
+        .toast.warning {
+            background: var(--warning);
+        }
+        .flex {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .flex-center {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .mt-12 {
+            margin-top: 12px;
+        }
+        .mb-12 {
+            margin-bottom: 12px;
+        }
+        .w-full {
+            width: 100%;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .text-muted {
+            color: var(--gray-600);
+            font-size: 13px;
+        }
+        .gap-8 {
+            gap: 8px;
+        }
         @media (max-width: 992px) {
             .sidebar {
                 width: 200px;
@@ -799,7 +837,6 @@
                 padding: 20px;
             }
         }
-
         @media (max-width: 768px) {
             .app-body {
                 flex-direction: column;
@@ -864,7 +901,6 @@
                 gap: 8px;
             }
         }
-
         @media (max-width: 480px) {
             .stat-cards {
                 grid-template-columns: 1fr 1fr;
@@ -907,7 +943,6 @@
                 height: 120px;
             }
         }
-
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -921,169 +956,6 @@
         }
         ::-webkit-scrollbar-thumb:hover {
             background: var(--gray-500);
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background: var(--gray-900);
-            color: white;
-            padding: 14px 24px;
-            border-radius: var(--radius-sm);
-            box-shadow: var(--shadow-lg);
-            font-size: 14px;
-            font-weight: 500;
-            z-index: 999;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.4s ease;
-            max-width: 400px;
-        }
-
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .toast.success {
-            background: var(--success);
-        }
-        .toast.error {
-            background: var(--danger);
-        }
-        .toast.warning {
-            background: var(--warning);
-        }
-
-        .flex {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .flex-center {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .mt-12 {
-            margin-top: 12px;
-        }
-        .mb-12 {
-            margin-bottom: 12px;
-        }
-        .w-full {
-            width: 100%;
-        }
-        .text-center {
-            text-align: center;
-        }
-        .text-muted {
-            color: var(--gray-600);
-            font-size: 13px;
-        }
-        .gap-8 {
-            gap: 8px;
-        }
-
-        .filter-bar {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .filter-bar select,
-        .filter-bar input {
-            padding: 8px 14px;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-sm);
-            font-size: 13px;
-            background: white;
-        }
-
-        .filter-bar select:focus,
-        .filter-bar input:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal-overlay.show {
-            display: flex;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        .modal-box {
-            background: white;
-            border-radius: var(--radius);
-            padding: 32px;
-            max-width: 560px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(30px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-box .modal-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-
-        .modal-box .modal-close {
-            float: right;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: var(--gray-500);
-            cursor: pointer;
-        }
-
-        .template-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin-top: 12px;
-        }
-
-        .template-grid .btn {
-            justify-content: center;
         }
     </style>
 </head>
@@ -1190,7 +1062,7 @@
                     </div>
                     <div style="background:white; border-radius:var(--radius); border:1px solid var(--gray-200); padding:20px 24px; box-shadow:var(--shadow);">
                         <h3 style="margin-bottom:12px;"><i class="fas fa-info-circle" style="color:var(--primary);"></i> Selamat Datang, Guru Pendidikan Pancasila!</h3>
-                        <p class="text-muted">Gunakan menu di samping untuk mengelola pembelajaran. Fitur tersedia: Absensi QR Code, Daftar Kehadiran, Agenda Harian, Materi Ajar (SRD-SRMA), Administrasi, dan Impor/Ekspor Data.</p>
+                        <p class="text-muted">Gunakan menu di samping untuk mengelola pembelajaran. Fitur tersedia: Absensi QR Code, Daftar Kehadiran, Agenda Harian, Materi Ajar lengkap per Fase (A-E), Administrasi, dan Impor/Ekspor Data.</p>
                         <p class="text-muted" style="margin-top:8px;"><strong>SRT 39 Garut</strong> • Sekolah Rakyat Terintegrasi 39 Garut • Tahun Ajaran 2026/2027</p>
                         <p class="text-muted" style="margin-top:4px;"><i class="fas fa-users"></i> Total siswa: <span id="totalSiswa2">0</span> (SD: <span id="totalSD">0</span>, SMP: <span id="totalSMP">0</span>)</p>
                     </div>
@@ -1311,9 +1183,17 @@
                 <!-- ===== MATERI AJAR ===== -->
                 <section id="page-materi" class="page-section">
                     <h1 class="page-title"><i class="fas fa-book"></i> Materi Ajar Pendidikan Pancasila</h1>
-                    <p class="page-subtitle">Materi lengkap dari SRD (SD) sampai SRMA (SMP) sesuai Kurikulum Merdeka terbaru</p>
+                    <p class="page-subtitle">Materi lengkap per Fase (A-E) sesuai Kurikulum Merdeka terbaru</p>
                     <div class="filter-bar">
-                        <select id="filterMateri" onchange="renderMateri()">
+                        <select id="filterMateriFase" onchange="renderMateri()">
+                            <option value="all">Semua Fase</option>
+                            <option value="A">Fase A (Kelas I-II)</option>
+                            <option value="B">Fase B (Kelas III-IV)</option>
+                            <option value="C">Fase C (Kelas V-VI)</option>
+                            <option value="D">Fase D (Kelas VII-IX)</option>
+                            <option value="E">Fase E (Kelas X-XII)</option>
+                        </select>
+                        <select id="filterMateriJenjang" onchange="renderMateri()">
                             <option value="all">Semua Jenjang</option>
                             <option value="SD">SD (SRD)</option>
                             <option value="SMP">SMP (SRMP)</option>
@@ -1503,168 +1383,270 @@
         ];
 
         // ============================================================
-        // DATA MATERI AJAR PENDIDIKAN PANCASILA (LENGKAP SRD - SRMA)
+        // DATA MATERI AJAR PENDIDIKAN PANCASILA (LENGKAP PER FASE)
         // ============================================================
         const materiPancasila = [{
             id: 1,
+            fase: "A",
             jenjang: "SD",
-            judul: "Bab 1: Pancasila sebagai Dasar Negara dan Pandangan Hidup",
-            deskripsi: "Mengenal Pancasila, sejarah lahir, dan makna setiap sila.",
-            konten: `<p><strong>A. Pengertian Pancasila</strong><br>
-                    Pancasila adalah dasar negara Indonesia yang terdiri dari lima sila. Nama Pancasila berasal dari bahasa Sanskerta: <em>panca</em> (lima) dan <em>sila</em> (dasar/azas).</p>
-                    <p><strong>B. Sejarah Lahirnya Pancasila</strong><br>
-                    Pancasila dirumuskan oleh para pendiri bangsa melalui sidang BPUPKI dan PPKI. Ir. Soekarno pertama kali mengusulkan nama Pancasila pada 1 Juni 1945.</p>
-                    <p><strong>C. Makna Setiap Sila</strong><br>
-                    <ol>
-                        <li><strong>Ketuhanan Yang Maha Esa:</strong> Bangsa Indonesia percaya dan bertakwa kepada Tuhan Yang Maha Esa.</li>
-                        <li><strong>Kemanusiaan yang Adil dan Beradab:</strong> Menjunjung tinggi nilai kemanusiaan dan keadilan.</li>
-                        <li><strong>Persatuan Indonesia:</strong> Mengutamakan persatuan dan kesatuan bangsa.</li>
-                        <li><strong>Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan:</strong> Mengedepankan musyawarah untuk mencapai mufakat.</li>
-                        <li><strong>Keadilan Sosial bagi Seluruh Rakyat Indonesia:</strong> Mewujudkan keadilan dalam segala bidang kehidupan.</li>
-                    </ol>
-                    </p>`
+            judul: "Aku Cinta Pancasila",
+            deskripsi: "Mengenal lambang dan bunyi Pancasila serta sikap cinta tanah air.",
+            konten: `<p><strong>Lambang Pancasila</strong><br>
+                    Pancasila memiliki lambang Burung Garuda dengan 5 simbol:<br>
+                    1. Bintang (Sila 1)<br>
+                    2. Rantai (Sila 2)<br>
+                    3. Pohon Beringin (Sila 3)<br>
+                    4. Kepala Banteng (Sila 4)<br>
+                    5. Padi dan Kapas (Sila 5)</p>
+                    <p><strong>Bunyi Pancasila</strong><br>
+                    1. Ketuhanan Yang Maha Esa<br>
+                    2. Kemanusiaan yang Adil dan Beradab<br>
+                    3. Persatuan Indonesia<br>
+                    4. Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan<br>
+                    5. Keadilan Sosial bagi Seluruh Rakyat Indonesia</p>
+                    <p><strong>Sikap Cinta Tanah Air</strong><br>
+                    - Bangga sebagai bangsa Indonesia.<br>
+                    - Menggunakan produk dalam negeri.<br>
+                    - Melestarikan budaya Indonesia.</p>`
         }, {
             id: 2,
+            fase: "A",
             jenjang: "SD",
-            judul: "Bab 2: Nilai-Nilai Pancasila dalam Kehidupan Sehari-hari",
-            deskripsi: "Penerapan nilai-nilai Pancasila di lingkungan keluarga, sekolah, dan masyarakat.",
-            konten: `<p><strong>A. Nilai Ketuhanan</strong><br>
-                    Beribadah sesuai agama yang dianut, saling menghormati antar umat beragama.</p>
-                    <p><strong>B. Nilai Kemanusiaan</strong><br>
-                    Saling menghormati, tolong-menolong, dan tidak membeda-bedakan suku, ras, atau agama.</p>
-                    <p><strong>C. Nilai Persatuan</strong><br>
-                    Gotong royong, menjaga kerukunan, dan cinta tanah air.</p>
-                    <p><strong>D. Nilai Kerakyatan</strong><br>
-                    Mengutamakan musyawarah, menghargai pendapat orang lain, dan menerima keputusan bersama.</p>
-                    <p><strong>E. Nilai Keadilan</strong><br>
-                    Berlaku adil kepada semua orang, tidak pilih kasih, dan memberikan hak yang sama.</p>`
+            judul: "Tata Tertib di Rumah dan Sekolah",
+            deskripsi: "Menerapkan kedisiplinan dan nilai-nilai Pancasila di lingkungan sekitar.",
+            konten: `<p><strong>Tata Tertib di Rumah</strong><br>
+                    - Hormat kepada orang tua.<br>
+                    - Membantu pekerjaan rumah.<br>
+                    - Belajar dan bermain sesuai waktu.</p>
+                    <p><strong>Tata Tertib di Sekolah</strong><br>
+                    - Datang tepat waktu.<br>
+                    - Mengikuti pelajaran dengan baik.<br>
+                    - Menghormati guru dan teman.</p>
+                    <p><strong>Nilai Pancasila yang Diterapkan</strong><br>
+                    Sila ke-2 (Kemanusiaan) dan Sila ke-3 (Persatuan) tercermin dalam sikap saling menghormati dan bekerja sama.</p>`
         }, {
             id: 3,
+            fase: "A",
             jenjang: "SD",
-            judul: "Bab 3: Pancasila dan Bhinneka Tunggal Ika",
-            deskripsi: "Keberagaman budaya Indonesia dan peran Pancasila sebagai perekat persatuan.",
-            konten: `<p><strong>A. Bhinneka Tunggal Ika</strong><br>
-                    Semboyan negara yang berarti "Berbeda-beda tetapi tetap satu".</p>
-                    <p><strong>B. Keberagaman di Indonesia</strong><br>
-                    Indonesia memiliki beragam suku, agama, bahasa, dan budaya. Pancasila menjadi dasar untuk menjaga persatuan.</p>
-                    <p><strong>C. Sikap yang Harus Dikembangkan</strong><br>
-                    <ul>
-                        <li>Menghargai perbedaan.</li>
-                        <li>Tidak memaksakan keyakinan kepada orang lain.</li>
-                        <li>Bekerja sama dengan siapa saja.</li>
-                        <li>Menjaga kerukunan antarumat beragama.</li>
-                    </ul>
-                    </p>`
+            judul: "Bermain dan Belajar Bersama",
+            deskripsi: "Kerja sama dan gotong royong sebagai implementasi Pancasila.",
+            konten: `<p><strong>Gotong Royong</strong><br>
+                    Gotong royong adalah bekerja sama untuk mencapai tujuan bersama. Nilai ini sesuai dengan Sila ke-5 (Keadilan Sosial).</p>
+                    <p><strong>Contoh Kerja Sama di Sekolah</strong><br>
+                    - Membersihkan kelas bersama.<br>
+                    - Belajar kelompok.<br>
+                    - Merapikan mainan setelah bermain.</p>
+                    <p><strong>Manfaat Kerja Sama</strong><br>
+                    Pekerjaan lebih ringan, hubungan antar teman lebih akrab, dan lingkungan menjadi nyaman.</p>`
         }, {
             id: 4,
+            fase: "B",
             jenjang: "SD",
-            judul: "Bab 4: Pancasila dan Hak-Hak Anak",
-            deskripsi: "Hak-hak anak dalam perspektif Pancasila dan perlindungan anak.",
-            konten: `<p><strong>A. Hak Anak Menurut Pancasila</strong><br>
-                    Pancasila menjamin hak-hak anak sebagai bagian dari generasi penerus bangsa.</p>
-                    <p><strong>B. Hak-Hak Anak</strong><br>
-                    <ul>
-                        <li>Hak atas pendidikan.</li>
-                        <li>Hak atas kesehatan dan gizi.</li>
-                        <li>Hak bermain dan berekreasi.</li>
-                        <li>Hak mendapatkan perlindungan dari kekerasan.</li>
-                        <li>Hak untuk berpartisipasi dan menyampaikan pendapat.</li>
-                    </ul>
-                    </p>
-                    <p><strong>C. Peran Keluarga dan Sekolah</strong><br>
-                    Keluarga dan sekolah bertanggung jawab untuk melindungi dan memenuhi hak-hak anak.</p>`
+            judul: "Nilai-Nilai Pancasila dalam Keluarga",
+            deskripsi: "Penerapan nilai-nilai Pancasila dalam kehidupan sehari-hari di rumah.",
+            konten: `<p><strong>Nilai Ketuhanan</strong><br>
+                    Berdoa sebelum dan sesudah kegiatan, menjalankan ibadah sesuai agama.</p>
+                    <p><strong>Nilai Kemanusiaan</strong><br>
+                    Saling menyayangi, tolong-menolong, dan tidak membeda-bedakan.</p>
+                    <p><strong>Nilai Persatuan</strong><br>
+                    Menjaga kerukunan dalam keluarga, tidak bertengkar, dan saling mendukung.</p>
+                    <p><strong>Nilai Kerakyatan</strong><br>
+                    Musyawarah untuk menentukan kegiatan keluarga, menghargai pendapat anggota keluarga.</p>
+                    <p><strong>Nilai Keadilan</strong><br>
+                    Memberikan hak yang sama kepada setiap anggota keluarga, tidak pilih kasih.</p>`
         }, {
             id: 5,
-            jenjang: "SMP",
-            judul: "Bab 1: Pancasila dalam Sejarah Perjuangan Bangsa",
-            deskripsi: "Peran Pancasila dalam perjuangan kemerdekaan dan pembentukan negara Indonesia.",
-            konten: `<p><strong>A. Latar Belakang Perumusan Pancasila</strong><br>
-                    Pada masa penjajahan, bangsa Indonesia berjuang untuk merdeka. Para tokoh nasional menyadari perlunya dasar negara.</p>
-                    <p><strong>B. Sidang BPUPKI dan PPKI</strong><br>
-                    BPUPKI (Badan Penyelidik Usaha-Usaha Persiapan Kemerdekaan Indonesia) mengadakan sidang pada 29 Mei - 1 Juni 1945. Ir. Soekarno mengusulkan Pancasila. PPKI mengesahkan Pancasila sebagai dasar negara pada 18 Agustus 1945.</p>
-                    <p><strong>C. Pancasila sebagai Ideologi Negara</strong><br>
-                    Pancasila menjadi ideologi yang mempersatukan bangsa Indonesia dari Sabang sampai Merauke.</p>`
+            fase: "B",
+            jenjang: "SD",
+            judul: "Pancasila di Lingkungan Masyarakat",
+            deskripsi: "Peran serta masyarakat dalam menjaga nilai-nilai Pancasila.",
+            konten: `<p><strong>Kegiatan Masyarakat yang Mencerminkan Pancasila</strong><br>
+                    - Kerja bakti membersihkan lingkungan (Sila 3 & 5).<br>
+                    - Rukun tetangga (Sila 2 & 3).<br>
+                    - Gotong royong membangun fasilitas umum (Sila 5).</p>
+                    <p><strong>Sikap yang Harus Dikembangkan</strong><br>
+                    - Toleransi antar umat beragama.<br>
+                    - Menghargai perbedaan suku dan budaya.<br>
+                    - Aktif dalam kegiatan sosial.</p>`
         }, {
             id: 6,
-            jenjang: "SMP",
-            judul: "Bab 2: Pancasila sebagai Ideologi Terbuka",
-            deskripsi: "Pancasila sebagai ideologi yang dinamis, terbuka terhadap perubahan, namun tetap pada nilai-nilai dasarnya.",
-            konten: `<p><strong>A. Pengertian Ideologi Terbuka</strong><br>
-                    Ideologi terbuka adalah ideologi yang mampu berkembang sesuai dengan dinamika masyarakat tanpa meninggalkan nilai-nilai dasarnya.</p>
-                    <p><strong>B. Ciri-Ciri Ideologi Terbuka</strong><br>
-                    <ul>
-                        <li>Bersumber dari nilai-nilai luhur bangsa.</li>
-                        <li>Mampu menyesuaikan diri dengan perkembangan zaman.</li>
-                        <li>Memberikan ruang bagi partisipasi masyarakat.</li>
-                    </ul>
-                    </p>
-                    <p><strong>C. Pancasila sebagai Ideologi Terbuka</strong><br>
-                    Pancasila dapat diterapkan dalam berbagai bidang kehidupan, seperti politik, ekonomi, sosial, dan budaya.</p>`
+            fase: "B",
+            jenjang: "SD",
+            judul: "Hari Besar Nasional dan Pancasila",
+            deskripsi: "Makna hari besar nasional dalam memperkuat nilai-nilai Pancasila.",
+            konten: `<p><strong>Hari Kemerdekaan (17 Agustus)</strong><br>
+                    Mengingat perjuangan para pahlawan, memperkuat rasa persatuan dan cinta tanah air.</p>
+                    <p><strong>Hari Pahlawan (10 November)</strong><br>
+                    Meneladani semangat kepahlawanan, berani membela kebenaran dan keadilan.</p>
+                    <p><strong>Hari Kebangkitan Nasional (20 Mei)</strong><br>
+                    Semangat untuk bangkit dan maju bersama, sesuai dengan nilai persatuan.</p>`
         }, {
             id: 7,
-            jenjang: "SMP",
-            judul: "Bab 3: Implementasi Pancasila di Era Globalisasi",
-            deskripsi: "Menghadapi tantangan global dengan berpegang teguh pada Pancasila.",
-            konten: `<p><strong>A. Tantangan Globalisasi</strong><br>
-                    Globalisasi membawa pengaruh positif seperti kemudahan akses informasi, tetapi juga negatif seperti masuknya budaya asing yang bertentangan dengan nilai-nilai Pancasila.</p>
-                    <p><strong>B. Peran Pancasila dalam Menyaring Budaya Asing</strong><br>
-                    Pancasila menjadi filter untuk memilah budaya asing yang sesuai dan tidak sesuai dengan kepribadian bangsa.</p>
-                    <p><strong>C. Sikap yang Perlu Dikembangkan</strong><br>
-                    <ul>
-                        <li>Memperkuat identitas nasional.</li>
-                        <li>Mengembangkan sikap kritis terhadap budaya asing.</li>
-                        <li>Melestarikan budaya lokal.</li>
-                    </ul>
-                    </p>`
+            fase: "C",
+            jenjang: "SD",
+            judul: "Sejarah Perumusan Pancasila",
+            deskripsi: "Proses perumusan Pancasila oleh para pendiri bangsa.",
+            konten: `<p><strong>BPUPKI dan PPKI</strong><br>
+                    BPUPKI dibentuk pada 1 Maret 1945 untuk mempersiapkan kemerdekaan. Sidang pertama membahas dasar negara.</p>
+                    <p><strong>Usulan Dasar Negara</strong><br>
+                    Ir. Soekarno mengusulkan Pancasila pada 1 Juni 1945. Drs. Moh. Hatta dan tokoh lainnya juga memberikan usulan.</p>
+                    <p><strong>Pengesahan Pancasila</strong><br>
+                    PPKI pada 18 Agustus 1945 mengesahkan Pancasila sebagai dasar negara Indonesia.</p>`
         }, {
             id: 8,
-            jenjang: "SMP",
-            judul: "Bab 4: Pancasila dan Hak Asasi Manusia",
-            deskripsi: "Keterkaitan Pancasila dengan HAM dan perlindungan hak warga negara.",
-            konten: `<p><strong>A. Pengertian HAM</strong><br>
-                    Hak Asasi Manusia adalah hak dasar yang melekat pada diri manusia sejak lahir.</p>
-                    <p><strong>B. Pancasila dan HAM</strong><br>
-                    Sila kedua Pancasila (Kemanusiaan yang Adil dan Beradab) menjadi landasan penghormatan terhadap HAM.</p>
-                    <p><strong>C. Hak-Hak Warga Negara dalam Pancasila</strong><br>
-                    <ul>
-                        <li>Hak atas pendidikan dan kesehatan.</li>
-                        <li>Hak atas pekerjaan dan penghidupan yang layak.</li>
-                        <li>Hak berpartisipasi dalam pemerintahan.</li>
-                    </ul>
-                    </p>`
+            fase: "C",
+            jenjang: "SD",
+            judul: "Pancasila dan Bhinneka Tunggal Ika",
+            deskripsi: "Keberagaman Indonesia dan peran Pancasila sebagai perekat.",
+            konten: `<p><strong>Makna Bhinneka Tunggal Ika</strong><br>
+                    "Berbeda-beda tetapi tetap satu". Semboyan ini mengajarkan persatuan dalam keberagaman.</p>
+                    <p><strong>Keberagaman di Indonesia</strong><br>
+                    Suku, agama, bahasa, dan budaya yang beragam. Pancasila menjadi dasar untuk menjaga persatuan.</p>
+                    <p><strong>Sikap yang Perlu Dikembangkan</strong><br>
+                    - Menghargai perbedaan.<br>
+                    - Tidak memaksakan keyakinan.<br>
+                    - Bekerja sama dengan semua orang.</p>`
         }, {
             id: 9,
-            jenjang: "SMP",
-            judul: "Bab 5: Pancasila dan Negara Kesatuan Republik Indonesia (NKRI)",
-            deskripsi: "Pancasila sebagai dasar negara dan NKRI sebagai bentuk negara yang utuh.",
-            konten: `<p><strong>A. NKRI dan Pancasila</strong><br>
-                    Pancasila menjadi dasar bagi tegaknya NKRI. Negara Kesatuan Republik Indonesia adalah bentuk negara yang dipilih untuk menjaga persatuan.</p>
-                    <p><strong>B. Prinsip-Prinsip NKRI</strong><br>
-                    <ul>
-                        <li>Persatuan dan kesatuan bangsa.</li>
-                        <li>Kedaulatan berada di tangan rakyat.</li>
-                        <li>Keadilan sosial bagi seluruh rakyat.</li>
-                    </ul>
-                    </p>
-                    <p><strong>C. Kewajiban Warga Negara</strong><br>
-                    Setiap warga negara wajib menjaga keutuhan NKRI, membayar pajak, dan turut serta dalam pembangunan bangsa.</p>`
+            fase: "C",
+            jenjang: "SD",
+            judul: "Pancasila dan Hak Anak",
+            deskripsi: "Hak-hak anak dalam perspektif Pancasila dan perlindungan anak.",
+            konten: `<p><strong>Hak Anak</strong><br>
+                    - Hak atas pendidikan.<br>
+                    - Hak atas kesehatan.<br>
+                    - Hak bermain.<br>
+                    - Hak mendapatkan perlindungan dari kekerasan.</p>
+                    <p><strong>Peran Pancasila</strong><br>
+                    Pancasila menjamin hak-hak anak sebagai generasi penerus bangsa. Sila ke-2 menjunjung tinggi nilai kemanusiaan.</p>`
         }, {
             id: 10,
+            fase: "D",
             jenjang: "SMP",
-            judul: "Bab 6: Pancasila dan Demokrasi",
+            judul: "Pancasila dalam Sejarah Perjuangan Bangsa",
+            deskripsi: "Peran Pancasila dalam perjuangan kemerdekaan dan pembentukan negara.",
+            konten: `<p><strong>Latar Belakang</strong><br>
+                    Pada masa penjajahan, para tokoh nasional menyadari perlunya dasar negara untuk mempersatukan perjuangan.</p>
+                    <p><strong>Sidang BPUPKI dan PPKI</strong><br>
+                    BPUPKI mengadakan sidang pada 29 Mei - 1 Juni 1945. Ir. Soekarno mengusulkan Pancasila. PPKI mengesahkan Pancasila pada 18 Agustus 1945.</p>
+                    <p><strong>Pancasila sebagai Ideologi Negara</strong><br>
+                    Pancasila menjadi ideologi yang mempersatukan bangsa Indonesia dari Sabang sampai Merauke.</p>`
+        }, {
+            id: 11,
+            fase: "D",
+            jenjang: "SMP",
+            judul: "Pancasila sebagai Ideologi Terbuka",
+            deskripsi: "Pancasila sebagai ideologi yang dinamis dan terbuka terhadap perubahan.",
+            konten: `<p><strong>Pengertian Ideologi Terbuka</strong><br>
+                    Ideologi terbuka adalah ideologi yang mampu berkembang sesuai dengan dinamika masyarakat tanpa meninggalkan nilai-nilai dasarnya.</p>
+                    <p><strong>Ciri-Ciri</strong><br>
+                    - Bersumber dari nilai-nilai luhur bangsa.<br>
+                    - Mampu menyesuaikan diri dengan perkembangan zaman.<br>
+                    - Memberikan ruang bagi partisipasi masyarakat.</p>
+                    <p><strong>Pancasila sebagai Ideologi Terbuka</strong><br>
+                    Pancasila dapat diterapkan dalam berbagai bidang kehidupan, seperti politik, ekonomi, sosial, dan budaya.</p>`
+        }, {
+            id: 12,
+            fase: "D",
+            jenjang: "SMP",
+            judul: "Implementasi Pancasila di Era Globalisasi",
+            deskripsi: "Menghadapi tantangan global dengan berpegang teguh pada Pancasila.",
+            konten: `<p><strong>Tantangan Globalisasi</strong><br>
+                    Globalisasi membawa pengaruh positif seperti kemudahan akses informasi, tetapi juga negatif seperti masuknya budaya asing yang bertentangan dengan nilai-nilai Pancasila.</p>
+                    <p><strong>Peran Pancasila</strong><br>
+                    Pancasila menjadi filter untuk memilah budaya asing yang sesuai dan tidak sesuai dengan kepribadian bangsa.</p>
+                    <p><strong>Sikap yang Perlu Dikembangkan</strong><br>
+                    - Memperkuat identitas nasional.<br>
+                    - Mengembangkan sikap kritis terhadap budaya asing.<br>
+                    - Melestarikan budaya lokal.</p>`
+        }, {
+            id: 13,
+            fase: "D",
+            jenjang: "SMP",
+            judul: "Pancasila dan Hak Asasi Manusia",
+            deskripsi: "Keterkaitan Pancasila dengan HAM dan perlindungan hak warga negara.",
+            konten: `<p><strong>Pengertian HAM</strong><br>
+                    Hak Asasi Manusia adalah hak dasar yang melekat pada diri manusia sejak lahir.</p>
+                    <p><strong>Pancasila dan HAM</strong><br>
+                    Sila kedua Pancasila (Kemanusiaan yang Adil dan Beradab) menjadi landasan penghormatan terhadap HAM.</p>
+                    <p><strong>Hak Warga Negara</strong><br>
+                    - Hak atas pendidikan dan kesehatan.<br>
+                    - Hak atas pekerjaan dan penghidupan yang layak.<br>
+                    - Hak berpartisipasi dalam pemerintahan.</p>`
+        }, {
+            id: 14,
+            fase: "D",
+            jenjang: "SMP",
+            judul: "Pancasila dan Demokrasi",
             deskripsi: "Keterkaitan Pancasila dengan sistem demokrasi di Indonesia.",
-            konten: `<p><strong>A. Pengertian Demokrasi</strong><br>
+            konten: `<p><strong>Pengertian Demokrasi</strong><br>
                     Demokrasi adalah sistem pemerintahan di mana rakyat berpartisipasi dalam pengambilan keputusan.</p>
-                    <p><strong>B. Demokrasi Pancasila</strong><br>
+                    <p><strong>Demokrasi Pancasila</strong><br>
                     Demokrasi Pancasila adalah demokrasi yang berdasarkan pada nilai-nilai Pancasila, mengutamakan musyawarah untuk mencapai mufakat.</p>
-                    <p><strong>C. Prinsip-Prinsip Demokrasi Pancasila</strong><br>
-                    <ul>
-                        <li>Kedaulatan rakyat.</li>
-                        <li>Permusyawaratan/perwakilan.</li>
-                        <li>Penghormatan terhadap HAM.</li>
-                        <li>Keadilan sosial.</li>
-                    </ul>
-                    </p>`
+                    <p><strong>Prinsip-Prinsip</strong><br>
+                    - Kedaulatan rakyat.<br>
+                    - Permusyawaratan/perwakilan.<br>
+                    - Penghormatan terhadap HAM.<br>
+                    - Keadilan sosial.</p>`
+        }, {
+            id: 15,
+            fase: "E",
+            jenjang: "SMP", // SRMA untuk Fase E, tapi kita tampilkan di SMP karena SRMA belum ada di data siswa
+            judul: "Pancasila dan Wawasan Kebangsaan",
+            deskripsi: "Memperkuat wawasan kebangsaan melalui nilai-nilai Pancasila.",
+            konten: `<p><strong>Wawasan Kebangsaan</strong><br>
+                    Wawasan kebangsaan adalah cara pandang bangsa Indonesia tentang diri dan lingkungannya, yang berlandaskan Pancasila dan UUD 1945.</p>
+                    <p><strong>Unsur-Unsur Wawasan Kebangsaan</strong><br>
+                    - Rasa cinta tanah air.<br>
+                    - Kesadaran berbangsa dan bernegara.<br>
+                    - Semangat persatuan dan kesatuan.</p>
+                    <p><strong>Peran Generasi Muda</strong><br>
+                    Generasi muda sebagai penerus bangsa harus memahami dan mengamalkan nilai-nilai Pancasila dalam kehidupan sehari-hari.</p>`
+        }, {
+            id: 16,
+            fase: "E",
+            jenjang: "SMP",
+            judul: "Pancasila dan Ketahanan Nasional",
+            deskripsi: "Peran Pancasila dalam memperkuat ketahanan nasional di berbagai bidang.",
+            konten: `<p><strong>Ketahanan Nasional</strong><br>
+                    Ketahanan nasional adalah kemampuan bangsa untuk bertahan dan mengatasi ancaman, tantangan, hambatan, dan gangguan yang datang dari dalam maupun luar.</p>
+                    <p><strong>Dimensi Ketahanan Nasional</strong><br>
+                    - Ideologi: Pancasila sebagai dasar.<br>
+                    - Politik: Demokrasi Pancasila.<br>
+                    - Ekonomi: Keadilan sosial.<br>
+                    - Sosial budaya: Bhinneka Tunggal Ika.<br>
+                    - Pertahanan keamanan: Sistem pertahanan rakyat semesta.</p>
+                    <p><strong>Implementasi</strong><br>
+                    Menerapkan nilai-nilai Pancasila dalam setiap aspek kehidupan untuk menjaga keutuhan NKRI.</p>`
+        }, {
+            id: 17,
+            fase: "E",
+            jenjang: "SMP",
+            judul: "Pancasila dan Politik Luar Negeri Bebas Aktif",
+            deskripsi: "Landasan Pancasila dalam politik luar negeri Indonesia.",
+            konten: `<p><strong>Politik Bebas Aktif</strong><br>
+                    Indonesia menganut politik luar negeri bebas aktif, tidak memihak blok mana pun, dan aktif dalam perdamaian dunia.</p>
+                    <p><strong>Landasan Pancasila</strong><br>
+                    Sila ke-2 (Kemanusiaan) dan Sila ke-3 (Persatuan) menjadi dasar dalam menjalin hubungan internasional yang berkeadilan.</p>
+                    <p><strong>Peran Indonesia di Dunia</strong><br>
+                    - Aktif dalam PBB.<br>
+                    - Gerakan Non-Blok.<br>
+                    - Kerja sama ASEAN.<br>
+                    - Misi perdamaian.</p>`
+        }, {
+            id: 18,
+            fase: "E",
+            jenjang: "SMP",
+            judul: "Pancasila dan Pembangunan Berkelanjutan",
+            deskripsi: "Implementasi Pancasila dalam pembangunan berkelanjutan dan SDGs.",
+            konten: `<p><strong>Pembangunan Berkelanjutan</strong><br>
+                    Pembangunan yang memenuhi kebutuhan masa kini tanpa mengorbankan generasi mendatang.</p>
+                    <p><strong>Keterkaitan dengan Pancasila</strong><br>
+                    - Sila ke-5 (Keadilan Sosial): Pemerataan pembangunan.<br>
+                    - Sila ke-4 (Kerakyatan): Partisipasi masyarakat.<br>
+                    - Sila ke-1 (Ketuhanan): Menjaga lingkungan sebagai ciptaan Tuhan.</p>
+                    <p><strong>Tujuan Pembangunan Berkelanjutan (SDGs)</strong><br>
+                    Indonesia mengintegrasikan nilai-nilai Pancasila dalam pencapaian 17 tujuan SDGs, seperti mengakhiri kemiskinan, pendidikan berkualitas, dan penanganan perubahan iklim.</p>`
         }];
 
         // ============================================================
@@ -1753,10 +1735,7 @@
             document.querySelectorAll('.sidebar .menu-item').forEach(el => el.classList.remove('active'));
             document.querySelector(`.sidebar .menu-item[data-page="${page}"]`).classList.add('active');
             if (page === 'qr') {
-                // Jika sudah ada instance, jangan auto start
-                if (!qrScannerInstance) {
-                    // biarkan user klik tombol start
-                }
+                // jangan auto start
             } else {
                 stopQrScanner();
             }
@@ -1807,7 +1786,6 @@
         }
 
         function onQrScanSuccess(decodedText) {
-            // decodedText format: "NISN|NAMA|JENJANG"
             try {
                 const parts = decodedText.split('|');
                 if (parts.length !== 3) {
@@ -1818,7 +1796,6 @@
                 const nama = parts[1].trim();
                 const jenjang = parts[2].trim();
 
-                // Cari di data siswa
                 const siswa = siswaData.find(s => s.nisn === nisn && s.nama === nama && s.jenjang === jenjang);
                 if (!siswa) {
                     document.getElementById('qrResult').innerHTML =
@@ -1827,7 +1804,6 @@
                     return;
                 }
 
-                // Tampilkan form absen
                 scannedSiswa = siswa;
                 document.getElementById('qrNamaSiswa').textContent = siswa.nama;
                 document.getElementById('qrNisnSiswa').textContent = siswa.nisn;
@@ -1837,9 +1813,7 @@
                 document.getElementById('qrResult').innerHTML =
                     `<span style="color:var(--success);">✅ Scan berhasil: ${siswa.nama}</span>`;
 
-                // Hentikan scanner setelah scan berhasil agar tidak berulang
                 stopQrScanner();
-
                 showToast(`QR Code terdeteksi: ${siswa.nama}`, 'success');
 
             } catch (e) {
@@ -1847,29 +1821,20 @@
             }
         }
 
-        function onQrScanError(err) {
-            // error handling (ignore)
-        }
+        function onQrScanError(err) {}
 
-        // ============================================================
-        // KONFIRMASI ABSEN QR
-        // ============================================================
         function konfirmasiAbsenQR() {
             if (!scannedSiswa) {
                 showToast('Scan QR Code terlebih dahulu!', 'error');
                 return;
             }
-
             const status = document.getElementById('qrStatusAbsen').value;
             const today = new Date().toISOString().split('T')[0];
-
-            // Cek apakah sudah absen hari ini
             const sudah = kehadiranData.some(k => k.nisn === scannedSiswa.nisn && k.tanggal === today);
             if (sudah) {
                 showToast(`${scannedSiswa.nama} sudah absen hari ini.`, 'warning');
                 return;
             }
-
             kehadiranData.push({
                 nama: scannedSiswa.nama,
                 nisn: scannedSiswa.nisn,
@@ -1879,23 +1844,16 @@
                 metode: 'QR Code',
                 bukti: 'qr_scan'
             });
-
             localStorage.setItem('kehadiranPancasila', JSON.stringify(kehadiranData));
             updateStats();
             renderKehadiran();
-
             showToast(`✅ Absen ${status} untuk ${scannedSiswa.nama} berhasil!`, 'success');
-
-            // Reset form
             scannedSiswa = null;
             document.getElementById('qrAbsenForm').style.display = 'none';
             document.getElementById('qrEmptyState').style.display = 'block';
             document.getElementById('qrResult').innerHTML = '';
         }
 
-        // ============================================================
-        // GENERATE QR CODE UNTUK SISWA
-        // ============================================================
         function generateQRForClass() {
             const jenjang = document.getElementById('qrGenerateKelas').value;
             const siswaJenjang = siswaData.filter(s => s.jenjang === jenjang);
@@ -1903,12 +1861,8 @@
                 showToast('Tidak ada siswa untuk jenjang ini.', 'warning');
                 return;
             }
-
             const container = document.getElementById('qrGeneratedArea');
             container.innerHTML = '';
-            // Gunakan library QRCode.js (sudah tersedia di CDN)
-            // Kita akan membuat QR Code secara manual dengan canvas
-
             siswaJenjang.forEach(s => {
                 const data = `${s.nisn}|${s.nama}|${s.jenjang}`;
                 const div = document.createElement('div');
@@ -1918,23 +1872,17 @@
                 div.style.borderRadius = '8px';
                 div.style.background = 'white';
                 div.style.minWidth = '120px';
-
                 const canvas = document.createElement('canvas');
                 canvas.width = 120;
                 canvas.height = 120;
                 div.appendChild(canvas);
-
                 const label = document.createElement('p');
                 label.textContent = s.nama;
                 label.style.fontSize = '11px';
                 label.style.margin = '4px 0 0 0';
                 label.style.fontWeight = '600';
                 div.appendChild(label);
-
                 container.appendChild(div);
-
-                // Generate QR menggunakan QRCode.js
-                // Pastikan library tersedia
                 if (typeof QRCode !== 'undefined') {
                     new QRCode(canvas, {
                         text: data,
@@ -1945,7 +1893,6 @@
                         correctLevel: QRCode.CorrectLevel.H
                     });
                 } else {
-                    // Fallback jika library belum load
                     canvas.getContext('2d').fillStyle = '#ddd';
                     canvas.getContext('2d').fillRect(0, 0, 120, 120);
                     canvas.getContext('2d').fillStyle = '#333';
@@ -1953,7 +1900,6 @@
                     canvas.getContext('2d').fillText('QR', 40, 60);
                 }
             });
-
             showToast(`✅ QR Code untuk ${jenjang} berhasil dibuat (${siswaJenjang.length} siswa)`, 'success');
         }
 
@@ -1974,9 +1920,7 @@
                 document.getElementById('kehadiranCount').textContent = '0 siswa';
                 return;
             }
-
             data.sort((a, b) => a.nama.localeCompare(b.nama));
-
             let html = '';
             data.forEach((d, i) => {
                 const badge = `<span class="badge-status ${d.status.toLowerCase()}">${d.status}</span>`;
@@ -1994,7 +1938,7 @@
         }
 
         // ============================================================
-        // AGENDA HARIAN
+        // AGENDA
         // ============================================================
         function renderAgenda() {
             const container = document.getElementById('agendaList');
@@ -2055,26 +1999,32 @@
         }
 
         // ============================================================
-        // MATERI AJAR
+        // MATERI AJAR (LENGKAP PER FASE)
         // ============================================================
         function renderMateri() {
-            const filter = document.getElementById('filterMateri').value;
+            const filterFase = document.getElementById('filterMateriFase').value;
+            const filterJenjang = document.getElementById('filterMateriJenjang').value;
             const container = document.getElementById('materiList');
+
             let data = materiPancasila;
-            if (filter !== 'all') data = data.filter(m => m.jenjang === filter);
+            if (filterFase !== 'all') data = data.filter(m => m.fase === filterFase);
+            if (filterJenjang !== 'all') data = data.filter(m => m.jenjang === filterJenjang);
 
             if (data.length === 0) {
-                container.innerHTML = '<p class="text-muted">Tidak ada materi untuk jenjang ini.</p>';
+                container.innerHTML = '<p class="text-muted">Tidak ada materi untuk filter ini.</p>';
                 return;
             }
 
             let html = '';
             data.forEach(m => {
-                const badgeClass = m.jenjang === 'SD' ? 'sd' : 'smp';
+                const badgeClass = `badge-fase-${m.fase.toLowerCase()}`;
                 html += `<div class="material-card" onclick="toggleMateri(${m.id})">
                     <div class="material-title">
                         <span>${m.judul}</span>
-                        <span class="badge-level ${badgeClass}">${m.jenjang}</span>
+                        <span>
+                            <span class="badge-level ${badgeClass}">Fase ${m.fase}</span>
+                            <span class="badge-level" style="background:var(--primary-light);">${m.jenjang}</span>
+                        </span>
                     </div>
                     <div class="material-desc">${m.deskripsi}</div>
                     <div class="material-body" id="materiBody_${m.id}">
@@ -2245,14 +2195,9 @@
             showToast('Ekspor nilai berhasil!', 'success');
         }
 
-        // ============================================================
-        // TEMPLATE UNDUH
-        // ============================================================
         function unduhTemplateSiswa() {
-            const template = [
-                { Nama: 'Contoh Siswa SD', NISN: '1234567890', Jenjang: 'SD' },
-                { Nama: 'Contoh Siswa SMP', NISN: '0987654321', Jenjang: 'SMP' }
-            ];
+            const template = [{ Nama: 'Contoh Siswa SD', NISN: '1234567890', Jenjang: 'SD' },
+            { Nama: 'Contoh Siswa SMP', NISN: '0987654321', Jenjang: 'SMP' }];
             const ws = XLSX.utils.json_to_sheet(template);
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, 'Template');
@@ -2261,10 +2206,8 @@
         }
 
         function unduhTemplateKehadiran() {
-            const template = [
-                { Nama: 'Contoh Siswa', NISN: '1234567890', Jenjang: 'SD', Status: 'Hadir', Tanggal: '2026-09-01',
-                    Metode: 'QR Code' }
-            ];
+            const template = [{ Nama: 'Contoh Siswa', NISN: '1234567890', Jenjang: 'SD', Status: 'Hadir',
+                Tanggal: '2026-09-01', Metode: 'QR Code' }];
             const ws = XLSX.utils.json_to_sheet(template);
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, 'Template_Kehadiran');
@@ -2273,9 +2216,8 @@
         }
 
         function unduhTemplateNilai() {
-            const template = [
-                { Nama: 'Contoh Siswa', NISN: '1234567890', Jenjang: 'SD', Nilai: 85, Keterangan: 'Baik' }
-            ];
+            const template = [{ Nama: 'Contoh Siswa', NISN: '1234567890', Jenjang: 'SD', Nilai: 85,
+                Keterangan: 'Baik' }];
             const ws = XLSX.utils.json_to_sheet(template);
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, 'Template_Nilai');
@@ -2296,27 +2238,16 @@
         }
 
         // ============================================================
-        // LOAD QRCODE LIBRARY (jika belum ada)
+        // LOAD QRCODE LIBRARY
         // ============================================================
         function loadQRCodeLibrary() {
             if (typeof QRCode === 'undefined') {
                 const script = document.createElement('script');
                 script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
-                script.onload = function() {
-                    console.log('QRCode.js loaded');
-                };
+                script.onload = function() { console.log('QRCode.js loaded'); };
                 document.head.appendChild(script);
             }
         }
-
-        // ============================================================
-        // KEYBOARD SHORTCUT
-        // ============================================================
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && document.getElementById('loginPage').style.display !== 'none') {
-                handleLogin();
-            }
-        });
 
         // ============================================================
         // INIT
@@ -2341,7 +2272,8 @@
         console.log('📚 e-Learning Pendidikan Pancasila SRT 39 Garut');
         console.log('👨‍🏫 Login: guru / pancasila');
         console.log('📊 Total siswa:', siswaData.length);
-        console.log('🔹 Fitur: Absensi QR Code, Kehadiran, Agenda, Materi lengkap SRD-SRMA, Administrasi, Impor/Ekspor');
+        console.log('📖 Materi lengkap per Fase (A-E) sesuai Kurikulum Merdeka');
+        console.log('🔹 Fitur: Absensi QR, Kehadiran, Agenda, Materi Ajar, Administrasi, Impor/Ekspor');
     </script>
 
 </body>

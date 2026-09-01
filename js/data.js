@@ -81,11 +81,10 @@ const siswaData = [
 
 // ============================================================
 // DATA MATERI AJAR LENGKAP PER KELAS + E-BOOK
-// Sumber: Buku Pendidikan Pancasila Kemendikbudristek Kurikulum Merdeka
 // ============================================================
 const defaultMateriPancasila = [
     // ============================================================
-    // SD (SRD) - Fase A (Kelas 1-2), Fase B (3-4), Fase C (5-6)
+    // SD (SRD) - Kelas 1-6
     // ============================================================
     // Kelas 1
     {
@@ -136,7 +135,6 @@ const defaultMateriPancasila = [
                 <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas I, Kemendikbudristek</div>`,
         ebook: "https://buku.kemdikbud.go.id/katalog/pendidikan-pancasila-untuk-sdmi-kelas-i"
     },
-
     // Kelas 2
     {
         id: 5,
@@ -188,7 +186,6 @@ const defaultMateriPancasila = [
                 <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas II, Kemendikbudristek</div>`,
         ebook: "https://buku.kemdikbud.go.id/katalog/pendidikan-pancasila-untuk-sdmi-kelas-ii"
     },
-
     // Kelas 3
     {
         id: 9,
@@ -238,7 +235,6 @@ const defaultMateriPancasila = [
                 <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas III, Kemendikbudristek</div>`,
         ebook: "https://buku.kemdikbud.go.id/katalog/pendidikan-pancasila-untuk-sdmi-kelas-iii"
     },
-
     // Kelas 4
     {
         id: 13,
@@ -288,7 +284,6 @@ const defaultMateriPancasila = [
                 <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas IV, Kemendikbudristek</div>`,
         ebook: "https://buku.kemdikbud.go.id/katalog/pendidikan-pancasila-untuk-sdmi-kelas-iv"
     },
-
     // Kelas 5
     {
         id: 17,
@@ -339,7 +334,6 @@ const defaultMateriPancasila = [
                 <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas V, Kemendikbudristek</div>`,
         ebook: "https://buku.kemdikbud.go.id/katalog/pendidikan-pancasila-untuk-sdmi-kelas-v"
     },
-
     // Kelas 6
     {
         id: 21,
@@ -390,9 +384,8 @@ const defaultMateriPancasila = [
                 <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas VI, Kemendikbudristek</div>`,
         ebook: "https://buku.kemdikbud.go.id/katalog/pendidikan-pancasila-untuk-sdmi-kelas-vi"
     },
-
     // ============================================================
-    // SMP (SRMP) - Fase D (Kelas 7-9)
+    // SMP (SRMP) - Kelas 7-9
     // ============================================================
     // Kelas 7
     {
@@ -443,7 +436,6 @@ const defaultMateriPancasila = [
                 <div class="sumber">Sumber: Buku Pendidikan Pancasila SMP/MTs Kelas VII, Kemendikbudristek</div>`,
         ebook: "https://buku.kemdikbud.go.id/katalog/pendidikan-pancasila-untuk-smpmts-kelas-vii"
     },
-
     // Kelas 8
     {
         id: 29,
@@ -493,7 +485,6 @@ const defaultMateriPancasila = [
                 <div class="sumber">Sumber: Buku Pendidikan Pancasila SMP/MTs Kelas VIII, Kemendikbudristek</div>`,
         ebook: "https://buku.kemdikbud.go.id/katalog/pendidikan-pancasila-untuk-smpmts-kelas-viii"
     },
-
     // Kelas 9
     {
         id: 33,
@@ -543,9 +534,8 @@ const defaultMateriPancasila = [
                 <div class="sumber">Sumber: Buku Pendidikan Pancasila SMP/MTs Kelas IX, Kemendikbudristek</div>`,
         ebook: "https://buku.kemdikbud.go.id/katalog/pendidikan-pancasila-untuk-smpmts-kelas-ix"
     },
-
     // ============================================================
-    // SMA / MA / SMK (SRMA) - Fase E (Kelas 10-11), Fase F (Kelas 12)
+    // SMA (SRMA) - Kelas 10-12
     // ============================================================
     // Kelas 10
     {
@@ -596,7 +586,6 @@ const defaultMateriPancasila = [
                 <div class="sumber">Sumber: Buku Pendidikan Pancasila SMA/MA Kelas X, Kemendikbudristek</div>`,
         ebook: "https://buku.kemdikbud.go.id/katalog/pendidikan-pancasila-untuk-smamasmkmak-kelas-x"
     },
-
     // Kelas 11
     {
         id: 41,
@@ -646,7 +635,6 @@ const defaultMateriPancasila = [
                 <div class="sumber">Sumber: Buku Pendidikan Pancasila SMA/MA Kelas XI, Kemendikbudristek</div>`,
         ebook: "https://buku.kemdikbud.go.id/katalog/pendidikan-pancasila-untuk-smamasmkmak-kelas-xi"
     },
-
     // Kelas 12
     {
         id: 45,

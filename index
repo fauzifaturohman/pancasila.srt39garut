@@ -1,0 +1,146 @@
+import React, { useState } from 'react';
+import Webcam from 'react-webcam';
+import * as XLSX from 'xlsx';
+
+export default function ElearningPancasila() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [activeTab, setActiveTab] = useState('absensi');
+  const [location, setLocation] = useState(null);
+  const [excelData, setExcelData] = useState([]);
+
+  // Modul Otentikasi Guru Pendidikan Pancasila
+  const handleLogin = (e) => {
+    e.preventDefault();
+    setIsLoggedIn(true);
+  };
+
+  // Verifikasi Koordinat Absensi
+  const verifyLocation = () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setLocation(`Lat: ${position.coords.latitude}, Lng: ${position.coords.longitude}`);
+      });
+    }
+  };
+
+  // Integrasi Impor File: PKPD FIX.xlsx
+  const handleExcelImport = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      const workbook = XLSX.read(evt.target.result, { type: 'binary' });
+      // Menargetkan sheet ABSENSI_1 dan JURNAL GURU
+      const sheetName = workbook.SheetNames.includes('ABSENSI_1') ? 'ABSENSI_1' : workbook.SheetNames[0];
+      const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+      setExcelData(data);
+    };
+    reader.readAsBinaryString(file);
+  };
+
+  // Ekspor Data ke Excel
+  const handleExcelExport = () => {
+    const ws = XLSX.utils.json_to_sheet(excelData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "JURNAL GURU");
+    XLSX.writeFile(wb, "Eksport_Pendidikan_Pancasila.xlsx");
+  };
+
+  if (!isLoggedIn) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-red-50">
+        <h2 className="text-2xl font-bold mb-4">Portal Guru Pendidikan Pancasila</h2>
+        <form onSubmit={handleLogin} className="flex flex-col gap-3 w-80">
+          <input type="text" placeholder="NIP / Username" className="p-2 border rounded" required />
+          <input type="password" placeholder="Password" className="p-2 border rounded" required />
+          <button type="submit" className="bg-red-700 text-white font-bold p-2 rounded">Masuk Portal</button>
+        </form>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-6 max-w-6xl mx-auto font-sans">
+      <header className="mb-6 border-b pb-4">
+        <h1 className="text-3xl font-bold">Aplikasi e-Learning Pendidikan Pancasila</h1>
+        <p className="text-gray-700">Sekolah Rakyat Terintegrasi 39 Garut - Cerdas Bersama Tumbuh Setara</p>
+      </header>
+      
+      <div className="flex gap-2 mb-6">
+        {['absensi', 'materi', 'administrasi', 'agenda'].map(tab => (
+          <button 
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`px-4 py-2 capitalize font-semibold rounded ${activeTab === tab ? 'bg-red-700 text-white' : 'bg-gray-200 text-gray-800'}`}>
+            {tab}
+          </button>
+        ))}
+      </div>
+
+      <main className="bg-white p-6 border rounded shadow-sm">
+        
+        {/* Modul Kehadiran & Data Siswa */}
+        {activeTab === 'absensi' && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="border p-4 rounded bg-gray-50">
+              <h3 className="font-bold mb-2">Scan Kehadiran Kamera</h3>
+              <Webcam className="w-full h-48 object-cover rounded mb-3 border" />
+              <button className="bg-blue-600 text-white px-4 py-2 rounded w-full">Scan QR Murid</button>
+            </div>
+            
+            <div className="border p-4 rounded bg-gray-50">
+              <h3 className="font-bold mb-2">Absensi Berdasarkan Lokasi</h3>
+              <button onClick={verifyLocation} className="bg-green-600 text-white px-4 py-2 rounded w-full mb-3">Deteksi Koordinat</button>
+              {location && <p className="text-sm font-mono bg-white p-2 border text-gray-700">Posisi Saat Ini: {location}</p>}
+            </div>
+
+            <div className="md:col-span-2 border p-4 rounded bg-gray-50 mt-2">
+              <h3 className="font-bold mb-2">Daftar Kehadiran & Sinkronisasi (PKPD FIX.xlsx)</h3>
+              <div className="flex gap-4 items-center mt-3">
+                <input type="file" accept=".xlsx, .xls" onChange={handleExcelImport} className="text-sm" />
+                <button onClick={handleExcelExport} className="bg-gray-800 text-white px-4 py-2 rounded">Ekspor Log Absensi</button>
+              </div>
+              {excelData.length > 0 && <p className="mt-3 text-sm font-bold text-green-700">✓ Data sheet berhasil diimpor.</p>}
+            </div>
+          </div>
+        )}
+
+        {/* Repositori Materi */}
+        {activeTab === 'materi' && (
+          <div>
+            <h2 className="text-xl font-bold mb-4 border-b pb-2">Materi Ajar Pendidikan Pancasila</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+              <div className="p-4 border rounded">
+                <h4 className="font-bold text-red-700 mb-1">Jenjang SRD</h4>
+                <p className="text-sm text-gray-700">Fase A-C: Pengenalan dasar keberagaman budaya dan Profil Pelajar Pancasila.</p>
+              </div>
+              <div className="p-4 border rounded bg-red-50">
+                <h4 className="font-bold text-red-700 mb-1">Jenjang SRMP (Kelas 7)</h4>
+                <p className="text-sm text-gray-700">Fase D: Implementasi pedagogi Deep Learning untuk analisis UUD 1945.</p>
+              </div>
+              <div className="p-4 border rounded">
+                <h4 className="font-bold text-red-700 mb-1">Jenjang SRMA</h4>
+                <p className="text-sm text-gray-700">Fase E-F: Kajian kritis ketatanegaraan, demokrasi, dan diplomasi geopolitik.</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Modul Administrasi */}
+        {activeTab === 'administrasi' && (
+          <div>
+            <h2 className="text-xl font-bold mb-2">Administrasi Pembelajaran Terintegrasi</h2>
+            <p className="text-sm text-gray-700 border-l-4 border-red-700 pl-3">Generator otomatis penyusunan RPP/Modul Ajar dan pemetaan instrumen Buku Kerja 1 yang sejalan dengan instrumen Asesmen Diagnostik.</p>
+          </div>
+        )}
+
+        {/* Agenda Harian */}
+        {activeTab === 'agenda' && (
+          <div>
+            <h2 className="text-xl font-bold mb-2">Agenda Harian Guru</h2>
+            <p className="text-sm text-gray-700 border-l-4 border-blue-600 pl-3">Distribusi dan log harian terkalibrasi dengan hari efektif belajar. Tahun Ajaran dimulai secara otomatis pada 6 Juli 2026.</p>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}

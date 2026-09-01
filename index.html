@@ -10,7 +10,10 @@
     </script>
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+    </script>
     <style>
+        /* ========== STYLE ========== */
         * {
             margin: 0;
             padding: 0;
@@ -532,150 +535,6 @@
             color: var(--gray-600);
             text-align: center;
         }
-        .qr-code-display {
-            background: white;
-            border-radius: var(--radius-sm);
-            padding: 16px;
-            text-align: center;
-            border: 2px dashed var(--gray-300);
-        }
-        .qr-code-display canvas {
-            max-width: 200px;
-            height: auto;
-        }
-        .qr-actions {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 12px;
-            justify-content: center;
-        }
-        .material-card {
-            background: white;
-            border-radius: var(--radius);
-            border: 1px solid var(--gray-200);
-            padding: 20px 24px;
-            margin-bottom: 16px;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-        .material-card:hover {
-            box-shadow: var(--shadow);
-            border-color: var(--primary-light);
-        }
-        .material-card .material-title {
-            font-weight: 600;
-            font-size: 16px;
-            color: var(--gray-900);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .material-card .material-title .badge-level {
-            font-size: 11px;
-            font-weight: 700;
-            padding: 2px 12px;
-            border-radius: 20px;
-            color: white;
-        }
-        .badge-fase-a {
-            background: #6c757d;
-        }
-        .badge-fase-b {
-            background: #28a745;
-        }
-        .badge-fase-c {
-            background: #17a2b8;
-        }
-        .badge-fase-d {
-            background: #007bff;
-        }
-        .badge-fase-e {
-            background: #6f42c1;
-        }
-        .material-card .material-desc {
-            color: var(--gray-600);
-            font-size: 14px;
-            margin-top: 6px;
-        }
-        .material-card .material-body {
-            display: none;
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid var(--gray-200);
-        }
-        .material-card .material-body.open {
-            display: block;
-        }
-        .material-card .material-body ul,
-        .material-card .material-body ol {
-            padding-left: 20px;
-            margin-top: 8px;
-        }
-        .material-card .material-body li {
-            margin-bottom: 4px;
-        }
-        .agenda-item {
-            background: white;
-            border-radius: var(--radius-sm);
-            padding: 16px 20px;
-            border-left: 4px solid var(--primary);
-            margin-bottom: 12px;
-            box-shadow: var(--shadow);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        .agenda-item .agenda-info .agenda-date {
-            font-size: 12px;
-            color: var(--gray-500);
-            font-weight: 500;
-        }
-        .agenda-item .agenda-info .agenda-title {
-            font-weight: 600;
-            font-size: 15px;
-            color: var(--gray-800);
-        }
-        .agenda-item .agenda-info .agenda-desc {
-            font-size: 13px;
-            color: var(--gray-600);
-            margin-top: 2px;
-        }
-        .admin-card {
-            background: white;
-            border-radius: var(--radius);
-            border: 1px solid var(--gray-200);
-            padding: 20px 24px;
-            margin-bottom: 16px;
-        }
-        .admin-card .admin-title {
-            font-weight: 600;
-            font-size: 16px;
-            color: var(--gray-800);
-            margin-bottom: 12px;
-        }
-        .file-upload-area {
-            border: 2px dashed var(--gray-300);
-            border-radius: var(--radius-sm);
-            padding: 32px;
-            text-align: center;
-            color: var(--gray-600);
-            transition: var(--transition);
-            cursor: pointer;
-        }
-        .file-upload-area:hover {
-            border-color: var(--primary);
-            background: rgba(26, 75, 140, 0.02);
-        }
-        .file-upload-area i {
-            font-size: 40px;
-            color: var(--gray-400);
-            margin-bottom: 8px;
-        }
         .filter-bar {
             display: flex;
             gap: 12px;
@@ -754,15 +613,6 @@
             color: var(--gray-500);
             cursor: pointer;
         }
-        .template-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin-top: 12px;
-        }
-        .template-grid .btn {
-            justify-content: center;
-        }
         .toast {
             position: fixed;
             bottom: 24px;
@@ -793,16 +643,18 @@
         .toast.warning {
             background: var(--warning);
         }
-        .flex {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
         .flex-center {
             display: flex;
             align-items: center;
             gap: 12px;
             flex-wrap: wrap;
+        }
+        .text-muted {
+            color: var(--gray-600);
+            font-size: 13px;
+        }
+        .text-center {
+            text-align: center;
         }
         .mt-12 {
             margin-top: 12px;
@@ -813,30 +665,82 @@
         .w-full {
             width: 100%;
         }
-        .text-center {
+
+        /* QR Card */
+        .qr-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 12px;
+        }
+        .qr-card {
             text-align: center;
+            padding: 14px 12px 12px 12px;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            background: white;
+            min-width: 140px;
+            max-width: 160px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
         }
-        .text-muted {
-            color: var(--gray-600);
-            font-size: 13px;
+        .qr-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
         }
-        .gap-8 {
-            gap: 8px;
+        .qr-card canvas {
+            display: block;
+            margin: 0 auto;
+            border-radius: 4px;
         }
-        @media (max-width: 992px) {
-            .sidebar {
-                width: 200px;
-                padding: 12px 0;
-            }
-            .sidebar .menu-item {
-                padding: 10px 16px;
-                font-size: 13px;
-                gap: 10px;
-            }
-            .main-content {
-                padding: 20px;
-            }
+        .qr-card .qr-name {
+            font-size: 11px;
+            font-weight: 600;
+            margin: 6px 0 2px 0;
+            color: var(--gray-800);
+            word-break: break-word;
         }
+        .qr-card .qr-nisn {
+            font-size: 9px;
+            color: var(--gray-500);
+            margin: 0 0 8px 0;
+        }
+        .qr-card .btn-download {
+            padding: 4px 12px;
+            font-size: 11px;
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+        .qr-card .btn-download:hover {
+            background: var(--primary-dark);
+        }
+        .btn-download-all {
+            margin-top: 16px;
+            width: 100%;
+            justify-content: center;
+            padding: 12px;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .template-grid .btn {
+            justify-content: center;
+        }
+
         @media (max-width: 768px) {
             .app-body {
                 flex-direction: column;
@@ -878,27 +782,19 @@
             .stat-cards {
                 grid-template-columns: repeat(2, 1fr);
             }
-            .table-wrap .table-header {
-                flex-direction: column;
-                align-items: stretch;
+            .qr-card {
+                min-width: 120px;
+                max-width: 140px;
             }
-            .table-wrap .table-header .actions {
-                justify-content: stretch;
-            }
-            .table-wrap .table-header .actions .btn {
-                flex: 1;
-                justify-content: center;
+            .qr-card canvas {
+                width: 100px;
+                height: 100px;
             }
             .qr-scanner-box {
                 min-height: 200px;
             }
             #loginPage .login-box {
                 padding: 32px 24px;
-            }
-            .material-card .material-title {
-                font-size: 14px;
-                flex-wrap: wrap;
-                gap: 8px;
             }
         }
         @media (max-width: 480px) {
@@ -930,13 +826,17 @@
             .table-wrap table td {
                 padding: 8px 10px;
             }
-            .agenda-item {
-                flex-direction: column;
-                align-items: stretch;
+            .qr-card {
+                min-width: 100px;
+                max-width: 120px;
+                padding: 10px 8px;
             }
-            .agenda-item .agenda-actions {
-                display: flex;
-                gap: 8px;
+            .qr-card canvas {
+                width: 80px;
+                height: 80px;
+            }
+            .qr-card .qr-name {
+                font-size: 10px;
             }
             .qr-scanner-box .qr-overlay {
                 width: 120px;
@@ -1111,19 +1011,22 @@
                         </div>
                     </div>
 
-                    <div class="qr-container">
+                    <!-- ===== GENERATE QR CODE ===== -->
+                    <div class="qr-container" style="max-width:100%;">
                         <div class="qr-header">
-                            <h3><i class="fas fa-download"></i> Generate QR Code untuk Siswa</h3>
+                            <h3><i class="fas fa-download"></i> Generate & Unduh QR Code Siswa</h3>
                         </div>
-                        <p class="text-muted">QR Code berisi NISN dan nama siswa. Bisa dicetak dan ditempel di kartu siswa.</p>
+                        <p class="text-muted">QR Code berisi NISN, Nama, dan Jenjang. Bisa dicetak untuk kartu siswa.</p>
                         <div class="flex-center" style="margin-top:12px; flex-wrap:wrap;">
                             <select id="qrGenerateKelas" style="padding:8px 14px; border:2px solid var(--gray-200); border-radius:var(--radius-sm);">
                                 <option value="SD">SD (SRD)</option>
                                 <option value="SMP">SMP (SRMP)</option>
                             </select>
                             <button class="btn btn-primary" onclick="generateQRForClass()"><i class="fas fa-qrcode"></i> Generate QR untuk Kelas</button>
+                            <button class="btn btn-warning" onclick="clearQRCards()"><i class="fas fa-trash"></i> Hapus Semua</button>
                         </div>
-                        <div id="qrGeneratedArea" style="margin-top:16px; display:flex; flex-wrap:wrap; gap:16px; justify-content:center;"></div>
+                        <div id="qrGeneratedArea" class="qr-grid"></div>
+                        <div id="qrGenStatus" class="text-muted text-center mt-12"></div>
                     </div>
                 </section>
 
@@ -1140,8 +1043,6 @@
                         <input type="date" id="filterTanggal" onchange="renderKehadiran()">
                         <button class="btn btn-primary btn-sm" onclick="renderKehadiran()"><i class="fas fa-filter"></i> Filter</button>
                         <button class="btn btn-success btn-sm" onclick="eksporKehadiran()"><i class="fas fa-file-excel"></i> Ekspor Excel</button>
-                        <button class="btn btn-warning btn-sm" onclick="unduhTemplateKehadiran()"><i class="fas fa-download"></i> Template Kehadiran</button>
-                        <button class="btn btn-info btn-sm" onclick="unduhTemplateNilai()"><i class="fas fa-download"></i> Template Nilai</button>
                     </div>
                     <div class="table-wrap">
                         <div class="table-header">
@@ -1206,7 +1107,7 @@
                 <section id="page-admin" class="page-section">
                     <h1 class="page-title"><i class="fas fa-tasks"></i> Administrasi Pembelajaran</h1>
                     <p class="page-subtitle">Nilai, catatan, dan administrasi lainnya</p>
-                    <div class="admin-card">
+                    <div class="admin-card" style="background:white; border-radius:var(--radius); border:1px solid var(--gray-200); padding:20px 24px; margin-bottom:16px;">
                         <div class="admin-title"><i class="fas fa-file-alt"></i> Catatan Pembelajaran</div>
                         <div class="form-group">
                             <label>Judul Catatan</label>
@@ -1214,14 +1115,14 @@
                         </div>
                         <div class="form-group">
                             <label>Isi Catatan</label>
-                            <textarea id="catatanIsi" rows="3" placeholder="Tulis catatan pembelajaran..." rows="3"></textarea>
+                            <textarea id="catatanIsi" rows="3" placeholder="Tulis catatan pembelajaran..."></textarea>
                         </div>
                         <button class="btn btn-primary" onclick="simpanCatatan()"><i class="fas fa-save"></i> Simpan Catatan</button>
                         <div style="margin-top:16px;" id="catatanList">
                             <p class="text-muted">Belum ada catatan.</p>
                         </div>
                     </div>
-                    <div class="admin-card">
+                    <div class="admin-card" style="background:white; border-radius:var(--radius); border:1px solid var(--gray-200); padding:20px 24px; margin-bottom:16px;">
                         <div class="admin-title"><i class="fas fa-chart-simple"></i> Rekap Nilai</div>
                         <div class="filter-bar">
                             <select id="nilaiKelas" onchange="renderNilai()">
@@ -1230,7 +1131,6 @@
                                 <option value="SMP">SMP</option>
                             </select>
                             <button class="btn btn-success btn-sm" onclick="eksporNilai()"><i class="fas fa-file-excel"></i> Ekspor Nilai</button>
-                            <button class="btn btn-warning btn-sm" onclick="unduhTemplateNilai()"><i class="fas fa-download"></i> Template Nilai</button>
                         </div>
                         <div style="overflow-x:auto;">
                             <table>
@@ -1250,17 +1150,17 @@
                     <h1 class="page-title"><i class="fas fa-file-import"></i> Impor / Ekspor Data</h1>
                     <p class="page-subtitle">Impor dan ekspor data menggunakan format Excel (.xlsx)</p>
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
-                        <div class="admin-card">
+                        <div class="admin-card" style="background:white; border-radius:var(--radius); border:1px solid var(--gray-200); padding:20px 24px;">
                             <div class="admin-title"><i class="fas fa-file-import"></i> Impor Data Siswa</div>
-                            <div class="file-upload-area" onclick="document.getElementById('fileInput').click()">
-                                <i class="fas fa-cloud-upload-alt"></i>
+                            <div class="file-upload-area" onclick="document.getElementById('fileInput').click()" style="border:2px dashed var(--gray-300); border-radius:var(--radius-sm); padding:32px; text-align:center; color:var(--gray-600); transition:var(--transition); cursor:pointer;">
+                                <i class="fas fa-cloud-upload-alt" style="font-size:40px; color:var(--gray-400); margin-bottom:8px;"></i>
                                 <p>Klik untuk upload file Excel</p>
                                 <p style="font-size:12px; color:var(--gray-500);">Format: .xlsx dengan kolom: Nama, NISN, Jenjang</p>
                             </div>
                             <input type="file" id="fileInput" accept=".xlsx,.xls" style="display:none;" onchange="imporData(event)">
                             <div id="imporStatus" style="margin-top:12px;"></div>
                         </div>
-                        <div class="admin-card">
+                        <div class="admin-card" style="background:white; border-radius:var(--radius); border:1px solid var(--gray-200); padding:20px 24px;">
                             <div class="admin-title"><i class="fas fa-file-export"></i> Ekspor Data & Template</div>
                             <p class="text-muted">Ekspor data atau unduh template</p>
                             <div class="template-grid">
@@ -1383,7 +1283,7 @@
         ];
 
         // ============================================================
-        // DATA MATERI AJAR PENDIDIKAN PANCASILA (LENGKAP PER FASE)
+        // DATA MATERI AJAR (ringkas)
         // ============================================================
         const materiPancasila = [{
             id: 1,
@@ -1391,262 +1291,70 @@
             jenjang: "SD",
             judul: "Aku Cinta Pancasila",
             deskripsi: "Mengenal lambang dan bunyi Pancasila serta sikap cinta tanah air.",
-            konten: `<p><strong>Lambang Pancasila</strong><br>
-                    Pancasila memiliki lambang Burung Garuda dengan 5 simbol:<br>
-                    1. Bintang (Sila 1)<br>
-                    2. Rantai (Sila 2)<br>
-                    3. Pohon Beringin (Sila 3)<br>
-                    4. Kepala Banteng (Sila 4)<br>
-                    5. Padi dan Kapas (Sila 5)</p>
-                    <p><strong>Bunyi Pancasila</strong><br>
-                    1. Ketuhanan Yang Maha Esa<br>
-                    2. Kemanusiaan yang Adil dan Beradab<br>
-                    3. Persatuan Indonesia<br>
-                    4. Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan<br>
-                    5. Keadilan Sosial bagi Seluruh Rakyat Indonesia</p>
-                    <p><strong>Sikap Cinta Tanah Air</strong><br>
-                    - Bangga sebagai bangsa Indonesia.<br>
-                    - Menggunakan produk dalam negeri.<br>
-                    - Melestarikan budaya Indonesia.</p>`
+            konten: `<p><strong>Lambang Pancasila</strong> Burung Garuda dengan 5 simbol: Bintang, Rantai, Pohon Beringin, Kepala Banteng, Padi dan Kapas.</p><p><strong>Bunyi Pancasila</strong> 1. Ketuhanan Yang Maha Esa, 2. Kemanusiaan yang Adil dan Beradab, 3. Persatuan Indonesia, 4. Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan, 5. Keadilan Sosial bagi Seluruh Rakyat Indonesia.</p>`
         }, {
             id: 2,
             fase: "A",
             jenjang: "SD",
             judul: "Tata Tertib di Rumah dan Sekolah",
             deskripsi: "Menerapkan kedisiplinan dan nilai-nilai Pancasila di lingkungan sekitar.",
-            konten: `<p><strong>Tata Tertib di Rumah</strong><br>
-                    - Hormat kepada orang tua.<br>
-                    - Membantu pekerjaan rumah.<br>
-                    - Belajar dan bermain sesuai waktu.</p>
-                    <p><strong>Tata Tertib di Sekolah</strong><br>
-                    - Datang tepat waktu.<br>
-                    - Mengikuti pelajaran dengan baik.<br>
-                    - Menghormati guru dan teman.</p>
-                    <p><strong>Nilai Pancasila yang Diterapkan</strong><br>
-                    Sila ke-2 (Kemanusiaan) dan Sila ke-3 (Persatuan) tercermin dalam sikap saling menghormati dan bekerja sama.</p>`
+            konten: `<p><strong>Tata Tertib di Rumah</strong> Hormat kepada orang tua, membantu pekerjaan rumah, belajar dan bermain sesuai waktu.</p><p><strong>Tata Tertib di Sekolah</strong> Datang tepat waktu, mengikuti pelajaran dengan baik, menghormati guru dan teman.</p>`
         }, {
             id: 3,
-            fase: "A",
-            jenjang: "SD",
-            judul: "Bermain dan Belajar Bersama",
-            deskripsi: "Kerja sama dan gotong royong sebagai implementasi Pancasila.",
-            konten: `<p><strong>Gotong Royong</strong><br>
-                    Gotong royong adalah bekerja sama untuk mencapai tujuan bersama. Nilai ini sesuai dengan Sila ke-5 (Keadilan Sosial).</p>
-                    <p><strong>Contoh Kerja Sama di Sekolah</strong><br>
-                    - Membersihkan kelas bersama.<br>
-                    - Belajar kelompok.<br>
-                    - Merapikan mainan setelah bermain.</p>
-                    <p><strong>Manfaat Kerja Sama</strong><br>
-                    Pekerjaan lebih ringan, hubungan antar teman lebih akrab, dan lingkungan menjadi nyaman.</p>`
-        }, {
-            id: 4,
             fase: "B",
             jenjang: "SD",
             judul: "Nilai-Nilai Pancasila dalam Keluarga",
             deskripsi: "Penerapan nilai-nilai Pancasila dalam kehidupan sehari-hari di rumah.",
-            konten: `<p><strong>Nilai Ketuhanan</strong><br>
-                    Berdoa sebelum dan sesudah kegiatan, menjalankan ibadah sesuai agama.</p>
-                    <p><strong>Nilai Kemanusiaan</strong><br>
-                    Saling menyayangi, tolong-menolong, dan tidak membeda-bedakan.</p>
-                    <p><strong>Nilai Persatuan</strong><br>
-                    Menjaga kerukunan dalam keluarga, tidak bertengkar, dan saling mendukung.</p>
-                    <p><strong>Nilai Kerakyatan</strong><br>
-                    Musyawarah untuk menentukan kegiatan keluarga, menghargai pendapat anggota keluarga.</p>
-                    <p><strong>Nilai Keadilan</strong><br>
-                    Memberikan hak yang sama kepada setiap anggota keluarga, tidak pilih kasih.</p>`
+            konten: `<p><strong>Nilai Ketuhanan</strong> Berdoa sebelum dan sesudah kegiatan, menjalankan ibadah sesuai agama.</p><p><strong>Nilai Kemanusiaan</strong> Saling menyayangi, tolong-menolong, dan tidak membeda-bedakan.</p><p><strong>Nilai Persatuan</strong> Menjaga kerukunan dalam keluarga.</p>`
         }, {
-            id: 5,
+            id: 4,
             fase: "B",
             jenjang: "SD",
             judul: "Pancasila di Lingkungan Masyarakat",
             deskripsi: "Peran serta masyarakat dalam menjaga nilai-nilai Pancasila.",
-            konten: `<p><strong>Kegiatan Masyarakat yang Mencerminkan Pancasila</strong><br>
-                    - Kerja bakti membersihkan lingkungan (Sila 3 & 5).<br>
-                    - Rukun tetangga (Sila 2 & 3).<br>
-                    - Gotong royong membangun fasilitas umum (Sila 5).</p>
-                    <p><strong>Sikap yang Harus Dikembangkan</strong><br>
-                    - Toleransi antar umat beragama.<br>
-                    - Menghargai perbedaan suku dan budaya.<br>
-                    - Aktif dalam kegiatan sosial.</p>`
+            konten: `<p><strong>Kegiatan Masyarakat</strong> Kerja bakti, rukun tetangga, gotong royong membangun fasilitas umum.</p><p><strong>Sikap</strong> Toleransi, menghargai perbedaan, aktif dalam kegiatan sosial.</p>`
         }, {
-            id: 6,
-            fase: "B",
-            jenjang: "SD",
-            judul: "Hari Besar Nasional dan Pancasila",
-            deskripsi: "Makna hari besar nasional dalam memperkuat nilai-nilai Pancasila.",
-            konten: `<p><strong>Hari Kemerdekaan (17 Agustus)</strong><br>
-                    Mengingat perjuangan para pahlawan, memperkuat rasa persatuan dan cinta tanah air.</p>
-                    <p><strong>Hari Pahlawan (10 November)</strong><br>
-                    Meneladani semangat kepahlawanan, berani membela kebenaran dan keadilan.</p>
-                    <p><strong>Hari Kebangkitan Nasional (20 Mei)</strong><br>
-                    Semangat untuk bangkit dan maju bersama, sesuai dengan nilai persatuan.</p>`
-        }, {
-            id: 7,
+            id: 5,
             fase: "C",
             jenjang: "SD",
             judul: "Sejarah Perumusan Pancasila",
             deskripsi: "Proses perumusan Pancasila oleh para pendiri bangsa.",
-            konten: `<p><strong>BPUPKI dan PPKI</strong><br>
-                    BPUPKI dibentuk pada 1 Maret 1945 untuk mempersiapkan kemerdekaan. Sidang pertama membahas dasar negara.</p>
-                    <p><strong>Usulan Dasar Negara</strong><br>
-                    Ir. Soekarno mengusulkan Pancasila pada 1 Juni 1945. Drs. Moh. Hatta dan tokoh lainnya juga memberikan usulan.</p>
-                    <p><strong>Pengesahan Pancasila</strong><br>
-                    PPKI pada 18 Agustus 1945 mengesahkan Pancasila sebagai dasar negara Indonesia.</p>`
+            konten: `<p><strong>BPUPKI dan PPKI</strong> BPUPKI dibentuk 1 Maret 1945. Sidang pertama membahas dasar negara.</p><p><strong>Usulan</strong> Ir. Soekarno mengusulkan Pancasila pada 1 Juni 1945. PPKI mengesahkan Pancasila pada 18 Agustus 1945.</p>`
         }, {
-            id: 8,
+            id: 6,
             fase: "C",
             jenjang: "SD",
             judul: "Pancasila dan Bhinneka Tunggal Ika",
             deskripsi: "Keberagaman Indonesia dan peran Pancasila sebagai perekat.",
-            konten: `<p><strong>Makna Bhinneka Tunggal Ika</strong><br>
-                    "Berbeda-beda tetapi tetap satu". Semboyan ini mengajarkan persatuan dalam keberagaman.</p>
-                    <p><strong>Keberagaman di Indonesia</strong><br>
-                    Suku, agama, bahasa, dan budaya yang beragam. Pancasila menjadi dasar untuk menjaga persatuan.</p>
-                    <p><strong>Sikap yang Perlu Dikembangkan</strong><br>
-                    - Menghargai perbedaan.<br>
-                    - Tidak memaksakan keyakinan.<br>
-                    - Bekerja sama dengan semua orang.</p>`
+            konten: `<p><strong>Makna</strong> "Berbeda-beda tetapi tetap satu".</p><p><strong>Keberagaman</strong> Suku, agama, bahasa, dan budaya yang beragam. Pancasila menjadi dasar persatuan.</p>`
         }, {
-            id: 9,
-            fase: "C",
-            jenjang: "SD",
-            judul: "Pancasila dan Hak Anak",
-            deskripsi: "Hak-hak anak dalam perspektif Pancasila dan perlindungan anak.",
-            konten: `<p><strong>Hak Anak</strong><br>
-                    - Hak atas pendidikan.<br>
-                    - Hak atas kesehatan.<br>
-                    - Hak bermain.<br>
-                    - Hak mendapatkan perlindungan dari kekerasan.</p>
-                    <p><strong>Peran Pancasila</strong><br>
-                    Pancasila menjamin hak-hak anak sebagai generasi penerus bangsa. Sila ke-2 menjunjung tinggi nilai kemanusiaan.</p>`
-        }, {
-            id: 10,
+            id: 7,
             fase: "D",
             jenjang: "SMP",
             judul: "Pancasila dalam Sejarah Perjuangan Bangsa",
             deskripsi: "Peran Pancasila dalam perjuangan kemerdekaan dan pembentukan negara.",
-            konten: `<p><strong>Latar Belakang</strong><br>
-                    Pada masa penjajahan, para tokoh nasional menyadari perlunya dasar negara untuk mempersatukan perjuangan.</p>
-                    <p><strong>Sidang BPUPKI dan PPKI</strong><br>
-                    BPUPKI mengadakan sidang pada 29 Mei - 1 Juni 1945. Ir. Soekarno mengusulkan Pancasila. PPKI mengesahkan Pancasila pada 18 Agustus 1945.</p>
-                    <p><strong>Pancasila sebagai Ideologi Negara</strong><br>
-                    Pancasila menjadi ideologi yang mempersatukan bangsa Indonesia dari Sabang sampai Merauke.</p>`
+            konten: `<p><strong>Latar Belakang</strong> Para tokoh nasional menyadari perlunya dasar negara.</p><p><strong>Sidang BPUPKI dan PPKI</strong> Ir. Soekarno mengusulkan Pancasila. PPKI mengesahkan Pancasila pada 18 Agustus 1945.</p>`
         }, {
-            id: 11,
+            id: 8,
             fase: "D",
             jenjang: "SMP",
             judul: "Pancasila sebagai Ideologi Terbuka",
             deskripsi: "Pancasila sebagai ideologi yang dinamis dan terbuka terhadap perubahan.",
-            konten: `<p><strong>Pengertian Ideologi Terbuka</strong><br>
-                    Ideologi terbuka adalah ideologi yang mampu berkembang sesuai dengan dinamika masyarakat tanpa meninggalkan nilai-nilai dasarnya.</p>
-                    <p><strong>Ciri-Ciri</strong><br>
-                    - Bersumber dari nilai-nilai luhur bangsa.<br>
-                    - Mampu menyesuaikan diri dengan perkembangan zaman.<br>
-                    - Memberikan ruang bagi partisipasi masyarakat.</p>
-                    <p><strong>Pancasila sebagai Ideologi Terbuka</strong><br>
-                    Pancasila dapat diterapkan dalam berbagai bidang kehidupan, seperti politik, ekonomi, sosial, dan budaya.</p>`
+            konten: `<p><strong>Pengertian</strong> Ideologi terbuka mampu berkembang sesuai dinamika masyarakat.</p><p><strong>Ciri</strong> Bersumber dari nilai luhur, mampu menyesuaikan dengan zaman, memberi ruang partisipasi.</p>`
         }, {
-            id: 12,
+            id: 9,
             fase: "D",
             jenjang: "SMP",
             judul: "Implementasi Pancasila di Era Globalisasi",
             deskripsi: "Menghadapi tantangan global dengan berpegang teguh pada Pancasila.",
-            konten: `<p><strong>Tantangan Globalisasi</strong><br>
-                    Globalisasi membawa pengaruh positif seperti kemudahan akses informasi, tetapi juga negatif seperti masuknya budaya asing yang bertentangan dengan nilai-nilai Pancasila.</p>
-                    <p><strong>Peran Pancasila</strong><br>
-                    Pancasila menjadi filter untuk memilah budaya asing yang sesuai dan tidak sesuai dengan kepribadian bangsa.</p>
-                    <p><strong>Sikap yang Perlu Dikembangkan</strong><br>
-                    - Memperkuat identitas nasional.<br>
-                    - Mengembangkan sikap kritis terhadap budaya asing.<br>
-                    - Melestarikan budaya lokal.</p>`
+            konten: `<p><strong>Tantangan</strong> Globalisasi membawa pengaruh positif dan negatif.</p><p><strong>Peran Pancasila</strong> Menjadi filter untuk memilah budaya asing.</p>`
         }, {
-            id: 13,
-            fase: "D",
-            jenjang: "SMP",
-            judul: "Pancasila dan Hak Asasi Manusia",
-            deskripsi: "Keterkaitan Pancasila dengan HAM dan perlindungan hak warga negara.",
-            konten: `<p><strong>Pengertian HAM</strong><br>
-                    Hak Asasi Manusia adalah hak dasar yang melekat pada diri manusia sejak lahir.</p>
-                    <p><strong>Pancasila dan HAM</strong><br>
-                    Sila kedua Pancasila (Kemanusiaan yang Adil dan Beradab) menjadi landasan penghormatan terhadap HAM.</p>
-                    <p><strong>Hak Warga Negara</strong><br>
-                    - Hak atas pendidikan dan kesehatan.<br>
-                    - Hak atas pekerjaan dan penghidupan yang layak.<br>
-                    - Hak berpartisipasi dalam pemerintahan.</p>`
-        }, {
-            id: 14,
-            fase: "D",
-            jenjang: "SMP",
-            judul: "Pancasila dan Demokrasi",
-            deskripsi: "Keterkaitan Pancasila dengan sistem demokrasi di Indonesia.",
-            konten: `<p><strong>Pengertian Demokrasi</strong><br>
-                    Demokrasi adalah sistem pemerintahan di mana rakyat berpartisipasi dalam pengambilan keputusan.</p>
-                    <p><strong>Demokrasi Pancasila</strong><br>
-                    Demokrasi Pancasila adalah demokrasi yang berdasarkan pada nilai-nilai Pancasila, mengutamakan musyawarah untuk mencapai mufakat.</p>
-                    <p><strong>Prinsip-Prinsip</strong><br>
-                    - Kedaulatan rakyat.<br>
-                    - Permusyawaratan/perwakilan.<br>
-                    - Penghormatan terhadap HAM.<br>
-                    - Keadilan sosial.</p>`
-        }, {
-            id: 15,
+            id: 10,
             fase: "E",
-            jenjang: "SMP", // SRMA untuk Fase E, tapi kita tampilkan di SMP karena SRMA belum ada di data siswa
+            jenjang: "SMP",
             judul: "Pancasila dan Wawasan Kebangsaan",
             deskripsi: "Memperkuat wawasan kebangsaan melalui nilai-nilai Pancasila.",
-            konten: `<p><strong>Wawasan Kebangsaan</strong><br>
-                    Wawasan kebangsaan adalah cara pandang bangsa Indonesia tentang diri dan lingkungannya, yang berlandaskan Pancasila dan UUD 1945.</p>
-                    <p><strong>Unsur-Unsur Wawasan Kebangsaan</strong><br>
-                    - Rasa cinta tanah air.<br>
-                    - Kesadaran berbangsa dan bernegara.<br>
-                    - Semangat persatuan dan kesatuan.</p>
-                    <p><strong>Peran Generasi Muda</strong><br>
-                    Generasi muda sebagai penerus bangsa harus memahami dan mengamalkan nilai-nilai Pancasila dalam kehidupan sehari-hari.</p>`
-        }, {
-            id: 16,
-            fase: "E",
-            jenjang: "SMP",
-            judul: "Pancasila dan Ketahanan Nasional",
-            deskripsi: "Peran Pancasila dalam memperkuat ketahanan nasional di berbagai bidang.",
-            konten: `<p><strong>Ketahanan Nasional</strong><br>
-                    Ketahanan nasional adalah kemampuan bangsa untuk bertahan dan mengatasi ancaman, tantangan, hambatan, dan gangguan yang datang dari dalam maupun luar.</p>
-                    <p><strong>Dimensi Ketahanan Nasional</strong><br>
-                    - Ideologi: Pancasila sebagai dasar.<br>
-                    - Politik: Demokrasi Pancasila.<br>
-                    - Ekonomi: Keadilan sosial.<br>
-                    - Sosial budaya: Bhinneka Tunggal Ika.<br>
-                    - Pertahanan keamanan: Sistem pertahanan rakyat semesta.</p>
-                    <p><strong>Implementasi</strong><br>
-                    Menerapkan nilai-nilai Pancasila dalam setiap aspek kehidupan untuk menjaga keutuhan NKRI.</p>`
-        }, {
-            id: 17,
-            fase: "E",
-            jenjang: "SMP",
-            judul: "Pancasila dan Politik Luar Negeri Bebas Aktif",
-            deskripsi: "Landasan Pancasila dalam politik luar negeri Indonesia.",
-            konten: `<p><strong>Politik Bebas Aktif</strong><br>
-                    Indonesia menganut politik luar negeri bebas aktif, tidak memihak blok mana pun, dan aktif dalam perdamaian dunia.</p>
-                    <p><strong>Landasan Pancasila</strong><br>
-                    Sila ke-2 (Kemanusiaan) dan Sila ke-3 (Persatuan) menjadi dasar dalam menjalin hubungan internasional yang berkeadilan.</p>
-                    <p><strong>Peran Indonesia di Dunia</strong><br>
-                    - Aktif dalam PBB.<br>
-                    - Gerakan Non-Blok.<br>
-                    - Kerja sama ASEAN.<br>
-                    - Misi perdamaian.</p>`
-        }, {
-            id: 18,
-            fase: "E",
-            jenjang: "SMP",
-            judul: "Pancasila dan Pembangunan Berkelanjutan",
-            deskripsi: "Implementasi Pancasila dalam pembangunan berkelanjutan dan SDGs.",
-            konten: `<p><strong>Pembangunan Berkelanjutan</strong><br>
-                    Pembangunan yang memenuhi kebutuhan masa kini tanpa mengorbankan generasi mendatang.</p>
-                    <p><strong>Keterkaitan dengan Pancasila</strong><br>
-                    - Sila ke-5 (Keadilan Sosial): Pemerataan pembangunan.<br>
-                    - Sila ke-4 (Kerakyatan): Partisipasi masyarakat.<br>
-                    - Sila ke-1 (Ketuhanan): Menjaga lingkungan sebagai ciptaan Tuhan.</p>
-                    <p><strong>Tujuan Pembangunan Berkelanjutan (SDGs)</strong><br>
-                    Indonesia mengintegrasikan nilai-nilai Pancasila dalam pencapaian 17 tujuan SDGs, seperti mengakhiri kemiskinan, pendidikan berkualitas, dan penanganan perubahan iklim.</p>`
+            konten: `<p><strong>Wawasan Kebangsaan</strong> Cara pandang bangsa Indonesia tentang diri dan lingkungannya.</p><p><strong>Unsur</strong> Cinta tanah air, kesadaran berbangsa, semangat persatuan.</p>`
         }];
 
         // ============================================================
@@ -1718,9 +1426,8 @@
             const today = new Date().toISOString().split('T')[0];
             const todayHadir = kehadiranData.filter(k => k.tanggal === today && k.status === 'Hadir');
             const todayIzinSakit = kehadiranData.filter(k => k.tanggal === today && (k.status === 'Izin' || k.status ===
-            'Sakit'));
+                'Sakit'));
             const todayAlpha = kehadiranData.filter(k => k.tanggal === today && k.status === 'Alpha');
-
             document.getElementById('hadirHariIni').textContent = todayHadir.length || 0;
             document.getElementById('izinSakit').textContent = todayIzinSakit.length || 0;
             document.getElementById('alpha').textContent = todayAlpha.length || 0;
@@ -1734,11 +1441,7 @@
             document.getElementById('page-' + page).classList.add('active');
             document.querySelectorAll('.sidebar .menu-item').forEach(el => el.classList.remove('active'));
             document.querySelector(`.sidebar .menu-item[data-page="${page}"]`).classList.add('active');
-            if (page === 'qr') {
-                // jangan auto start
-            } else {
-                stopQrScanner();
-            }
+            if (page !== 'qr') stopQrScanner();
             if (page === 'kehadiran') renderKehadiran();
             if (page === 'agenda') renderAgenda();
             if (page === 'admin') { renderCatatan();
@@ -1751,20 +1454,13 @@
         // QR CODE SCANNER
         // ============================================================
         function startQrScanner() {
-            if (qrScannerInstance) {
-                showToast('Scanner sudah berjalan.', 'warning');
-                return;
-            }
+            if (qrScannerInstance) { showToast('Scanner sudah berjalan.', 'warning'); return; }
             document.getElementById('qrStatus').textContent = '⏳ Mengaktifkan kamera...';
-            document.getElementById('qrStatus').style.color = 'var(--gray-600)';
             document.getElementById('qrResult').textContent = '';
-
             try {
                 qrScannerInstance = new Html5Qrcode("qr-reader");
-                qrScannerInstance.start({ facingMode: "environment" }, {
-                    fps: 10,
-                    qrbox: { width: 250, height: 250 }
-                }, onQrScanSuccess, onQrScanError);
+                qrScannerInstance.start({ facingMode: "environment" }, { fps: 10, qrbox: { width: 250, height: 250 } },
+                    onQrScanSuccess, onQrScanError);
                 document.getElementById('qrStatus').textContent = '✅ Kamera aktif. Arahkan ke QR Code siswa.';
                 document.getElementById('qrStatus').style.color = 'var(--success)';
             } catch (err) {
@@ -1781,29 +1477,24 @@
                     qrScannerInstance = null;
                     document.getElementById('qrStatus').textContent = '⏸️ Scanner dimatikan.';
                     document.getElementById('qrStatus').style.color = 'var(--gray-600)';
-                }).catch(err => console.warn('Stop scanner error:', err));
+                }).catch(err => console.warn(err));
             }
         }
 
         function onQrScanSuccess(decodedText) {
             try {
                 const parts = decodedText.split('|');
-                if (parts.length !== 3) {
-                    showToast('QR Code tidak valid!', 'error');
-                    return;
-                }
-                const nisn = parts[0].trim();
-                const nama = parts[1].trim();
-                const jenjang = parts[2].trim();
-
+                if (parts.length !== 3) { showToast('QR Code tidak valid!', 'error'); return; }
+                const nisn = parts[0].trim(),
+                    nama = parts[1].trim(),
+                    jenjang = parts[2].trim();
                 const siswa = siswaData.find(s => s.nisn === nisn && s.nama === nama && s.jenjang === jenjang);
                 if (!siswa) {
                     document.getElementById('qrResult').innerHTML =
-                        `<span style="color:var(--danger);">❌ Siswa tidak terdaftar: ${nama} (${nisn})</span>`;
+                        `<span style="color:var(--danger);">❌ Siswa tidak terdaftar: ${nama}</span>`;
                     showToast('Siswa tidak terdaftar!', 'error');
                     return;
                 }
-
                 scannedSiswa = siswa;
                 document.getElementById('qrNamaSiswa').textContent = siswa.nama;
                 document.getElementById('qrNisnSiswa').textContent = siswa.nisn;
@@ -1812,29 +1503,19 @@
                 document.getElementById('qrEmptyState').style.display = 'none';
                 document.getElementById('qrResult').innerHTML =
                     `<span style="color:var(--success);">✅ Scan berhasil: ${siswa.nama}</span>`;
-
                 stopQrScanner();
                 showToast(`QR Code terdeteksi: ${siswa.nama}`, 'success');
-
-            } catch (e) {
-                showToast('Gagal memproses QR Code: ' + e.message, 'error');
-            }
+            } catch (e) { showToast('Gagal memproses QR Code: ' + e.message, 'error'); }
         }
 
         function onQrScanError(err) {}
 
         function konfirmasiAbsenQR() {
-            if (!scannedSiswa) {
-                showToast('Scan QR Code terlebih dahulu!', 'error');
-                return;
-            }
+            if (!scannedSiswa) { showToast('Scan QR Code terlebih dahulu!', 'error'); return; }
             const status = document.getElementById('qrStatusAbsen').value;
             const today = new Date().toISOString().split('T')[0];
             const sudah = kehadiranData.some(k => k.nisn === scannedSiswa.nisn && k.tanggal === today);
-            if (sudah) {
-                showToast(`${scannedSiswa.nama} sudah absen hari ini.`, 'warning');
-                return;
-            }
+            if (sudah) { showToast(`${scannedSiswa.nama} sudah absen hari ini.`, 'warning'); return; }
             kehadiranData.push({
                 nama: scannedSiswa.nama,
                 nisn: scannedSiswa.nisn,
@@ -1854,53 +1535,198 @@
             document.getElementById('qrResult').innerHTML = '';
         }
 
+        // ============================================================
+        // GENERATE QR CODE - DIPERBAIKI dengan database siswa
+        // ============================================================
         function generateQRForClass() {
             const jenjang = document.getElementById('qrGenerateKelas').value;
             const siswaJenjang = siswaData.filter(s => s.jenjang === jenjang);
+            const container = document.getElementById('qrGeneratedArea');
+            const status = document.getElementById('qrGenStatus');
+
             if (siswaJenjang.length === 0) {
                 showToast('Tidak ada siswa untuk jenjang ini.', 'warning');
+                status.textContent = '⚠️ Tidak ada siswa untuk jenjang ini.';
                 return;
             }
-            const container = document.getElementById('qrGeneratedArea');
+
+            // Cek library QRCode
+            if (typeof QRCode === 'undefined') {
+                status.innerHTML =
+                    `<span style="color:var(--danger);">❌ Library QR Code belum dimuat. Silakan refresh halaman.</span>`;
+                showToast('Library QR Code belum dimuat!', 'error');
+                // Coba load ulang
+                loadQRCodeLibrary();
+                return;
+            }
+
             container.innerHTML = '';
-            siswaJenjang.forEach(s => {
+            status.textContent = `⏳ Membuat ${siswaJenjang.length} QR Code...`;
+
+            let count = 0;
+            siswaJenjang.forEach((s, index) => {
                 const data = `${s.nisn}|${s.nama}|${s.jenjang}`;
-                const div = document.createElement('div');
-                div.style.textAlign = 'center';
-                div.style.padding = '8px';
-                div.style.border = '1px solid var(--gray-200)';
-                div.style.borderRadius = '8px';
-                div.style.background = 'white';
-                div.style.minWidth = '120px';
+                const card = document.createElement('div');
+                card.className = 'qr-card';
+
                 const canvas = document.createElement('canvas');
-                canvas.width = 120;
-                canvas.height = 120;
-                div.appendChild(canvas);
+                canvas.width = 130;
+                canvas.height = 130;
+                canvas.style.cssText = 'display:block; margin:0 auto;';
+
                 const label = document.createElement('p');
+                label.className = 'qr-name';
                 label.textContent = s.nama;
-                label.style.fontSize = '11px';
-                label.style.margin = '4px 0 0 0';
-                label.style.fontWeight = '600';
-                div.appendChild(label);
-                container.appendChild(div);
-                if (typeof QRCode !== 'undefined') {
+
+                const nisnLabel = document.createElement('p');
+                nisnLabel.className = 'qr-nisn';
+                nisnLabel.textContent = `NISN: ${s.nisn}`;
+
+                const downloadBtn = document.createElement('button');
+                downloadBtn.className = 'btn-download';
+                downloadBtn.innerHTML = '<i class="fas fa-download"></i> Unduh';
+                downloadBtn.onclick = function(e) {
+                    e.stopPropagation();
+                    downloadQRCode(canvas, s.nama, s.nisn);
+                };
+
+                card.appendChild(canvas);
+                card.appendChild(label);
+                card.appendChild(nisnLabel);
+                card.appendChild(downloadBtn);
+                container.appendChild(card);
+
+                try {
                     new QRCode(canvas, {
                         text: data,
-                        width: 120,
-                        height: 120,
+                        width: 130,
+                        height: 130,
                         colorDark: "#1a4b8c",
                         colorLight: "#ffffff",
                         correctLevel: QRCode.CorrectLevel.H
                     });
-                } else {
-                    canvas.getContext('2d').fillStyle = '#ddd';
-                    canvas.getContext('2d').fillRect(0, 0, 120, 120);
-                    canvas.getContext('2d').fillStyle = '#333';
-                    canvas.getContext('2d').font = '12px sans-serif';
-                    canvas.getContext('2d').fillText('QR', 40, 60);
+                    count++;
+                } catch (err) {
+                    console.error('QR error for', s.nama, err);
+                    const ctx = canvas.getContext('2d');
+                    ctx.fillStyle = '#f8d7da';
+                    ctx.fillRect(0, 0, 130, 130);
+                    ctx.fillStyle = '#721c24';
+                    ctx.font = '10px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Error', 65, 65);
                 }
             });
-            showToast(`✅ QR Code untuk ${jenjang} berhasil dibuat (${siswaJenjang.length} siswa)`, 'success');
+
+            // Tombol Unduh Semua
+            if (count > 0) {
+                const downloadAllBtn = document.createElement('button');
+                downloadAllBtn.className = 'btn btn-success btn-download-all';
+                downloadAllBtn.innerHTML = '<i class="fas fa-download"></i> Unduh Semua QR Code (' + count + ')';
+                downloadAllBtn.onclick = function() {
+                    downloadAllQRCodes();
+                };
+                container.appendChild(downloadAllBtn);
+                status.innerHTML = `<span style="color:var(--success);">✅ Berhasil membuat ${count} QR Code untuk ${jenjang}.</span>`;
+                showToast(`✅ ${count} QR Code berhasil dibuat!`, 'success');
+            } else {
+                status.innerHTML = `<span style="color:var(--danger);">❌ Gagal membuat QR Code. Coba refresh halaman.</span>`;
+            }
+        }
+
+        // ============================================================
+        // UNDUH QR CODE (Perorangan)
+        // ============================================================
+        function downloadQRCode(canvas, nama, nisn) {
+            try {
+                const link = document.createElement('a');
+                const sanitizedNama = nama.replace(/\s+/g, '_').substring(0, 30);
+                link.download = `QR_${sanitizedNama}_${nisn}.png`;
+                link.href = canvas.toDataURL('image/png', 1.0);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                showToast(`✅ QR Code ${nama} berhasil diunduh!`, 'success');
+            } catch (err) {
+                showToast('Gagal mengunduh: ' + err.message, 'error');
+            }
+        }
+
+        // ============================================================
+        // UNDUH SEMUA QR CODE
+        // ============================================================
+        function downloadAllQRCodes() {
+            const cards = document.querySelectorAll('.qr-card');
+            const validCards = [];
+            cards.forEach(card => {
+                const canvas = card.querySelector('canvas');
+                const nameEl = card.querySelector('.qr-name');
+                if (canvas && nameEl) {
+                    validCards.push({ canvas, nama: nameEl.textContent });
+                }
+            });
+
+            if (validCards.length === 0) {
+                showToast('Tidak ada QR Code untuk diunduh.', 'warning');
+                return;
+            }
+
+            // Download satu per satu dengan delay untuk menghindari block
+            let idx = 0;
+
+            function downloadNext() {
+                if (idx >= validCards.length) {
+                    showToast(`✅ Semua ${validCards.length} QR Code berhasil diunduh!`, 'success');
+                    return;
+                }
+                const item = validCards[idx];
+                try {
+                    const link = document.createElement('a');
+                    const sanitized = item.nama.replace(/\s+/g, '_').substring(0, 30);
+                    link.download = `QR_${sanitized}.png`;
+                    link.href = item.canvas.toDataURL('image/png', 1.0);
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                } catch (err) {
+                    console.error('Download error:', err);
+                }
+                idx++;
+                setTimeout(downloadNext, 400);
+            }
+
+            showToast(`⏳ Mengunduh ${validCards.length} QR Code...`, 'warning');
+            downloadNext();
+        }
+
+        // ============================================================
+        // HAPUS SEMUA QR CARD
+        // ============================================================
+        function clearQRCards() {
+            const container = document.getElementById('qrGeneratedArea');
+            container.innerHTML = '';
+            document.getElementById('qrGenStatus').textContent = '';
+            showToast('Semua QR Code telah dihapus.', 'warning');
+        }
+
+        // ============================================================
+        // LOAD QRCODE LIBRARY
+        // ============================================================
+        function loadQRCodeLibrary() {
+            if (typeof QRCode !== 'undefined') {
+                showToast('Library QR Code sudah tersedia.', 'success');
+                return;
+            }
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+            script.onload = function() {
+                showToast('✅ Library QR Code berhasil dimuat!', 'success');
+                document.getElementById('qrGenStatus').textContent = '✅ Library siap digunakan.';
+            };
+            script.onerror = function() {
+                showToast('❌ Gagal memuat library QR Code. Periksa koneksi internet.', 'error');
+            };
+            document.head.appendChild(script);
         }
 
         // ============================================================
@@ -1910,11 +1736,9 @@
             const kelas = document.getElementById('filterKelas').value;
             const tanggal = document.getElementById('filterTanggal').value;
             const tbody = document.getElementById('kehadiranTableBody');
-
             let data = [...kehadiranData];
             if (kelas !== 'all') data = data.filter(d => d.jenjang === kelas);
             if (tanggal) data = data.filter(d => d.tanggal === tanggal);
-
             if (data.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">Belum ada data kehadiran</td></tr>';
                 document.getElementById('kehadiranCount').textContent = '0 siswa';
@@ -1924,14 +1748,7 @@
             let html = '';
             data.forEach((d, i) => {
                 const badge = `<span class="badge-status ${d.status.toLowerCase()}">${d.status}</span>`;
-                html += `<tr>
-                    <td>${i+1}</td>
-                    <td>${d.nama}</td>
-                    <td>${d.jenjang}</td>
-                    <td>${badge}</td>
-                    <td>${d.tanggal}</td>
-                    <td>${d.metode || '-'}</td>
-                </tr>`;
+                html += `<tr><td>${i+1}</td><td>${d.nama}</td><td>${d.jenjang}</td><td>${badge}</td><td>${d.tanggal}</td><td>${d.metode || '-'}</td></tr>`;
             });
             tbody.innerHTML = html;
             document.getElementById('kehadiranCount').textContent = data.length + ' siswa';
@@ -1949,11 +1766,11 @@
             const sorted = [...agendaData].sort((a, b) => b.tanggal.localeCompare(a.tanggal));
             let html = '';
             sorted.forEach((a, idx) => {
-                html += `<div class="agenda-item">
+                html += `<div class="agenda-item" style="background:white; border-radius:var(--radius-sm); padding:16px 20px; border-left:4px solid var(--primary); margin-bottom:12px; box-shadow:var(--shadow); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
                     <div class="agenda-info">
-                        <div class="agenda-date"><i class="far fa-calendar-alt"></i> ${a.tanggal}</div>
-                        <div class="agenda-title">${a.judul}</div>
-                        <div class="agenda-desc">${a.deskripsi || ''}</div>
+                        <div class="agenda-date" style="font-size:12px; color:var(--gray-500); font-weight:500;"><i class="far fa-calendar-alt"></i> ${a.tanggal}</div>
+                        <div class="agenda-title" style="font-weight:600; font-size:15px; color:var(--gray-800);">${a.judul}</div>
+                        <div class="agenda-desc" style="font-size:13px; color:var(--gray-600); margin-top:2px;">${a.deskripsi || ''}</div>
                     </div>
                     <div class="agenda-actions">
                         <button class="btn btn-danger btn-sm" onclick="hapusAgenda(${idx})"><i class="fas fa-trash"></i></button>
@@ -1970,18 +1787,13 @@
             document.getElementById('agendaTanggal').value = new Date().toISOString().split('T')[0];
         }
 
-        function tutupModalAgenda() {
-            document.getElementById('modalAgenda').classList.remove('show');
-        }
+        function tutupModalAgenda() { document.getElementById('modalAgenda').classList.remove('show'); }
 
         function simpanAgenda() {
             const judul = document.getElementById('agendaJudul').value.trim();
             const deskripsi = document.getElementById('agendaDeskripsi').value.trim();
             const tanggal = document.getElementById('agendaTanggal').value;
-            if (!judul || !tanggal) {
-                showToast('Judul dan tanggal wajib diisi!', 'error');
-                return;
-            }
+            if (!judul || !tanggal) { showToast('Judul dan tanggal wajib diisi!', 'error'); return; }
             agendaData.push({ judul, deskripsi, tanggal });
             localStorage.setItem('agendaPancasila', JSON.stringify(agendaData));
             renderAgenda();
@@ -1999,35 +1811,32 @@
         }
 
         // ============================================================
-        // MATERI AJAR (LENGKAP PER FASE)
+        // MATERI
         // ============================================================
         function renderMateri() {
             const filterFase = document.getElementById('filterMateriFase').value;
             const filterJenjang = document.getElementById('filterMateriJenjang').value;
             const container = document.getElementById('materiList');
-
             let data = materiPancasila;
             if (filterFase !== 'all') data = data.filter(m => m.fase === filterFase);
             if (filterJenjang !== 'all') data = data.filter(m => m.jenjang === filterJenjang);
-
             if (data.length === 0) {
                 container.innerHTML = '<p class="text-muted">Tidak ada materi untuk filter ini.</p>';
                 return;
             }
-
             let html = '';
             data.forEach(m => {
                 const badgeClass = `badge-fase-${m.fase.toLowerCase()}`;
-                html += `<div class="material-card" onclick="toggleMateri(${m.id})">
-                    <div class="material-title">
+                html += `<div class="material-card" onclick="toggleMateri(${m.id})" style="background:white; border-radius:var(--radius); border:1px solid var(--gray-200); padding:20px 24px; margin-bottom:16px; transition:var(--transition); cursor:pointer;">
+                    <div class="material-title" style="font-weight:600; font-size:16px; color:var(--gray-900); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
                         <span>${m.judul}</span>
                         <span>
-                            <span class="badge-level ${badgeClass}">Fase ${m.fase}</span>
-                            <span class="badge-level" style="background:var(--primary-light);">${m.jenjang}</span>
+                            <span class="badge-level ${badgeClass}" style="font-size:11px; font-weight:700; padding:2px 12px; border-radius:20px; color:white; background:#6c757d;">Fase ${m.fase}</span>
+                            <span class="badge-level" style="font-size:11px; font-weight:700; padding:2px 12px; border-radius:20px; color:white; background:var(--primary-light);">${m.jenjang}</span>
                         </span>
                     </div>
-                    <div class="material-desc">${m.deskripsi}</div>
-                    <div class="material-body" id="materiBody_${m.id}">
+                    <div class="material-desc" style="color:var(--gray-600); font-size:14px; margin-top:6px;">${m.deskripsi}</div>
+                    <div class="material-body" id="materiBody_${m.id}" style="display:none; margin-top:16px; padding-top:16px; border-top:1px solid var(--gray-200);">
                         ${m.konten}
                     </div>
                 </div>`;
@@ -2037,19 +1846,16 @@
 
         function toggleMateri(id) {
             const body = document.getElementById('materiBody_' + id);
-            if (body) body.classList.toggle('open');
+            if (body) body.style.display = body.style.display === 'block' ? 'none' : 'block';
         }
 
         // ============================================================
-        // ADMINISTRASI - CATATAN
+        // CATATAN
         // ============================================================
         function simpanCatatan() {
             const judul = document.getElementById('catatanJudul').value.trim();
             const isi = document.getElementById('catatanIsi').value.trim();
-            if (!judul || !isi) {
-                showToast('Judul dan isi catatan wajib diisi!', 'error');
-                return;
-            }
+            if (!judul || !isi) { showToast('Judul dan isi catatan wajib diisi!', 'error'); return; }
             catatanData.push({ judul, isi, tanggal: new Date().toISOString().split('T')[0] });
             localStorage.setItem('catatanPancasila', JSON.stringify(catatanData));
             document.getElementById('catatanJudul').value = '';
@@ -2066,11 +1872,11 @@
             }
             let html = '';
             [...catatanData].reverse().forEach((c, idx) => {
-                html += `<div class="agenda-item" style="border-left-color:var(--success);">
+                html += `<div class="agenda-item" style="background:white; border-radius:var(--radius-sm); padding:16px 20px; border-left:4px solid var(--success); margin-bottom:12px; box-shadow:var(--shadow); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
                     <div class="agenda-info">
-                        <div class="agenda-date"><i class="far fa-calendar-alt"></i> ${c.tanggal}</div>
-                        <div class="agenda-title">${c.judul}</div>
-                        <div class="agenda-desc">${c.isi}</div>
+                        <div class="agenda-date" style="font-size:12px; color:var(--gray-500);"><i class="far fa-calendar-alt"></i> ${c.tanggal}</div>
+                        <div class="agenda-title" style="font-weight:600; font-size:15px; color:var(--gray-800);">${c.judul}</div>
+                        <div class="agenda-desc" style="font-size:13px; color:var(--gray-600);">${c.isi}</div>
                     </div>
                     <button class="btn btn-danger btn-sm" onclick="hapusCatatan(${idx})"><i class="fas fa-trash"></i></button>
                 </div>`;
@@ -2088,30 +1894,21 @@
         }
 
         // ============================================================
-        // ADMINISTRASI - NILAI
+        // NILAI
         // ============================================================
         function renderNilai() {
             const kelas = document.getElementById('nilaiKelas').value;
             const tbody = document.getElementById('nilaiTableBody');
-
             let data = [...nilaiData];
             if (kelas !== 'all') data = data.filter(d => d.jenjang === kelas);
-
             if (data.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">Belum ada data nilai</td></tr>';
                 return;
             }
-
             let html = '';
             data.forEach((d, i) => {
                 const color = d.nilai >= 75 ? 'var(--success)' : d.nilai >= 60 ? 'var(--warning)' : 'var(--danger)';
-                html += `<tr>
-                    <td>${i+1}</td>
-                    <td>${d.nama}</td>
-                    <td>${d.jenjang}</td>
-                    <td><strong style="color:${color};">${d.nilai}</strong></td>
-                    <td>${d.keterangan || '-'}</td>
-                </tr>`;
+                html += `<tr><td>${i+1}</td><td>${d.nama}</td><td>${d.jenjang}</td><td><strong style="color:${color};">${d.nilai}</strong></td><td>${d.keterangan || '-'}</td></tr>`;
             });
             tbody.innerHTML = html;
         }
@@ -2129,7 +1926,6 @@
                     const workbook = XLSX.read(data, { type: 'array' });
                     const sheet = workbook.Sheets[workbook.SheetNames[0]];
                     const json = XLSX.utils.sheet_to_json(sheet);
-
                     let imported = 0;
                     json.forEach(row => {
                         const nama = (row['Nama'] || row['nama'] || '').toString().trim();
@@ -2137,13 +1933,10 @@
                         const jenjang = (row['Jenjang'] || row['jenjang'] || '').toString().trim().toUpperCase();
                         if (nama && jenjang && (jenjang === 'SD' || jenjang === 'SMP')) {
                             const exists = siswaData.some(s => s.nisn === nisn && s.nama === nama);
-                            if (!exists) {
-                                siswaData.push({ nama, nisn, jenjang });
-                                imported++;
-                            }
+                            if (!exists) { siswaData.push({ nama, nisn, jenjang });
+                                imported++; }
                         }
                     });
-
                     document.getElementById('imporStatus').innerHTML =
                         `<span style="color:var(--success);">✅ Berhasil mengimpor ${imported} data siswa baru.</span>`;
                     updateTotalSiswa();
@@ -2168,15 +1961,9 @@
         }
 
         function eksporKehadiran() {
-            const data = kehadiranData.map(k => ({
-                Nama: k.nama,
-                NISN: k.nisn,
-                Jenjang: k.jenjang,
-                Status: k.status,
-                Tanggal: k.tanggal,
-                Metode: k.metode || '-'
-            }));
-            if (data.length === 0) { showToast('Tidak ada data kehadiran untuk diekspor.', 'warning'); return; }
+            const data = kehadiranData.map(k => ({ Nama: k.nama, NISN: k.nisn, Jenjang: k.jenjang, Status: k.status,
+                Tanggal: k.tanggal, Metode: k.metode || '-' }));
+            if (data.length === 0) { showToast('Tidak ada data kehadiran.', 'warning'); return; }
             const ws = XLSX.utils.json_to_sheet(data);
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, 'Kehadiran');
@@ -2187,7 +1974,7 @@
         function eksporNilai() {
             const data = nilaiData.map(n => ({ Nama: n.nama, NISN: n.nisn, Jenjang: n.jenjang, Nilai: n.nilai,
                 Keterangan: n.keterangan || '-' }));
-            if (data.length === 0) { showToast('Tidak ada data nilai untuk diekspor.', 'warning'); return; }
+            if (data.length === 0) { showToast('Tidak ada data nilai.', 'warning'); return; }
             const ws = XLSX.utils.json_to_sheet(data);
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, 'Nilai');
@@ -2202,7 +1989,7 @@
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, 'Template');
             XLSX.writeFile(wb, 'Template_Siswa_SRT39Garut.xlsx');
-            showToast('Template siswa berhasil diunduh!', 'success');
+            showToast('Template siswa diunduh!', 'success');
         }
 
         function unduhTemplateKehadiran() {
@@ -2212,7 +1999,7 @@
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, 'Template_Kehadiran');
             XLSX.writeFile(wb, 'Template_Kehadiran_SRT39Garut.xlsx');
-            showToast('Template kehadiran berhasil diunduh!', 'success');
+            showToast('Template kehadiran diunduh!', 'success');
         }
 
         function unduhTemplateNilai() {
@@ -2222,7 +2009,7 @@
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, 'Template_Nilai');
             XLSX.writeFile(wb, 'Template_Nilai_SRT39Garut.xlsx');
-            showToast('Template nilai berhasil diunduh!', 'success');
+            showToast('Template nilai diunduh!', 'success');
         }
 
         // ============================================================
@@ -2235,18 +2022,6 @@
             toast.classList.add('show');
             clearTimeout(toast._timer);
             toast._timer = setTimeout(() => toast.classList.remove('show'), 3500);
-        }
-
-        // ============================================================
-        // LOAD QRCODE LIBRARY
-        // ============================================================
-        function loadQRCodeLibrary() {
-            if (typeof QRCode === 'undefined') {
-                const script = document.createElement('script');
-                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
-                script.onload = function() { console.log('QRCode.js loaded'); };
-                document.head.appendChild(script);
-            }
         }
 
         // ============================================================
@@ -2263,7 +2038,10 @@
             renderCatatan();
             renderNilai();
             updateStats();
-            loadQRCodeLibrary();
+            // Load QRCode library
+            if (typeof QRCode === 'undefined') {
+                loadQRCodeLibrary();
+            }
         });
 
         document.getElementById('loginPage').style.display = 'flex';
@@ -2272,8 +2050,7 @@
         console.log('📚 e-Learning Pendidikan Pancasila SRT 39 Garut');
         console.log('👨‍🏫 Login: guru / pancasila');
         console.log('📊 Total siswa:', siswaData.length);
-        console.log('📖 Materi lengkap per Fase (A-E) sesuai Kurikulum Merdeka');
-        console.log('🔹 Fitur: Absensi QR, Kehadiran, Agenda, Materi Ajar, Administrasi, Impor/Ekspor');
+        console.log('🔹 Fitur: Generate QR Code dari database siswa + Unduh perorangan / semua');
     </script>
 
 </body>

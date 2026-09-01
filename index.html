@@ -3,273 +3,2110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplikasi e-Learning Pendidikan Pancasila - SRT 39 Garut</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- SheetJS CDN untuk Ekspor/Impor Excel -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <title>e-Learning Pendidikan Pancasila - SRT 39 Garut</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js">
+    </script>
     <style>
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        :root {
+            --primary: #1a4b8c;
+            --primary-light: #2d6bb8;
+            --primary-dark: #0d2b4f;
+            --secondary: #e8a838;
+            --success: #22a65e;
+            --danger: #dc3545;
+            --warning: #f0ad4e;
+            --info: #17a2b8;
+            --gray-50: #f8f9fa;
+            --gray-100: #f1f3f5;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --radius: 12px;
+            --radius-sm: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background: var(--gray-50);
+            color: var(--gray-800);
+            min-height: 100vh;
+        }
+
+        /* ========== LOGIN ========== */
+        #loginPage {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+            padding: 20px;
+        }
+
+        #loginPage .login-box {
+            background: white;
+            border-radius: var(--radius);
+            padding: 48px 40px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: var(--shadow-lg);
+            animation: fadeUp 0.6s ease;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #loginPage .login-box .logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        #loginPage .login-box .logo h1 {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        #loginPage .login-box .logo h1 span {
+            color: var(--secondary);
+        }
+
+        #loginPage .login-box .logo p {
+            font-size: 13px;
+            color: var(--gray-600);
+            margin-top: 4px;
+        }
+
+        #loginPage .login-box .form-group {
+            margin-bottom: 20px;
+        }
+
+        #loginPage .login-box label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 6px;
+        }
+
+        #loginPage .login-box input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            transition: var(--transition);
+            background: var(--gray-50);
+        }
+
+        #loginPage .login-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(26, 75, 140, 0.1);
+        }
+
+        #loginPage .login-box .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 8px;
+        }
+
+        #loginPage .login-box .btn-login:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(26, 75, 140, 0.3);
+        }
+
+        #loginPage .login-box .login-error {
+            color: var(--danger);
+            font-size: 13px;
+            text-align: center;
+            margin-top: 12px;
+            display: none;
+        }
+
+        /* ========== APP LAYOUT ========== */
+        #app {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .app-header {
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .app-header .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .app-header .brand h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .app-header .brand h2 span {
+            color: var(--secondary);
+        }
+
+        .app-header .brand .badge {
+            background: var(--secondary);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .app-header .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .app-header .user-info .name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .app-header .user-info .logout-btn {
+            background: none;
+            border: none;
+            color: var(--gray-600);
+            cursor: pointer;
+            font-size: 18px;
+            transition: var(--transition);
+            padding: 6px;
+            border-radius: 50%;
+        }
+
+        .app-header .user-info .logout-btn:hover {
+            color: var(--danger);
+            background: rgba(220, 53, 69, 0.08);
+        }
+
+        .app-body {
+            display: flex;
+            min-height: calc(100vh - 72px);
+        }
+
+        /* ========== SIDEBAR ========== */
+        .sidebar {
+            width: 250px;
+            background: white;
+            border-right: 1px solid var(--gray-200);
+            padding: 20px 0;
+            flex-shrink: 0;
+            overflow-y: auto;
+            height: calc(100vh - 72px);
+            position: sticky;
+            top: 72px;
+        }
+
+        .sidebar .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 24px;
+            color: var(--gray-700);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar .menu-item:hover {
+            background: var(--gray-50);
+            color: var(--primary);
+        }
+
+        .sidebar .menu-item.active {
+            background: rgba(26, 75, 140, 0.06);
+            color: var(--primary);
+            border-left-color: var(--primary);
+            font-weight: 600;
+        }
+
+        .sidebar .menu-item i {
+            width: 20px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .sidebar .menu-divider {
+            height: 1px;
+            background: var(--gray-200);
+            margin: 12px 24px;
+        }
+
+        .sidebar .menu-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 8px 24px;
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        .main-content {
+            flex: 1;
+            padding: 28px 32px;
+            overflow-y: auto;
+            max-height: calc(100vh - 72px);
+        }
+
+        .page-section {
+            display: none;
+            animation: fadeUp 0.4s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .page-subtitle {
+            color: var(--gray-600);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        /* ========== CARDS ========== */
+        .stat-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray-200);
+        }
+
+        .stat-card .stat-label {
+            font-size: 13px;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .stat-card .stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-top: 4px;
+        }
+
+        .stat-card .stat-icon {
+            float: right;
+            font-size: 28px;
+            opacity: 0.2;
+            color: var(--primary);
+        }
+
+        .stat-card.green .stat-value {
+            color: var(--success);
+        }
+        .stat-card.red .stat-value {
+            color: var(--danger);
+        }
+        .stat-card.orange .stat-value {
+            color: var(--warning);
+        }
+        .stat-card.blue .stat-value {
+            color: var(--info);
+        }
+
+        /* ========== TABLES ========== */
+        .table-wrap {
+            background: white;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .table-wrap .table-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: var(--gray-50);
+        }
+
+        .table-wrap .table-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .table-wrap .table-header .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .table-wrap table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .table-wrap table th {
+            background: var(--gray-50);
+            text-align: left;
+            padding: 12px 16px;
+            font-weight: 600;
+            color: var(--gray-700);
+            border-bottom: 2px solid var(--gray-200);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .table-wrap table td {
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--gray-100);
+            vertical-align: middle;
+        }
+
+        .table-wrap table tr:hover td {
+            background: var(--gray-50);
+        }
+
+        .badge-status {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-status.hadir {
+            background: #d4edda;
+            color: #155724;
+        }
+        .badge-status.absen {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .badge-status.izin {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .badge-status.sakit {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        /* ========== FORMS ========== */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 4px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            transition: var(--transition);
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(26, 75, 140, 0.08);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 4px 12px rgba(26, 75, 140, 0.25);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #1a8a4a;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #b02a37;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #d39e00;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--gray-300);
+            color: var(--gray-700);
+        }
+
+        .btn-outline:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-400);
+        }
+
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 12px;
+        }
+
+        /* ========== CAMERA & LOCATION ========== */
+        .camera-container {
+            background: var(--gray-900);
+            border-radius: var(--radius);
+            overflow: hidden;
+            position: relative;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .camera-container video {
+            width: 100%;
+            display: block;
+            background: #000;
+        }
+
+        .camera-container .camera-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .camera-controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .location-info {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            border: 1px solid var(--gray-200);
+            margin: 16px 0;
+            text-align: center;
+        }
+
+        .location-info .loc-status {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .location-info .loc-status .fa-check-circle {
+            color: var(--success);
+        }
+        .location-info .loc-status .fa-times-circle {
+            color: var(--danger);
+        }
+
+        /* ========== MATERIALS ========== */
+        .material-card {
+            background: white;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .material-card:hover {
+            box-shadow: var(--shadow);
+            border-color: var(--primary-light);
+        }
+
+        .material-card .material-title {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--gray-900);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .material-card .material-title .badge-level {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 12px;
+            border-radius: 20px;
+            background: var(--secondary);
+            color: white;
+        }
+
+        .material-card .material-desc {
+            color: var(--gray-600);
+            font-size: 14px;
+            margin-top: 6px;
+        }
+
+        .material-card .material-body {
+            display: none;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .material-card .material-body.open {
+            display: block;
+        }
+
+        /* ========== AGENDA ========== */
+        .agenda-item {
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: 16px 20px;
+            border-left: 4px solid var(--primary);
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .agenda-item .agenda-info .agenda-date {
+            font-size: 12px;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        .agenda-item .agenda-info .agenda-title {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--gray-800);
+        }
+
+        .agenda-item .agenda-info .agenda-desc {
+            font-size: 13px;
+            color: var(--gray-600);
+            margin-top: 2px;
+        }
+
+        /* ========== ADMIN ========== */
+        .admin-card {
+            background: white;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            padding: 20px 24px;
+            margin-bottom: 16px;
+        }
+
+        .admin-card .admin-title {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--gray-800);
+            margin-bottom: 12px;
+        }
+
+        .file-upload-area {
+            border: 2px dashed var(--gray-300);
+            border-radius: var(--radius-sm);
+            padding: 32px;
+            text-align: center;
+            color: var(--gray-600);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .file-upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(26, 75, 140, 0.02);
+        }
+
+        .file-upload-area i {
+            font-size: 40px;
+            color: var(--gray-400);
+            margin-bottom: 8px;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 200px;
+                padding: 12px 0;
+            }
+            .sidebar .menu-item {
+                padding: 10px 16px;
+                font-size: 13px;
+                gap: 10px;
+            }
+            .main-content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .app-body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                top: 0;
+                border-right: none;
+                border-bottom: 1px solid var(--gray-200);
+                display: flex;
+                flex-wrap: wrap;
+                padding: 8px 12px;
+                gap: 4px;
+            }
+            .sidebar .menu-item {
+                padding: 8px 14px;
+                border-left: none;
+                border-bottom: 2px solid transparent;
+                font-size: 12px;
+            }
+            .sidebar .menu-item.active {
+                border-left: none;
+                border-bottom-color: var(--primary);
+            }
+            .sidebar .menu-divider,
+            .sidebar .menu-label {
+                display: none;
+            }
+            .main-content {
+                padding: 16px;
+                max-height: none;
+                height: auto;
+            }
+            .app-header .brand h2 {
+                font-size: 15px;
+            }
+            .stat-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .table-wrap .table-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .table-wrap .table-header .actions {
+                justify-content: stretch;
+            }
+            .table-wrap .table-header .actions .btn {
+                flex: 1;
+                justify-content: center;
+            }
+            .camera-container .camera-overlay {
+                width: 120px;
+                height: 120px;
+            }
+            #loginPage .login-box {
+                padding: 32px 24px;
+            }
+            .material-card .material-title {
+                font-size: 14px;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stat-cards {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .stat-card {
+                padding: 14px 16px;
+            }
+            .stat-card .stat-value {
+                font-size: 20px;
+            }
+            .app-header {
+                padding: 8px 16px;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .app-header .user-info .name {
+                font-size: 12px;
+            }
+            .main-content {
+                padding: 12px;
+            }
+            .table-wrap table {
+                font-size: 12px;
+            }
+            .table-wrap table th,
+            .table-wrap table td {
+                padding: 8px 10px;
+            }
+            .agenda-item {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .agenda-item .agenda-actions {
+                display: flex;
+                gap: 8px;
+            }
+        }
+
+        /* scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--gray-100);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-400);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-500);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--gray-900);
+            color: white;
+            padding: 14px 24px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-lg);
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 999;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            max-width: 400px;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: var(--success);
+        }
+        .toast.error {
+            background: var(--danger);
+        }
+        .toast.warning {
+            background: var(--warning);
+        }
+
+        .flex {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .flex-center {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .mt-12 {
+            margin-top: 12px;
+        }
+        .mb-12 {
+            margin-bottom: 12px;
+        }
+        .w-full {
+            width: 100%;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .text-muted {
+            color: var(--gray-600);
+            font-size: 13px;
+        }
+        .gap-8 {
+            gap: 8px;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .filter-bar select,
+        .filter-bar input {
+            padding: 8px 14px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            background: white;
+        }
+
+        .filter-bar select:focus,
+        .filter-bar input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-box {
+            background: white;
+            border-radius: var(--radius);
+            padding: 32px;
+            max-width: 560px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-box .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .modal-box .modal-close {
+            float: right;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--gray-500);
+            cursor: pointer;
+        }
     </style>
 </head>
-<body class="bg-gray-100 font-sans text-gray-800">
+<body>
 
-    <!-- MODAL LOGIN GURU -->
-    <div id="loginSection" class="flex flex-col items-center justify-center min-h-screen bg-red-50">
-        <div class="bg-white p-8 rounded-lg shadow-md w-96 text-center border-t-4 border-red-700">
-            <h2 class="text-2xl font-bold mb-2 text-gray-800">Portal Guru Pendidikan Pancasila</h2>
-            <p class="text-sm text-gray-500 mb-6">Sekolah Rakyat Terintegrasi 39 Garut</p>
-            <form id="loginForm" class="flex flex-col gap-4">
-                <input type="text" placeholder="NIP / Username Guru" class="p-3 border rounded focus:outline-none focus:ring-2 focus:ring-red-600" required />
-                <input type="password" placeholder="Password" class="p-3 border rounded focus:outline-none focus:ring-2 focus:ring-red-600" required />
-                <button type="submit" class="bg-red-700 hover:bg-red-800 text-white font-bold p-3 rounded transition duration-200">
-                    Masuk Portal
-                </button>
-            </form>
+    <!-- ========== TOAST ========== -->
+    <div id="toast" class="toast"></div>
+
+    <!-- ========== LOGIN ========== -->
+    <div id="loginPage">
+        <div class="login-box">
+            <div class="logo">
+                <h1>e-Learning <span>Pancasila</span></h1>
+                <p>SRT 39 Garut • Pusdiklat Bangprofkesos</p>
+                <p style="font-size:12px; color:var(--gray-500); margin-top:2px;">Pendidikan Pancasila • Guru</p>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Username</label>
+                <input type="text" id="loginUser" value="guru" placeholder="Masukkan username">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="loginPass" value="pancasila" placeholder="Masukkan password">
+            </div>
+            <button class="btn-login" onclick="handleLogin()"><i class="fas fa-sign-in-alt"></i> Masuk</button>
+            <div id="loginError" class="login-error"><i class="fas fa-exclamation-circle"></i> Username atau password salah!</div>
+            <p style="text-align:center; margin-top:16px; font-size:12px; color:var(--gray-500);">Default: guru / pancasila</p>
         </div>
     </div>
 
-    <!-- MAIN APP DASHBOARD -->
-    <div id="appSection" class="hidden max-w-6xl mx-auto p-6">
+    <!-- ========== APP ========== -->
+    <div id="app">
+
         <!-- HEADER -->
-        <header class="mb-8 border-b-2 border-red-700 pb-4 bg-white p-6 rounded shadow-sm">
-            <h1 class="text-3xl font-extrabold text-gray-800">Aplikasi e-Learning Pendidikan Pancasila</h1>
-            <p class="text-lg text-gray-600 font-medium">Sekolah Rakyat Terintegrasi 39 Garut - "Cerdas Bersama Tumbuh Setara"</p>
+        <header class="app-header">
+            <div class="brand">
+                <h2>e-Learning <span>Pancasila</span></h2>
+                <span class="badge">SRT 39 Garut</span>
+            </div>
+            <div class="user-info">
+                <span class="name"><i class="fas fa-user-graduate"></i> Guru Pancasila</span>
+                <button class="logout-btn" onclick="handleLogout()" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
         </header>
-        
-        <!-- NAVIGASI TAB -->
-        <div class="flex flex-wrap gap-2 mb-6">
-            <button onclick="switchTab('absensi')" id="btn-absensi" class="tab-btn px-5 py-2 font-semibold rounded bg-red-700 text-white shadow">
-                Absensi & Data
-            </button>
-            <button onclick="switchTab('materi')" id="btn-materi" class="tab-btn px-5 py-2 font-semibold rounded bg-white text-gray-700 border hover:bg-gray-50">
-                Materi Ajar
-            </button>
-            <button onclick="switchTab('administrasi')" id="btn-administrasi" class="tab-btn px-5 py-2 font-semibold rounded bg-white text-gray-700 border hover:bg-gray-50">
-                Administrasi Pembelajaran
-            </button>
-            <button onclick="switchTab('agenda')" id="btn-agenda" class="tab-btn px-5 py-2 font-semibold rounded bg-white text-gray-700 border hover:bg-gray-50">
-                Agenda Harian Guru
-            </button>
+
+        <div class="app-body">
+
+            <!-- SIDEBAR -->
+            <nav class="sidebar" id="sidebar">
+                <div class="menu-label">Navigasi</div>
+                <div class="menu-item active" data-page="dashboard" onclick="navigateTo('dashboard')">
+                    <i class="fas fa-th-large"></i> Dashboard
+                </div>
+                <div class="menu-item" data-page="absensi" onclick="navigateTo('absensi')">
+                    <i class="fas fa-camera"></i> Absensi Kamera
+                </div>
+                <div class="menu-item" data-page="lokasi" onclick="navigateTo('lokasi')">
+                    <i class="fas fa-map-pin"></i> Absensi Lokasi
+                </div>
+                <div class="menu-item" data-page="kehadiran" onclick="navigateTo('kehadiran')">
+                    <i class="fas fa-clipboard-list"></i> Daftar Kehadiran
+                </div>
+                <div class="menu-divider"></div>
+                <div class="menu-item" data-page="agenda" onclick="navigateTo('agenda')">
+                    <i class="fas fa-calendar-day"></i> Agenda Harian
+                </div>
+                <div class="menu-item" data-page="materi" onclick="navigateTo('materi')">
+                    <i class="fas fa-book"></i> Materi Ajar
+                </div>
+                <div class="menu-item" data-page="admin" onclick="navigateTo('admin')">
+                    <i class="fas fa-tasks"></i> Administrasi
+                </div>
+                <div class="menu-divider"></div>
+                <div class="menu-item" data-page="impor" onclick="navigateTo('impor')">
+                    <i class="fas fa-file-import"></i> Impor / Ekspor
+                </div>
+            </nav>
+
+            <!-- MAIN CONTENT -->
+            <main class="main-content">
+
+                <!-- ===== DASHBOARD ===== -->
+                <section id="page-dashboard" class="page-section active">
+                    <h1 class="page-title">Dashboard</h1>
+                    <p class="page-subtitle">Ringkasan aktivitas pembelajaran Pendidikan Pancasila</p>
+                    <div class="stat-cards" id="statCards">
+                        <div class="stat-card blue">
+                            <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
+                            <div class="stat-label">Total Siswa</div>
+                            <div class="stat-value" id="totalSiswa">0</div>
+                        </div>
+                        <div class="stat-card green">
+                            <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                            <div class="stat-label">Hadir Hari Ini</div>
+                            <div class="stat-value" id="hadirHariIni">0</div>
+                        </div>
+                        <div class="stat-card orange">
+                            <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                            <div class="stat-label">Izin / Sakit</div>
+                            <div class="stat-value" id="izinSakit">0</div>
+                        </div>
+                        <div class="stat-card red">
+                            <div class="stat-icon"><i class="fas fa-times-circle"></i></div>
+                            <div class="stat-label">Alpha</div>
+                            <div class="stat-value" id="alpha">0</div>
+                        </div>
+                    </div>
+                    <div style="background:white; border-radius:var(--radius); border:1px solid var(--gray-200); padding:20px 24px; box-shadow:var(--shadow);">
+                        <h3 style="margin-bottom:12px;"><i class="fas fa-info-circle" style="color:var(--primary);"></i> Selamat Datang, Guru Pendidikan Pancasila!</h3>
+                        <p class="text-muted">Gunakan menu di samping untuk mengelola pembelajaran. Fitur tersedia: Absensi Kamera, Absensi Lokasi, Daftar Kehadiran, Agenda Harian, Materi Ajar, Administrasi, dan Impor/Ekspor Data.</p>
+                        <p class="text-muted" style="margin-top:8px;"><strong>SRT 39 Garut</strong> • Sekolah Rakyat Terintegrasi 39 Garut • Tahun Ajaran 2026/2027</p>
+                        <p class="text-muted" style="margin-top:4px;"><i class="fas fa-users"></i> Total siswa: <span id="totalSiswa2">0</span> (SD: <span id="totalSD">0</span>, SMP: <span id="totalSMP">0</span>)</p>
+                    </div>
+                </section>
+
+                <!-- ===== ABSENSI KAMERA ===== -->
+                <section id="page-absensi" class="page-section">
+                    <h1 class="page-title"><i class="fas fa-camera"></i> Absensi dengan Kamera</h1>
+                    <p class="page-subtitle">Ambil foto sebagai bukti kehadiran</p>
+                    <div style="max-width:640px;">
+                        <div class="camera-container">
+                            <video id="videoCam" autoplay playsinline></video>
+                            <div class="camera-overlay"></div>
+                        </div>
+                        <div class="camera-controls">
+                            <button class="btn btn-primary" onclick="startCamera()"><i class="fas fa-play"></i> Mulai Kamera</button>
+                            <button class="btn btn-success" onclick="capturePhoto()"><i class="fas fa-camera"></i> Ambil Foto</button>
+                            <button class="btn btn-danger" onclick="stopCamera()"><i class="fas fa-stop"></i> Stop</button>
+                        </div>
+                        <div id="photoPreview" style="margin-top:12px; display:none; text-align:center;">
+                            <p><strong>Foto berhasil diambil!</strong></p>
+                            <img id="capturedImg" style="max-width:200px; border-radius:var(--radius-sm); border:2px solid var(--gray-200);">
+                            <div style="margin-top:10px;">
+                                <select id="absenKelas" class="btn-sm" style="padding:6px 12px; border:2px solid var(--gray-200); border-radius:var(--radius-sm);">
+                                    <option value="SD">SD</option>
+                                    <option value="SMP">SMP</option>
+                                </select>
+                                <button class="btn btn-success btn-sm" onclick="konfirmasiAbsen('kamera')"><i class="fas fa-check"></i> Konfirmasi Hadir</button>
+                            </div>
+                        </div>
+                        <div id="cameraStatus" class="text-muted" style="margin-top:8px; text-align:center;">Kamera belum aktif</div>
+                    </div>
+                </section>
+
+                <!-- ===== ABSENSI LOKASI ===== -->
+                <section id="page-lokasi" class="page-section">
+                    <h1 class="page-title"><i class="fas fa-map-pin"></i> Absensi Berdasarkan Lokasi</h1>
+                    <p class="page-subtitle">Verifikasi kehadiran berdasarkan lokasi GPS</p>
+                    <div style="max-width:640px;">
+                        <div class="location-info" id="locationInfo">
+                            <div class="loc-status"><i class="fas fa-spinner fa-spin"></i> Mendeteksi lokasi...</div>
+                            <div id="locDetail" style="margin-top:8px; font-size:14px; color:var(--gray-700);"></div>
+                        </div>
+                        <div class="flex-center" style="justify-content:center; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+                            <button class="btn btn-primary" onclick="getLocation()"><i class="fas fa-satellite"></i> Deteksi Lokasi</button>
+                            <select id="absenKelasLokasi" style="padding:8px 14px; border:2px solid var(--gray-200); border-radius:var(--radius-sm);">
+                                <option value="SD">SD</option>
+                                <option value="SMP">SMP</option>
+                            </select>
+                            <button class="btn btn-success" onclick="konfirmasiAbsen('lokasi')"><i class="fas fa-check"></i> Konfirmasi Hadir</button>
+                        </div>
+                        <div id="lokasiStatus" class="text-muted" style="text-align:center;"></div>
+                        <div style="background:white; border-radius:var(--radius); border:1px solid var(--gray-200); padding:16px 20px; margin-top:12px;">
+                            <p style="font-size:13px; color:var(--gray-600);"><i class="fas fa-info-circle"></i> Lokasi akan diverifikasi dengan radius sekolah. Pastikan GPS aktif dan izin lokasi diberikan.</p>
+                            <p style="font-size:13px; color:var(--gray-600);"><strong>Koordinat sekolah:</strong> -7.2170, 107.9029 (perkiraan Garut)</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ===== DAFTAR KEHADIRAN ===== -->
+                <section id="page-kehadiran" class="page-section">
+                    <h1 class="page-title"><i class="fas fa-clipboard-list"></i> Daftar Kehadiran Murid</h1>
+                    <p class="page-subtitle">Rekap kehadiran siswa Pendidikan Pancasila</p>
+                    <div class="filter-bar">
+                        <select id="filterKelas" onchange="renderKehadiran()">
+                            <option value="all">Semua Kelas</option>
+                            <option value="SD">SD</option>
+                            <option value="SMP">SMP</option>
+                        </select>
+                        <input type="date" id="filterTanggal" onchange="renderKehadiran()">
+                        <button class="btn btn-primary btn-sm" onclick="renderKehadiran()"><i class="fas fa-filter"></i> Filter</button>
+                        <button class="btn btn-success btn-sm" onclick="eksporKehadiran()"><i class="fas fa-file-excel"></i> Ekspor Excel</button>
+                    </div>
+                    <div class="table-wrap">
+                        <div class="table-header">
+                            <h3><i class="fas fa-users"></i> Rekap Kehadiran</h3>
+                            <span class="text-muted" id="kehadiranCount">0 siswa</span>
+                        </div>
+                        <div style="overflow-x:auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama</th>
+                                        <th>Jenjang</th>
+                                        <th>Status</th>
+                                        <th>Tanggal</th>
+                                        <th>Metode</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="kehadiranTableBody">
+                                    <tr><td colspan="6" class="text-center text-muted">Belum ada data kehadiran</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ===== AGENDA HARIAN ===== -->
+                <section id="page-agenda" class="page-section">
+                    <h1 class="page-title"><i class="fas fa-calendar-day"></i> Agenda Harian Guru</h1>
+                    <p class="page-subtitle">Catatan kegiatan pembelajaran hari ini</p>
+                    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:20px;">
+                        <button class="btn btn-primary" onclick="tampilkanModalAgenda()"><i class="fas fa-plus"></i> Tambah Agenda</button>
+                    </div>
+                    <div id="agendaList">
+                        <p class="text-muted">Belum ada agenda. Tambahkan agenda baru.</p>
+                    </div>
+                </section>
+
+                <!-- ===== MATERI AJAR ===== -->
+                <section id="page-materi" class="page-section">
+                    <h1 class="page-title"><i class="fas fa-book"></i> Materi Ajar Pendidikan Pancasila</h1>
+                    <p class="page-subtitle">Materi dari SRD sampai SRMA (SD & SMP)</p>
+                    <div class="filter-bar">
+                        <select id="filterMateri" onchange="renderMateri()">
+                            <option value="all">Semua Jenjang</option>
+                            <option value="SD">SD (SRD)</option>
+                            <option value="SMP">SMP (SRMP)</option>
+                        </select>
+                    </div>
+                    <div id="materiList"></div>
+                </section>
+
+                <!-- ===== ADMINISTRASI ===== -->
+                <section id="page-admin" class="page-section">
+                    <h1 class="page-title"><i class="fas fa-tasks"></i> Administrasi Pembelajaran</h1>
+                    <p class="page-subtitle">Nilai, catatan, dan administrasi lainnya</p>
+                    <div class="admin-card">
+                        <div class="admin-title"><i class="fas fa-file-alt"></i> Catatan Pembelajaran</div>
+                        <div class="form-group">
+                            <label>Judul Catatan</label>
+                            <input type="text" id="catatanJudul" placeholder="Misal: Refleksi Pembelajaran Bab 1">
+                        </div>
+                        <div class="form-group">
+                            <label>Isi Catatan</label>
+                            <textarea id="catatanIsi" placeholder="Tulis catatan pembelajaran..." rows="3"></textarea>
+                        </div>
+                        <button class="btn btn-primary" onclick="simpanCatatan()"><i class="fas fa-save"></i> Simpan Catatan</button>
+                        <div style="margin-top:16px;" id="catatanList">
+                            <p class="text-muted">Belum ada catatan.</p>
+                        </div>
+                    </div>
+                    <div class="admin-card">
+                        <div class="admin-title"><i class="fas fa-chart-simple"></i> Rekap Nilai</div>
+                        <div class="filter-bar">
+                            <select id="nilaiKelas" onchange="renderNilai()">
+                                <option value="all">Semua Kelas</option>
+                                <option value="SD">SD</option>
+                                <option value="SMP">SMP</option>
+                            </select>
+                            <button class="btn btn-success btn-sm" onclick="eksporNilai()"><i class="fas fa-file-excel"></i> Ekspor Nilai</button>
+                        </div>
+                        <div style="overflow-x:auto;">
+                            <table>
+                                <thead>
+                                    <tr><th>No</th><th>Nama</th><th>Jenjang</th><th>Nilai</th><th>Keterangan</th></tr>
+                                </thead>
+                                <tbody id="nilaiTableBody">
+                                    <tr><td colspan="5" class="text-center text-muted">Belum ada data nilai</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ===== IMPOR / EKSPOR ===== -->
+                <section id="page-impor" class="page-section">
+                    <h1 class="page-title"><i class="fas fa-file-import"></i> Impor / Ekspor Data</h1>
+                    <p class="page-subtitle">Impor dan ekspor data menggunakan format Excel (.xlsx)</p>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+                        <div class="admin-card">
+                            <div class="admin-title"><i class="fas fa-file-import"></i> Impor Data Siswa</div>
+                            <div class="file-upload-area" onclick="document.getElementById('fileInput').click()">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Klik untuk upload file Excel</p>
+                                <p style="font-size:12px; color:var(--gray-500);">Format: .xlsx dengan kolom: Nama, NISN, Jenjang</p>
+                            </div>
+                            <input type="file" id="fileInput" accept=".xlsx,.xls" style="display:none;" onchange="imporData(event)">
+                            <div id="imporStatus" style="margin-top:12px;"></div>
+                        </div>
+                        <div class="admin-card">
+                            <div class="admin-title"><i class="fas fa-file-export"></i> Ekspor Data</div>
+                            <p class="text-muted">Ekspor data ke file Excel</p>
+                            <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
+                                <button class="btn btn-success" onclick="eksporSiswa()"><i class="fas fa-file-excel"></i> Ekspor Data Siswa</button>
+                                <button class="btn btn-primary" onclick="eksporKehadiran()"><i class="fas fa-file-excel"></i> Ekspor Kehadiran</button>
+                                <button class="btn btn-warning" onclick="eksporNilai()"><i class="fas fa-file-excel"></i> Ekspor Nilai</button>
+                                <button class="btn btn-outline" onclick="unduhTemplate()"><i class="fas fa-download"></i> Unduh Template Siswa</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
         </div>
-
-        <main class="bg-white p-6 border rounded shadow-sm min-h-[500px]">
-            
-            <!-- TAB 1: ABSENSI & DATA (KAMERA, LOKASI, EXCEL) -->
-            <div id="absensi" class="tab-content active">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Scan Kamera -->
-                    <div class="border p-5 rounded-lg bg-gray-50 shadow-inner">
-                        <h3 class="font-bold text-lg mb-3">Scan Kehadiran (Kamera/QR)</h3>
-                        <div class="bg-black rounded-lg overflow-hidden flex items-center justify-center h-48 mb-4">
-                            <video id="webcam" autoplay playsinline class="w-full h-full object-cover hidden"></video>
-                            <span id="cameraPlaceholder" class="text-white text-sm">Kamera tidak aktif</span>
-                        </div>
-                        <button onclick="startCamera()" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded w-full transition">
-                            Aktifkan Kamera Scan
-                        </button>
-                    </div>
-                    
-                    <!-- Absensi Lokasi -->
-                    <div class="border p-5 rounded-lg bg-gray-50 shadow-inner">
-                        <h3 class="font-bold text-lg mb-3">Absensi Berdasarkan Lokasi</h3>
-                        <p class="text-sm text-gray-600 mb-4">Verifikasi koordinat absensi untuk presensi murid.</p>
-                        <button onclick="getLocation()" class="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded w-full mb-3 transition">
-                            Deteksi Koordinat Saat Ini
-                        </button>
-                        <div id="locationOutput" class="text-sm font-mono bg-white p-3 border rounded text-gray-800 hidden"></div>
-                    </div>
-
-                    <!-- Ekspor & Impor Excel -->
-                    <div class="md:col-span-2 border p-5 rounded-lg bg-gray-50 mt-2 shadow-inner">
-                        <h3 class="font-bold text-lg mb-2">Daftar Kehadiran Murid (Impor/Ekspor Excel)</h3>
-                        <p class="text-sm text-gray-600 mb-4">Gunakan format <b>PKPD FIX.xlsx</b> (Sheet: ABSENSI_1 / JURNAL GURU) untuk impor data.</p>
-                        <div class="flex flex-wrap gap-4 items-center">
-                            <input type="file" id="excelUpload" accept=".xlsx, .xls" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100 border p-2 bg-white cursor-pointer md:w-auto" />
-                            <button onclick="exportExcel()" class="bg-gray-800 hover:bg-gray-900 text-white font-medium px-5 py-2 rounded shadow transition">
-                                Ekspor Daftar Kehadiran (.xlsx)
-                            </button>
-                        </div>
-                        <div id="excelPreview" class="mt-4 p-3 bg-white border rounded text-sm text-green-700 hidden font-semibold">
-                            ✓ Berhasil memuat data dari file Excel.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 2: MATERI AJAR -->
-            <div id="materi" class="tab-content">
-                <h2 class="text-2xl font-bold mb-4 border-b pb-2">Katalog Materi Ajar Pendidikan Pancasila</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
-                    <div class="p-5 border-2 border-gray-200 rounded-lg hover:border-red-600 transition">
-                        <h4 class="font-extrabold text-red-700 mb-2 text-lg">Jenjang SRD (Sekolah Rakyat Dasar)</h4>
-                        <p class="text-sm text-gray-700"><b>Fase A-C:</b> Pengenalan dasar keberagaman budaya, gotong royong, dan penerapan Profil Pelajar Pancasila di lingkungan sehari-hari.</p>
-                    </div>
-                    <div class="p-5 border-2 border-red-700 rounded-lg bg-red-50 shadow-md">
-                        <h4 class="font-extrabold text-red-700 mb-2 text-lg">Jenjang SRMP (Kelas 7)</h4>
-                        <p class="text-sm text-gray-700"><b>Fase D:</b> Implementasi Kurikulum Merdeka. Analisis sejarah perumusan UUD 1945, BPUPKI, dan norma dalam kehidupan bermasyarakat.</p>
-                    </div>
-                    <div class="p-5 border-2 border-gray-200 rounded-lg hover:border-red-600 transition">
-                        <h4 class="font-extrabold text-red-700 mb-2 text-lg">Jenjang SRMA (Menengah Atas)</h4>
-                        <p class="text-sm text-gray-700"><b>Fase E-F:</b> Kajian kritis sistem ketatanegaraan, instrumen HAM, demokrasi Pancasila, dan diplomasi geopolitik Indonesia.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 3: ADMINISTRASI -->
-            <div id="administrasi" class="tab-content">
-                <h2 class="text-2xl font-bold mb-4 border-b pb-2">Administrasi Pembelajaran Pendidikan Pancasila</h2>
-                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-4">
-                    <p class="text-sm font-semibold text-yellow-800">Modul otomatis penyusunan RPP/Modul Ajar Deep Learning dan Buku Kerja 1 yang disesuaikan dengan Capaian Pembelajaran Nasional Kurikulum Merdeka.</p>
-                </div>
-                <ul class="list-disc ml-5 text-gray-700 space-y-2 mt-4">
-                    <li>Alur Tujuan Pembelajaran (ATP) Kelas 7 Fase D.</li>
-                    <li>Pemetaan Asesmen Diagnostik Kognitif dan Non-Kognitif.</li>
-                    <li>Lembar Kerja Peserta Didik (LKPD).</li>
-                    <li>Rekapitulasi Capaian Pembelajaran dari format PKPD.</li>
-                </ul>
-            </div>
-
-            <!-- TAB 4: AGENDA -->
-            <div id="agenda" class="tab-content">
-                <h2 class="text-2xl font-bold mb-4 border-b pb-2">Agenda Harian Guru (Jurnal)</h2>
-                <div class="bg-blue-50 border-l-4 border-blue-600 p-4 mb-4">
-                    <p class="text-sm font-semibold text-blue-900">Distribusi Jurnal Guru secara otomatis terkalibrasi dengan hari efektif pada Kalender Pendidikan Tahun Ajaran Baru (Dimulai 6 Juli 2026).</p>
-                </div>
-                <div class="overflow-x-auto mt-4 border rounded">
-                    <table class="w-full text-left text-sm text-gray-600">
-                        <thead class="bg-gray-100 text-gray-800">
-                            <tr>
-                                <th class="p-3 border-b">Tanggal</th>
-                                <th class="p-3 border-b">Kelas</th>
-                                <th class="p-3 border-b">Topik / Materi</th>
-                                <th class="p-3 border-b">Absensi</th>
-                                <th class="p-3 border-b">Keterangan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="border-b hover:bg-gray-50">
-                                <td class="p-3">Rabu, 12 Agustus 2026</td>
-                                <td class="p-3 font-semibold text-red-700">SRMP B (Kelas 7)</td>
-                                <td class="p-3">Asesmen Diagnostik Kognitif & Nilai Pancasila</td>
-                                <td class="p-3">S: 2, I: 0, A: 1</td>
-                                <td class="p-3">-</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </main>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        // 1. Logika Login
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('appSection').style.display = 'block';
-        });
+    <!-- ========== MODAL AGENDA ========== -->
+    <div class="modal-overlay" id="modalAgenda">
+        <div class="modal-box">
+            <button class="modal-close" onclick="tutupModalAgenda()">&times;</button>
+            <div class="modal-title"><i class="fas fa-calendar-plus"></i> Tambah Agenda</div>
+            <div class="form-group">
+                <label>Judul Agenda</label>
+                <input type="text" id="agendaJudul" placeholder="Misal: Pembelajaran Bab 2">
+            </div>
+            <div class="form-group">
+                <label>Deskripsi</label>
+                <textarea id="agendaDeskripsi" rows="3" placeholder="Detail kegiatan..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Tanggal</label>
+                <input type="date" id="agendaTanggal">
+            </div>
+            <button class="btn btn-primary" onclick="simpanAgenda()"><i class="fas fa-save"></i> Simpan</button>
+        </div>
+    </div>
 
-        // 2. Logika Navigasi Tab
-        function switchTab(tabId) {
-            // Sembunyikan semua tab
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            
-            // Reset style tombol
-            const btns = document.querySelectorAll('.tab-btn');
-            btns.forEach(btn => {
-                btn.classList.remove('bg-red-700', 'text-white', 'shadow');
-                btn.classList.add('bg-white', 'text-gray-700', 'border');
+    <script>
+        // ============================================================
+        // DATA SISWA (dari screenshot)
+        // ============================================================
+        const siswaData = [
+            { nama: "ADE MUSTOPA", nisn: "3139453861", jenjang: "SD" },
+            { nama: "AGUS RAMDANI", nisn: "0104915906", jenjang: "SMP" },
+            { nama: "AHMAD PADILAH", nisn: "3137836817", jenjang: "SD" },
+            { nama: "AI SITI NUROHMAH", nisn: "3158260386", jenjang: "SD" },
+            { nama: "ANDIKA NUROHMAN", nisn: "0141419382", jenjang: "SD" },
+            { nama: "ANISA SAPUTRI", nisn: "0123595071", jenjang: "SMP" },
+            { nama: "ARDIANSYAH SAPUTRA", nisn: "3162522983", jenjang: "SD" },
+            { nama: "ARIF FIRMANSYAH", nisn: "3120690349", jenjang: "SD" },
+            { nama: "ARMAN MAULANA", nisn: "3132152714", jenjang: "SMP" },
+            { nama: "DEPAHRI PUTRA RAMADAN", nisn: "3111636292", jenjang: "SMP" },
+            { nama: "DERIMUHAMMAD", nisn: "3122527422", jenjang: "SMP" },
+            { nama: "DEWANGGNA NUGRAHA", nisn: "3124835417", jenjang: "SMP" },
+            { nama: "DEWI TANIA", nisn: "3124764226", jenjang: "SD" },
+            { nama: "ELSA SABILA NURHALIMAH", nisn: "3130228888", jenjang: "SMP" },
+            { nama: "EVA FAUZIAH", nisn: "0094884752", jenjang: "SMP" },
+            { nama: "FANESA ANASTASYA", nisn: "0106857181", jenjang: "SMP" },
+            { nama: "FEBI", nisn: "0129226857", jenjang: "SD" },
+            { nama: "HISMA HOLIPATUL PADILAH", nisn: "0113316745", jenjang: "SMP" },
+            { nama: "IHSAN MAULANA", nisn: "3126090468", jenjang: "SMP" },
+            { nama: "INDRIA DELIA PUTRI", nisn: "97311050", jenjang: "SMP" },
+            { nama: "IRNA RAODOTUL ZANAH", nisn: "3133143373", jenjang: "SMP" },
+            { nama: "IRSAL KHAERUNA", nisn: "3146716444", jenjang: "SD" },
+            { nama: "LESTI JULIANTI", nisn: "3128365677", jenjang: "SMP" },
+            { nama: "M RIZKY MAULANA", nisn: "3172776475", jenjang: "SD" },
+            { nama: "M. FATIR", nisn: "0102903616", jenjang: "SMP" },
+            { nama: "MOCH AKBAR TRI HERMAWAN", nisn: "0106566909", jenjang: "SMP" },
+            { nama: "MOH PAISAL APRILIANSAH", nisn: "0147560005", jenjang: "SD" },
+            { nama: "MUHAMAD FATTAN SAPUTRA", nisn: "3155276593", jenjang: "SD" },
+            { nama: "MUHAMAD HANIF ALIYUDIN", nisn: "102243542", jenjang: "SMP" },
+            { nama: "MUHAMAD HASANUDIN", nisn: "0113191027", jenjang: "SMP" },
+            { nama: "MUHAMAD REHAN NURUL JANAH", nisn: "0111987988", jenjang: "SMP" },
+            { nama: "MUHAMAD RISKI ABDULLOH", nisn: "3161059263", jenjang: "SD" },
+            { nama: "MUHAMAD RIVAL ALFARIZI", nisn: "3169279715", jenjang: "SD" },
+            { nama: "MUHAMAD SAMIN NUGRAHA", nisn: "0119673298", jenjang: "SMP" },
+            { nama: "MUHAMAD SANDI", nisn: "0115109325", jenjang: "SMP" },
+            { nama: "MUHAMMAD IDRUS PAHMI JAHARSAH", nisn: "0115015547", jenjang: "SMP" },
+            { nama: "MUHAMMAD RAEHAN", nisn: "3094108589", jenjang: "SMP" },
+            { nama: "MUHAMMAD ZAKI ARIPIN", nisn: "0127300770", jenjang: "SMP" },
+            { nama: "MUSNAN FIRDAUS", nisn: "3108593390", jenjang: "SMP" },
+            { nama: "NAZHAN", nisn: "0102332909", jenjang: "SD" },
+            { nama: "NOVI RAHMADANI", nisn: "0127825608", jenjang: "SMP" },
+            { nama: "PARHAN HERIYANSAH", nisn: "3137252816", jenjang: "SMP" },
+            { nama: "PERDIANSAH PRATAMA", nisn: "0128988677", jenjang: "SMP" },
+            { nama: "PIRMANSYAH RAMDANI", nisn: "3108187441", jenjang: "SMP" },
+            { nama: "PONI YULIA", nisn: "0124893928", jenjang: "SD" },
+            { nama: "RAIHAN SAPUTRA", nisn: "0119552685", jenjang: "SMP" },
+            { nama: "RAISA AURELIA PUTRI", nisn: "3142169447", jenjang: "SD" },
+            { nama: "RAISYA NURPADILAH", nisn: "0104449370", jenjang: "SMP" },
+            { nama: "RANI", nisn: "3128636723", jenjang: "SMP" },
+            { nama: "RAYAA RAFSANJANI", nisn: "3151327926", jenjang: "SD" },
+            { nama: "REGI", nisn: "0092815396", jenjang: "SMP" },
+            { nama: "REHAN", nisn: "0098060608", jenjang: "SMP" },
+            { nama: "REZA HANAFIYAH", nisn: "3129196277", jenjang: "SMP" },
+            { nama: "RINA", nisn: "3129604730", jenjang: "SMP" },
+            { nama: "RISKY", nisn: "0103304248", jenjang: "SMP" },
+            { nama: "RIYAD FADILAH", nisn: "0131133087", jenjang: "SD" },
+            { nama: "RIYAN AGUNG FAUZI", nisn: "3129425558", jenjang: "SD" },
+            { nama: "RIZKI MIRAJ NAWAWI", nisn: "3120958649", jenjang: "SD" },
+            { nama: "SABIT MAULANA", nisn: "3117684281", jenjang: "SMP" },
+            { nama: "SALMAN SAEPUL BAGRI", nisn: "0115635878", jenjang: "SMP" },
+            { nama: "SALSA BILA", nisn: "0124232598", jenjang: "SMP" },
+            { nama: "SALWA AULIA ZAKIAWAN", nisn: "0109385868", jenjang: "SMP" },
+            { nama: "SELLI KHAIRUNNISA", nisn: "3124008773", jenjang: "SMP" },
+            { nama: "SIFA NURAINI", nisn: "0103955647", jenjang: "SMP" },
+            { nama: "SITI FADILAH", nisn: "3154325333", jenjang: "SD" },
+            { nama: "SITIMASITOH", nisn: "3125474904", jenjang: "SMP" },
+            { nama: "SITIPASWA", nisn: "3131493765", jenjang: "SMP" },
+            { nama: "SRIMULYANI", nisn: "0108334564", jenjang: "SMP" },
+            { nama: "SUDIRMAN", nisn: "0119440168", jenjang: "SMP" },
+            { nama: "SYIFANURHAYATI", nisn: "0103927661", jenjang: "SMP" },
+            { nama: "YAN YAN ABDUL HADI", nisn: "0106183939", jenjang: "SMP" },
+            { nama: "YANA MULYANA", nisn: "3138754482", jenjang: "SD" },
+            { nama: "YUSUP AWALUDIN", nisn: "0114870689", jenjang: "SMP" },
+            { nama: "ZAKI MUHAMAD KUSUMAH", nisn: "3133946425", jenjang: "SD" },
+            { nama: "ZIDAN ABDUL JAILANI", nisn: "3169526039", jenjang: "SD" }
+        ];
+
+        // ============================================================
+        // DATA MATERI PENDIDIKAN PANCASILA
+        // ============================================================
+        const materiPancasila = [{
+            id: 1,
+            jenjang: "SD",
+            judul: "Bab 1: Pancasila sebagai Dasar Negara",
+            deskripsi: "Pengenalan Pancasila, sejarah lahirnya Pancasila, dan makna sila-sila Pancasila.",
+            konten: "Pancasila adalah dasar negara Indonesia. Terdiri dari 5 sila: 1) Ketuhanan Yang Maha Esa, 2) Kemanusiaan yang Adil dan Beradab, 3) Persatuan Indonesia, 4) Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan, 5) Keadilan Sosial bagi Seluruh Rakyat Indonesia."
+        }, {
+            id: 2,
+            jenjang: "SD",
+            judul: "Bab 2: Nilai-Nilai Pancasila dalam Kehidupan",
+            deskripsi: "Penerapan nilai-nilai Pancasila di lingkungan keluarga, sekolah, dan masyarakat.",
+            konten: "Nilai ketuhanan: beribadah sesuai agama. Nilai kemanusiaan: saling menghormati. Nilai persatuan: gotong royong. Nilai kerakyatan: musyawarah. Nilai keadilan: berlaku adil."
+        }, {
+            id: 3,
+            jenjang: "SD",
+            judul: "Bab 3: Pancasila dan Bhinneka Tunggal Ika",
+            deskripsi: "Keberagaman budaya Indonesia dan peran Pancasila dalam mempersatukan.",
+            konten: "Bhinneka Tunggal Ika berarti berbeda-beda tetapi tetap satu. Indonesia memiliki beragam suku, agama, dan budaya. Pancasila menjadi perekat persatuan."
+        }, {
+            id: 4,
+            jenjang: "SMP",
+            judul: "Bab 1: Pancasila dalam Sejarah Perjuangan Bangsa",
+            deskripsi: "Peran Pancasila dalam perjuangan kemerdekaan dan pembentukan negara.",
+            konten: "Pancasila dirumuskan oleh para pendiri bangsa. BPUPKI dan PPKI berperan dalam merumuskan dasar negara. Pancasila diresmikan pada 18 Agustus 1945."
+        }, {
+            id: 5,
+            jenjang: "SMP",
+            judul: "Bab 2: Pancasila sebagai Ideologi Terbuka",
+            deskripsi: "Pancasila sebagai ideologi yang dinamis dan terbuka terhadap perubahan.",
+            konten: "Ideologi terbuka berarti Pancasila dapat berkembang sesuai dengan dinamika masyarakat. Namun tetap berpegang pada nilai-nilai dasarnya."
+        }, {
+            id: 6,
+            jenjang: "SMP",
+            judul: "Bab 3: Implementasi Pancasila di Era Globalisasi",
+            deskripsi: "Menghadapi tantangan global dengan berpegang teguh pada Pancasila.",
+            konten: "Globalisasi membawa pengaruh positif dan negatif. Pancasila menjadi filter untuk menyaring budaya asing dan mempertahankan jati diri bangsa."
+        }, {
+            id: 7,
+            jenjang: "SMP",
+            judul: "Bab 4: Pancasila dan Hak Asasi Manusia",
+            deskripsi: "Keterkaitan Pancasila dengan HAM dan perlindungan hak warga negara.",
+            konten: "Pancasila menjamin hak-hak dasar manusia. Sila kedua menjunjung tinggi nilai kemanusiaan. Negara melindungi HAM sesuai dengan Pancasila."
+        }];
+
+        // ============================================================
+        // STATE
+        // ============================================================
+        let currentUser = null;
+        let kehadiranData = JSON.parse(localStorage.getItem('kehadiranPancasila')) || [];
+        let agendaData = JSON.parse(localStorage.getItem('agendaPancasila')) || [];
+        let catatanData = JSON.parse(localStorage.getItem('catatanPancasila')) || [];
+        let nilaiData = JSON.parse(localStorage.getItem('nilaiPancasila')) || [];
+        let stream = null;
+        let capturedPhoto = null;
+        let currentLocation = null;
+
+        // ============================================================
+        // LOGIN
+        // ============================================================
+        function handleLogin() {
+            const u = document.getElementById('loginUser').value.trim();
+            const p = document.getElementById('loginPass').value.trim();
+            if (u === 'guru' && p === 'pancasila') {
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('app').style.display = 'block';
+                currentUser = 'guru';
+                initApp();
+                showToast('Login berhasil! Selamat datang, Guru Pancasila.', 'success');
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+                setTimeout(() => { document.getElementById('loginError').style.display = 'none'; }, 3000);
+            }
+        }
+
+        function handleLogout() {
+            if (confirm('Yakin ingin logout?')) {
+                document.getElementById('app').style.display = 'none';
+                document.getElementById('loginPage').style.display = 'flex';
+                currentUser = null;
+                stopCamera();
+                showToast('Logout berhasil.', 'warning');
+            }
+        }
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        function initApp() {
+            // Set default date filter
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('filterTanggal').value = today;
+            document.getElementById('agendaTanggal').value = today;
+
+            // Update stats
+            updateStats();
+            renderKehadiran();
+            renderAgenda();
+            renderMateri();
+            renderCatatan();
+            renderNilai();
+            updateTotalSiswa();
+        }
+
+        function updateTotalSiswa() {
+            const total = siswaData.length;
+            const sd = siswaData.filter(s => s.jenjang === 'SD').length;
+            const smp = siswaData.filter(s => s.jenjang === 'SMP').length;
+            document.getElementById('totalSiswa').textContent = total;
+            document.getElementById('totalSiswa2').textContent = total;
+            document.getElementById('totalSD').textContent = sd;
+            document.getElementById('totalSMP').textContent = smp;
+        }
+
+        function updateStats() {
+            const today = new Date().toISOString().split('T')[0];
+            const todayHadir = kehadiranData.filter(k => k.tanggal === today && k.status === 'Hadir');
+            const todayIzinSakit = kehadiranData.filter(k => k.tanggal === today && (k.status === 'Izin' || k.status ===
+            'Sakit'));
+            const todayAlpha = kehadiranData.filter(k => k.tanggal === today && k.status === 'Alpha');
+
+            document.getElementById('hadirHariIni').textContent = todayHadir.length || 0;
+            document.getElementById('izinSakit').textContent = todayIzinSakit.length || 0;
+            document.getElementById('alpha').textContent = todayAlpha.length || 0;
+        }
+
+        // ============================================================
+        // NAVIGATION
+        // ============================================================
+        function navigateTo(page) {
+            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+            document.getElementById('page-' + page).classList.add('active');
+            document.querySelectorAll('.sidebar .menu-item').forEach(el => el.classList.remove('active'));
+            document.querySelector(`.sidebar .menu-item[data-page="${page}"]`).classList.add('active');
+            if (page === 'absensi') startCamera();
+            else stopCamera();
+            if (page === 'kehadiran') renderKehadiran();
+            if (page === 'agenda') renderAgenda();
+            if (page === 'admin') { renderCatatan();
+                renderNilai(); }
+            if (page === 'materi') renderMateri();
+            if (page === 'dashboard') updateStats();
+        }
+
+        // ============================================================
+        // CAMERA
+        // ============================================================
+        async function startCamera() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+                document.getElementById('videoCam').srcObject = stream;
+                document.getElementById('cameraStatus').textContent = '✅ Kamera aktif';
+                document.getElementById('cameraStatus').style.color = 'var(--success)';
+            } catch (err) {
+                document.getElementById('cameraStatus').textContent = '❌ Gagal mengakses kamera: ' + err.message;
+                document.getElementById('cameraStatus').style.color = 'var(--danger)';
+            }
+        }
+
+        function stopCamera() {
+            if (stream) {
+                stream.getTracks().forEach(t => t.stop());
+                stream = null;
+                document.getElementById('videoCam').srcObject = null;
+                document.getElementById('cameraStatus').textContent = '⏸️ Kamera dimatikan';
+                document.getElementById('cameraStatus').style.color = 'var(--gray-600)';
+            }
+        }
+
+        function capturePhoto() {
+            const video = document.getElementById('videoCam');
+            if (!video.srcObject) {
+                showToast('Nyalakan kamera terlebih dahulu!', 'error');
+                return;
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth || 640;
+            canvas.height = video.videoHeight || 480;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            capturedPhoto = canvas.toDataURL('image/jpeg', 0.8);
+            document.getElementById('capturedImg').src = capturedPhoto;
+            document.getElementById('photoPreview').style.display = 'block';
+            showToast('Foto berhasil diambil!', 'success');
+        }
+
+        // ============================================================
+        // LOCATION
+        // ============================================================
+        function getLocation() {
+            const info = document.getElementById('locationInfo');
+            const status = document.getElementById('lokasiStatus');
+            info.querySelector('.loc-status').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mendeteksi lokasi...';
+            document.getElementById('locDetail').textContent = '';
+
+            if (!navigator.geolocation) {
+                info.querySelector('.loc-status').innerHTML = '<i class="fas fa-times-circle" style="color:var(--danger);"></i> GPS tidak didukung browser ini.';
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const lat = pos.coords.latitude;
+                    const lng = pos.coords.longitude;
+                    currentLocation = { lat, lng };
+                    // Koordinat sekolah (Garut)
+                    const schoolLat = -7.2170;
+                    const schoolLng = 107.9029;
+                    const dist = haversine(lat, lng, schoolLat, schoolLng);
+                    const withinRadius = dist < 5; // 5 km radius
+
+                    document.getElementById('locDetail').innerHTML =
+                        `📍 Lat: ${lat.toFixed(6)}, Lng: ${lng.toFixed(6)}<br>📏 Jarak ke sekolah: ${dist.toFixed(2)} km`;
+
+                    if (withinRadius) {
+                        info.querySelector('.loc-status').innerHTML =
+                            '<i class="fas fa-check-circle" style="color:var(--success);"></i> ✅ Lokasi terverifikasi dalam radius sekolah';
+                        document.getElementById('lokasiStatus').innerHTML =
+                            '<span style="color:var(--success);font-weight:600;">✅ Siswa berada di sekitar sekolah.</span>';
+                    } else {
+                        info.querySelector('.loc-status').innerHTML =
+                            '<i class="fas fa-exclamation-triangle" style="color:var(--warning);"></i> ⚠️ Lokasi di luar radius sekolah';
+                        document.getElementById('lokasiStatus').innerHTML =
+                            '<span style="color:var(--warning);font-weight:600;">⚠️ Siswa tidak terdeteksi di sekitar sekolah.</span>';
+                    }
+                    showToast('Lokasi berhasil dideteksi!', 'success');
+                },
+                (err) => {
+                    info.querySelector('.loc-status').innerHTML =
+                        `<i class="fas fa-times-circle" style="color:var(--danger);"></i> ❌ Gagal: ${err.message}`;
+                    document.getElementById('lokasiStatus').innerHTML = '';
+                    showToast('Gagal mendeteksi lokasi: ' + err.message, 'error');
+                }, { enableHighAccuracy: true, timeout: 10000 }
+            );
+        }
+
+        function haversine(lat1, lon1, lat2, lon2) {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat / 2) ** 2 +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) ** 2;
+            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        }
+
+        // ============================================================
+        // KONFIRMASI ABSEN
+        // ============================================================
+        function konfirmasiAbsen(metode) {
+            const kelas = metodo === 'kamera' ?
+                document.getElementById('absenKelas').value :
+                document.getElementById('absenKelasLokasi').value;
+
+            // Filter siswa berdasarkan jenjang
+            const siswaJenjang = siswaData.filter(s => s.jenjang === kelas);
+            if (siswaJenjang.length === 0) {
+                showToast('Tidak ada siswa untuk jenjang ini.', 'warning');
+                return;
+            }
+
+            const today = new Date().toISOString().split('T')[0];
+
+            // Cek apakah sudah absen hari ini untuk jenjang ini
+            const sudahAbsen = kehadiranData.some(k => k.tanggal === today && k.jenjang === kelas);
+            if (sudahAbsen) {
+                showToast(`Absen untuk ${kelas} sudah dilakukan hari ini.`, 'warning');
+                return;
+            }
+
+            // Jika metode kamera, cek apakah foto sudah diambil
+            if (metode === 'kamera' && !capturedPhoto) {
+                showToast('Ambil foto terlebih dahulu!', 'error');
+                return;
+            }
+
+            // Jika metode lokasi, cek lokasi
+            if (metode === 'lokasi') {
+                if (!currentLocation) {
+                    showToast('Deteksi lokasi terlebih dahulu!', 'error');
+                    return;
+                }
+                const schoolLat = -7.2170,
+                    schoolLng = 107.9029;
+                const dist = haversine(currentLocation.lat, currentLocation.lng, schoolLat, schoolLng);
+                if (dist > 5) {
+                    showToast(`Lokasi di luar radius sekolah (${dist.toFixed(2)} km). Absen gagal.`, 'error');
+                    return;
+                }
+            }
+
+            // Tambahkan kehadiran untuk semua siswa di jenjang tersebut
+            const status = 'Hadir';
+            const bukti = metode === 'kamera' ? capturedPhoto : 'location_verified';
+
+            siswaJenjang.forEach(s => {
+                kehadiranData.push({
+                    nama: s.nama,
+                    nisn: s.nisn,
+                    jenjang: s.jenjang,
+                    status: status,
+                    tanggal: today,
+                    metode: metode === 'kamera' ? 'Kamera' : 'Lokasi',
+                    bukti: bukti
+                });
             });
 
-            // Aktifkan tab yang dipilih
-            document.getElementById(tabId).classList.add('active');
-            const activeBtn = document.getElementById('btn-' + tabId);
-            activeBtn.classList.remove('bg-white', 'text-gray-700', 'border');
-            activeBtn.classList.add('bg-red-700', 'text-white', 'shadow');
-        }
+            localStorage.setItem('kehadiranPancasila', JSON.stringify(kehadiranData));
+            updateStats();
+            renderKehadiran();
+            showToast(`✅ Absen ${status} untuk ${kelas} (${siswaJenjang.length} siswa) berhasil!`, 'success');
 
-        // 3. Logika Akses Kamera
-        async function startCamera() {
-            const video = document.getElementById('webcam');
-            const placeholder = document.getElementById('cameraPlaceholder');
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                video.srcObject = stream;
-                video.classList.remove('hidden');
-                placeholder.classList.add('hidden');
-            } catch (err) {
-                alert("Tidak dapat mengakses kamera. Pastikan izin kamera diberikan.");
-                console.error("Camera Error:", err);
+            // Reset
+            if (metode === 'kamera') {
+                document.getElementById('photoPreview').style.display = 'none';
+                capturedPhoto = null;
             }
         }
 
-        // 4. Logika Geolocation
-        function getLocation() {
-            const output = document.getElementById('locationOutput');
-            if (navigator.geolocation) {
-                output.classList.remove('hidden');
-                output.innerHTML = "<i>Mendeteksi koordinat...</i>";
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        output.innerHTML = `<b>Latitude:</b> ${position.coords.latitude} <br> <b>Longitude:</b> ${position.coords.longitude} <br><span class='text-green-600 mt-2 block'>✓ Lokasi Absensi Terekam</span>`;
-                    },
-                    function(error) {
-                        output.innerHTML = "<span class='text-red-600'>Gagal mendeteksi lokasi. Pastikan GPS aktif.</span>";
-                    }
-                );
-            } else {
-                alert("Geolocation tidak didukung oleh browser Anda.");
+        // ============================================================
+        // DAFTAR KEHADIRAN
+        // ============================================================
+        function renderKehadiran() {
+            const kelas = document.getElementById('filterKelas').value;
+            const tanggal = document.getElementById('filterTanggal').value;
+            const tbody = document.getElementById('kehadiranTableBody');
+
+            let data = [...kehadiranData];
+            if (kelas !== 'all') data = data.filter(d => d.jenjang === kelas);
+            if (tanggal) data = data.filter(d => d.tanggal === tanggal);
+
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">Belum ada data kehadiran</td></tr>';
+                document.getElementById('kehadiranCount').textContent = '0 siswa';
+                return;
+            }
+
+            // Urutkan berdasarkan nama
+            data.sort((a, b) => a.nama.localeCompare(b.nama));
+
+            let html = '';
+            data.forEach((d, i) => {
+                const badge = `<span class="badge-status ${d.status.toLowerCase()}">${d.status}</span>`;
+                html += `<tr>
+                    <td>${i+1}</td>
+                    <td>${d.nama}</td>
+                    <td>${d.jenjang}</td>
+                    <td>${badge}</td>
+                    <td>${d.tanggal}</td>
+                    <td>${d.metode || '-'}</td>
+                </tr>`;
+            });
+            tbody.innerHTML = html;
+            document.getElementById('kehadiranCount').textContent = data.length + ' siswa';
+        }
+
+        // ============================================================
+        // AGENDA HARIAN
+        // ============================================================
+        function renderAgenda() {
+            const container = document.getElementById('agendaList');
+            if (agendaData.length === 0) {
+                container.innerHTML = '<p class="text-muted">Belum ada agenda. Tambahkan agenda baru.</p>';
+                return;
+            }
+            // Urutkan berdasarkan tanggal terbaru
+            const sorted = [...agendaData].sort((a, b) => b.tanggal.localeCompare(a.tanggal));
+            let html = '';
+            sorted.forEach((a, idx) => {
+                html += `<div class="agenda-item">
+                    <div class="agenda-info">
+                        <div class="agenda-date"><i class="far fa-calendar-alt"></i> ${a.tanggal}</div>
+                        <div class="agenda-title">${a.judul}</div>
+                        <div class="agenda-desc">${a.deskripsi || ''}</div>
+                    </div>
+                    <div class="agenda-actions">
+                        <button class="btn btn-danger btn-sm" onclick="hapusAgenda(${idx})"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function tampilkanModalAgenda() {
+            document.getElementById('modalAgenda').classList.add('show');
+            document.getElementById('agendaJudul').value = '';
+            document.getElementById('agendaDeskripsi').value = '';
+            document.getElementById('agendaTanggal').value = new Date().toISOString().split('T')[0];
+        }
+
+        function tutupModalAgenda() {
+            document.getElementById('modalAgenda').classList.remove('show');
+        }
+
+        function simpanAgenda() {
+            const judul = document.getElementById('agendaJudul').value.trim();
+            const deskripsi = document.getElementById('agendaDeskripsi').value.trim();
+            const tanggal = document.getElementById('agendaTanggal').value;
+            if (!judul || !tanggal) {
+                showToast('Judul dan tanggal wajib diisi!', 'error');
+                return;
+            }
+            agendaData.push({ judul, deskripsi, tanggal });
+            localStorage.setItem('agendaPancasila', JSON.stringify(agendaData));
+            renderAgenda();
+            tutupModalAgenda();
+            showToast('Agenda berhasil ditambahkan!', 'success');
+        }
+
+        function hapusAgenda(idx) {
+            if (confirm('Hapus agenda ini?')) {
+                agendaData.splice(idx, 1);
+                localStorage.setItem('agendaPancasila', JSON.stringify(agendaData));
+                renderAgenda();
+                showToast('Agenda dihapus.', 'warning');
             }
         }
 
-        // 5. Variabel Global Data Excel
-        let excelData = [];
+        // ============================================================
+        // MATERI AJAR
+        // ============================================================
+        function renderMateri() {
+            const filter = document.getElementById('filterMateri').value;
+            const container = document.getElementById('materiList');
+            let data = materiPancasila;
+            if (filter !== 'all') data = data.filter(m => m.jenjang === filter);
 
-        // 6. Logika Impor Excel (Membaca PKPD FIX.xlsx)
-        document.getElementById('excelUpload').addEventListener('change', function(e) {
-            const file = e.target.files[0];
+            if (data.length === 0) {
+                container.innerHTML = '<p class="text-muted">Tidak ada materi untuk jenjang ini.</p>';
+                return;
+            }
+
+            let html = '';
+            data.forEach(m => {
+                html += `<div class="material-card" onclick="toggleMateri(${m.id})">
+                    <div class="material-title">
+                        <span>${m.judul}</span>
+                        <span class="badge-level">${m.jenjang}</span>
+                    </div>
+                    <div class="material-desc">${m.deskripsi}</div>
+                    <div class="material-body" id="materiBody_${m.id}">
+                        <p style="white-space:pre-wrap;">${m.konten}</p>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function toggleMateri(id) {
+            const body = document.getElementById('materiBody_' + id);
+            if (body) body.classList.toggle('open');
+        }
+
+        // ============================================================
+        // ADMINISTRASI - CATATAN
+        // ============================================================
+        function simpanCatatan() {
+            const judul = document.getElementById('catatanJudul').value.trim();
+            const isi = document.getElementById('catatanIsi').value.trim();
+            if (!judul || !isi) {
+                showToast('Judul dan isi catatan wajib diisi!', 'error');
+                return;
+            }
+            catatanData.push({ judul, isi, tanggal: new Date().toISOString().split('T')[0] });
+            localStorage.setItem('catatanPancasila', JSON.stringify(catatanData));
+            document.getElementById('catatanJudul').value = '';
+            document.getElementById('catatanIsi').value = '';
+            renderCatatan();
+            showToast('Catatan berhasil disimpan!', 'success');
+        }
+
+        function renderCatatan() {
+            const container = document.getElementById('catatanList');
+            if (catatanData.length === 0) {
+                container.innerHTML = '<p class="text-muted">Belum ada catatan.</p>';
+                return;
+            }
+            let html = '';
+            [...catatanData].reverse().forEach((c, idx) => {
+                html += `<div class="agenda-item" style="border-left-color:var(--success);">
+                    <div class="agenda-info">
+                        <div class="agenda-date"><i class="far fa-calendar-alt"></i> ${c.tanggal}</div>
+                        <div class="agenda-title">${c.judul}</div>
+                        <div class="agenda-desc">${c.isi}</div>
+                    </div>
+                    <button class="btn btn-danger btn-sm" onclick="hapusCatatan(${idx})"><i class="fas fa-trash"></i></button>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function hapusCatatan(idx) {
+            if (confirm('Hapus catatan ini?')) {
+                catatanData.splice(idx, 1);
+                localStorage.setItem('catatanPancasila', JSON.stringify(catatanData));
+                renderCatatan();
+                showToast('Catatan dihapus.', 'warning');
+            }
+        }
+
+        // ============================================================
+        // ADMINISTRASI - NILAI
+        // ============================================================
+        function renderNilai() {
+            const kelas = document.getElementById('nilaiKelas').value;
+            const tbody = document.getElementById('nilaiTableBody');
+
+            let data = [...nilaiData];
+            if (kelas !== 'all') data = data.filter(d => d.jenjang === kelas);
+
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">Belum ada data nilai</td></tr>';
+                return;
+            }
+
+            let html = '';
+            data.forEach((d, i) => {
+                const color = d.nilai >= 75 ? 'var(--success)' : d.nilai >= 60 ? 'var(--warning)' : 'var(--danger)';
+                html += `<tr>
+                    <td>${i+1}</td>
+                    <td>${d.nama}</td>
+                    <td>${d.jenjang}</td>
+                    <td><strong style="color:${color};">${d.nilai}</strong></td>
+                    <td>${d.keterangan || '-'}</td>
+                </tr>`;
+            });
+            tbody.innerHTML = html;
+        }
+
+        // ============================================================
+        // IMPOR / EKSPOR
+        // ============================================================
+        function imporData(event) {
+            const file = event.target.files[0];
             if (!file) return;
-
             const reader = new FileReader();
-            reader.onload = function(evt) {
-                const data = evt.target.result;
-                const workbook = XLSX.read(data, { type: 'binary' });
-                
-                // Coba membaca sheet 'ABSENSI_1' atau 'JURNAL GURU' sebagai prioritas jika ada
-                let targetSheet = workbook.SheetNames[0]; // Default ke sheet pertama
-                if (workbook.SheetNames.includes('ABSENSI_1')) targetSheet = 'ABSENSI_1';
-                else if (workbook.SheetNames.includes('JURNAL GURU')) targetSheet = 'JURNAL GURU';
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const json = XLSX.utils.sheet_to_json(sheet);
 
-                const sheet = workbook.Sheets[targetSheet];
-                excelData = XLSX.utils.sheet_to_json(sheet);
-                
-                // Menampilkan preview UI
-                const preview = document.getElementById('excelPreview');
-                preview.classList.remove('hidden');
-                preview.innerHTML = `✓ Berhasil memuat data dari Sheet: <b>${targetSheet}</b> (${excelData.length} baris dibaca).`;
+                    let imported = 0;
+                    json.forEach(row => {
+                        const nama = (row['Nama'] || row['nama'] || '').toString().trim();
+                        const nisn = (row['NISN'] || row['nisn'] || '').toString().trim();
+                        const jenjang = (row['Jenjang'] || row['jenjang'] || '').toString().trim().toUpperCase();
+                        if (nama && jenjang && (jenjang === 'SD' || jenjang === 'SMP')) {
+                            // Cek duplikat
+                            const exists = siswaData.some(s => s.nisn === nisn && s.nama === nama);
+                            if (!exists) {
+                                siswaData.push({ nama, nisn, jenjang });
+                                imported++;
+                            }
+                        }
+                    });
+
+                    document.getElementById('imporStatus').innerHTML =
+                        `<span style="color:var(--success);">✅ Berhasil mengimpor ${imported} data siswa baru.</span>`;
+                    updateTotalSiswa();
+                    showToast(`Impor selesai! ${imported} siswa ditambahkan.`, 'success');
+                } catch (err) {
+                    document.getElementById('imporStatus').innerHTML =
+                        `<span style="color:var(--danger);">❌ Gagal membaca file: ${err.message}</span>`;
+                    showToast('Gagal impor data: ' + err.message, 'error');
+                }
             };
-            reader.readAsBinaryString(file);
+            reader.readAsArrayBuffer(file);
+            event.target.value = '';
+        }
+
+        function eksporSiswa() {
+            const data = siswaData.map(s => ({ Nama: s.nama, NISN: s.nisn, Jenjang: s.jenjang }));
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Siswa');
+            XLSX.writeFile(wb, 'Data_Siswa_SRT39Garut.xlsx');
+            showToast('Ekspor data siswa berhasil!', 'success');
+        }
+
+        function eksporKehadiran() {
+            const data = kehadiranData.map(k => ({
+                Nama: k.nama,
+                NISN: k.nisn,
+                Jenjang: k.jenjang,
+                Status: k.status,
+                Tanggal: k.tanggal,
+                Metode: k.metode || '-'
+            }));
+            if (data.length === 0) { showToast('Tidak ada data kehadiran untuk diekspor.', 'warning'); return; }
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Kehadiran');
+            XLSX.writeFile(wb, 'Kehadiran_SRT39Garut.xlsx');
+            showToast('Ekspor kehadiran berhasil!', 'success');
+        }
+
+        function eksporNilai() {
+            const data = nilaiData.map(n => ({ Nama: n.nama, NISN: n.nisn, Jenjang: n.jenjang, Nilai: n.nilai,
+                Keterangan: n.keterangan || '-' }));
+            if (data.length === 0) { showToast('Tidak ada data nilai untuk diekspor.', 'warning'); return; }
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Nilai');
+            XLSX.writeFile(wb, 'Nilai_SRT39Garut.xlsx');
+            showToast('Ekspor nilai berhasil!', 'success');
+        }
+
+        function unduhTemplate() {
+            const template = [
+                { Nama: 'Contoh Siswa SD', NISN: '1234567890', Jenjang: 'SD' },
+                { Nama: 'Contoh Siswa SMP', NISN: '0987654321', Jenjang: 'SMP' }
+            ];
+            const ws = XLSX.utils.json_to_sheet(template);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Template');
+            XLSX.writeFile(wb, 'Template_Siswa_SRT39Garut.xlsx');
+            showToast('Template berhasil diunduh!', 'success');
+        }
+
+        // ============================================================
+        // TOAST
+        // ============================================================
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + type;
+            toast.classList.add('show');
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+
+        // ============================================================
+        // KEYBOARD SHORTCUT: Enter untuk login
+        // ============================================================
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && document.getElementById('loginPage').style.display !== 'none') {
+                handleLogin();
+            }
         });
 
-        // 7. Logika Ekspor Excel
-        function exportExcel() {
-            // Data dummy jika belum ada impor
-            const dataToExport = excelData.length > 0 ? excelData : [
-                { "Tanggal": "12-Aug-26", "Nama": "Murid 1", "Kelas": "SRMP B", "Kehadiran": "Hadir", "Lokasi": "Garut" },
-                { "Tanggal": "12-Aug-26", "Nama": "Murid 2", "Kelas": "SRMP B", "Kehadiran": "Sakit", "Lokasi": "-" }
-            ];
+        // Inisialisasi default: tampilkan login
+        document.getElementById('loginPage').style.display = 'flex';
+        document.getElementById('app').style.display = 'none';
 
-            const ws = XLSX.utils.json_to_sheet(dataToExport);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Daftar Kehadiran");
+        // Auto-set tanggal filter
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('filterTanggal').value = today;
+            document.getElementById('agendaTanggal').value = today;
+            updateTotalSiswa();
+            // Render awal
+            renderMateri();
+            renderKehadiran();
+            renderAgenda();
+            renderCatatan();
+            renderNilai();
+            updateStats();
+        });
 
-            XLSX.writeFile(wb, "Rekap_Absensi_Pendidikan_Pancasila.xlsx");
-        }
+        console.log('📚 e-Learning Pendidikan Pancasila SRT 39 Garut');
+        console.log('👨‍🏫 Login: guru / pancasila');
+        console.log('📊 Total siswa:', siswaData.length);
+        console.log('💡 Fitur: Absensi Kamera, Lokasi, Kehadiran, Agenda, Materi, Administrasi, Impor/Ekspor');
     </script>
+
 </body>
 </html>

@@ -10,10 +10,7 @@
     </script>
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
-    </script>
     <style>
-        /* ========== STYLE ========== */
         * {
             margin: 0;
             padding: 0;
@@ -665,8 +662,6 @@
         .w-full {
             width: 100%;
         }
-
-        /* QR Card */
         .qr-grid {
             display: flex;
             flex-wrap: wrap;
@@ -689,10 +684,13 @@
             box-shadow: var(--shadow-lg);
             transform: translateY(-2px);
         }
-        .qr-card canvas {
+        .qr-card img {
             display: block;
             margin: 0 auto;
             border-radius: 4px;
+            width: 120px;
+            height: 120px;
+            background: white;
         }
         .qr-card .qr-name {
             font-size: 11px;
@@ -730,7 +728,6 @@
             justify-content: center;
             padding: 12px;
         }
-
         .template-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -739,6 +736,133 @@
         }
         .template-grid .btn {
             justify-content: center;
+        }
+        .admin-card {
+            background: white;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            padding: 20px 24px;
+            margin-bottom: 16px;
+        }
+        .admin-card .admin-title {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--gray-800);
+            margin-bottom: 12px;
+        }
+        .file-upload-area {
+            border: 2px dashed var(--gray-300);
+            border-radius: var(--radius-sm);
+            padding: 32px;
+            text-align: center;
+            color: var(--gray-600);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .file-upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(26, 75, 140, 0.02);
+        }
+        .file-upload-area i {
+            font-size: 40px;
+            color: var(--gray-400);
+            margin-bottom: 8px;
+        }
+        .material-card {
+            background: white;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .material-card:hover {
+            box-shadow: var(--shadow);
+            border-color: var(--primary-light);
+        }
+        .material-card .material-title {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--gray-900);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .material-card .material-title .badge-level {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 12px;
+            border-radius: 20px;
+            color: white;
+        }
+        .badge-sd {
+            background: #28a745;
+        }
+        .badge-smp {
+            background: #007bff;
+        }
+        .badge-sma {
+            background: #6f42c1;
+        }
+        .material-card .material-desc {
+            color: var(--gray-600);
+            font-size: 14px;
+            margin-top: 6px;
+        }
+        .material-card .material-body {
+            display: none;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--gray-200);
+        }
+        .material-card .material-body.open {
+            display: block;
+        }
+        .material-card .material-body ul,
+        .material-card .material-body ol {
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+        .material-card .material-body li {
+            margin-bottom: 4px;
+        }
+        .material-card .material-body .sumber {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-top: 12px;
+            border-top: 1px dashed var(--gray-200);
+            padding-top: 8px;
+        }
+        .agenda-item {
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: 16px 20px;
+            border-left: 4px solid var(--primary);
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .agenda-item .agenda-info .agenda-date {
+            font-size: 12px;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+        .agenda-item .agenda-info .agenda-title {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--gray-800);
+        }
+        .agenda-item .agenda-info .agenda-desc {
+            font-size: 13px;
+            color: var(--gray-600);
+            margin-top: 2px;
         }
 
         @media (max-width: 768px) {
@@ -786,7 +910,7 @@
                 min-width: 120px;
                 max-width: 140px;
             }
-            .qr-card canvas {
+            .qr-card img {
                 width: 100px;
                 height: 100px;
             }
@@ -795,6 +919,14 @@
             }
             #loginPage .login-box {
                 padding: 32px 24px;
+            }
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .filter-bar select,
+            .filter-bar input {
+                width: 100%;
             }
         }
         @media (max-width: 480px) {
@@ -831,7 +963,7 @@
                 max-width: 120px;
                 padding: 10px 8px;
             }
-            .qr-card canvas {
+            .qr-card img {
                 width: 80px;
                 height: 80px;
             }
@@ -856,6 +988,35 @@
         }
         ::-webkit-scrollbar-thumb:hover {
             background: var(--gray-500);
+        }
+
+        .uploaded-materials {
+            margin-top: 16px;
+            border-top: 2px solid var(--gray-200);
+            padding-top: 16px;
+        }
+        .uploaded-materials .upload-item {
+            background: var(--gray-50);
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .uploaded-materials .upload-item .upload-title {
+            font-weight: 500;
+            font-size: 14px;
+        }
+        .uploaded-materials .upload-item .upload-meta {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+        .uploaded-materials .upload-item .btn-sm {
+            padding: 4px 12px;
+            font-size: 11px;
         }
     </style>
 </head>
@@ -962,7 +1123,7 @@
                     </div>
                     <div style="background:white; border-radius:var(--radius); border:1px solid var(--gray-200); padding:20px 24px; box-shadow:var(--shadow);">
                         <h3 style="margin-bottom:12px;"><i class="fas fa-info-circle" style="color:var(--primary);"></i> Selamat Datang, Guru Pendidikan Pancasila!</h3>
-                        <p class="text-muted">Gunakan menu di samping untuk mengelola pembelajaran. Fitur tersedia: Absensi QR Code, Daftar Kehadiran, Agenda Harian, Materi Ajar lengkap per Fase (A-E), Administrasi, dan Impor/Ekspor Data.</p>
+                        <p class="text-muted">Gunakan menu di samping untuk mengelola pembelajaran. Fitur tersedia: Absensi QR Code, Daftar Kehadiran, Agenda Harian, Materi Ajar lengkap per Kelas (SD I-VI, SMP VII-IX, SMA X-XII), Administrasi, dan Impor/Ekspor Data.</p>
                         <p class="text-muted" style="margin-top:8px;"><strong>SRT 39 Garut</strong> • Sekolah Rakyat Terintegrasi 39 Garut • Tahun Ajaran 2026/2027</p>
                         <p class="text-muted" style="margin-top:4px;"><i class="fas fa-users"></i> Total siswa: <span id="totalSiswa2">0</span> (SD: <span id="totalSD">0</span>, SMP: <span id="totalSMP">0</span>)</p>
                     </div>
@@ -1015,8 +1176,9 @@
                     <div class="qr-container" style="max-width:100%;">
                         <div class="qr-header">
                             <h3><i class="fas fa-download"></i> Generate & Unduh QR Code Siswa</h3>
+                            <span style="font-size:12px; color:var(--gray-500);"><i class="fas fa-globe"></i> via qrzap.fun</span>
                         </div>
-                        <p class="text-muted">QR Code berisi NISN, Nama, dan Jenjang. Bisa dicetak untuk kartu siswa.</p>
+                        <p class="text-muted">QR Code berisi NISN, Nama, dan Jenjang. Dihasilkan menggunakan layanan gratis <strong>qrzap.fun</strong>[reference:0].</p>
                         <div class="flex-center" style="margin-top:12px; flex-wrap:wrap;">
                             <select id="qrGenerateKelas" style="padding:8px 14px; border:2px solid var(--gray-200); border-radius:var(--radius-sm);">
                                 <option value="SD">SD (SRD)</option>
@@ -1084,30 +1246,90 @@
                 <!-- ===== MATERI AJAR ===== -->
                 <section id="page-materi" class="page-section">
                     <h1 class="page-title"><i class="fas fa-book"></i> Materi Ajar Pendidikan Pancasila</h1>
-                    <p class="page-subtitle">Materi lengkap per Fase (A-E) sesuai Kurikulum Merdeka terbaru</p>
+                    <p class="page-subtitle">Materi lengkap per kelas (SD I-VI, SMP VII-IX, SMA X-XII) sesuai Kurikulum Merdeka</p>
+
                     <div class="filter-bar">
-                        <select id="filterMateriFase" onchange="renderMateri()">
-                            <option value="all">Semua Fase</option>
-                            <option value="A">Fase A (Kelas I-II)</option>
-                            <option value="B">Fase B (Kelas III-IV)</option>
-                            <option value="C">Fase C (Kelas V-VI)</option>
-                            <option value="D">Fase D (Kelas VII-IX)</option>
-                            <option value="E">Fase E (Kelas X-XII)</option>
-                        </select>
                         <select id="filterMateriJenjang" onchange="renderMateri()">
                             <option value="all">Semua Jenjang</option>
                             <option value="SD">SD (SRD)</option>
                             <option value="SMP">SMP (SRMP)</option>
+                            <option value="SMA">SMA (SRMA)</option>
+                        </select>
+                        <select id="filterMateriKelas" onchange="renderMateri()">
+                            <option value="all">Semua Kelas</option>
+                            <option value="1">Kelas I</option>
+                            <option value="2">Kelas II</option>
+                            <option value="3">Kelas III</option>
+                            <option value="4">Kelas IV</option>
+                            <option value="5">Kelas V</option>
+                            <option value="6">Kelas VI</option>
+                            <option value="7">Kelas VII</option>
+                            <option value="8">Kelas VIII</option>
+                            <option value="9">Kelas IX</option>
+                            <option value="10">Kelas X</option>
+                            <option value="11">Kelas XI</option>
+                            <option value="12">Kelas XII</option>
                         </select>
                     </div>
+
                     <div id="materiList"></div>
+
+                    <!-- ===== UNGGAH MATERI ===== -->
+                    <div class="admin-card" style="margin-top:24px;">
+                        <div class="admin-title"><i class="fas fa-upload"></i> Unggah Materi Ajar</div>
+                        <p class="text-muted">Tambahkan materi ajar secara manual jika materi di atas belum lengkap.</p>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
+                            <div class="form-group">
+                                <label>Judul Materi</label>
+                                <input type="text" id="uploadJudul" placeholder="Misal: Bab 5 Pancasila dan NKRI">
+                            </div>
+                            <div class="form-group">
+                                <label>Kelas</label>
+                                <select id="uploadKelas">
+                                    <option value="1">Kelas I</option><option value="2">Kelas II</option>
+                                    <option value="3">Kelas III</option><option value="4">Kelas IV</option>
+                                    <option value="5">Kelas V</option><option value="6">Kelas VI</option>
+                                    <option value="7">Kelas VII</option><option value="8">Kelas VIII</option>
+                                    <option value="9">Kelas IX</option>
+                                    <option value="10">Kelas X</option><option value="11">Kelas XI</option>
+                                    <option value="12">Kelas XII</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                            <div class="form-group">
+                                <label>Jenjang</label>
+                                <select id="uploadJenjang">
+                                    <option value="SD">SD (SRD)</option>
+                                    <option value="SMP">SMP (SRMP)</option>
+                                    <option value="SMA">SMA (SRMA)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Deskripsi Singkat</label>
+                                <input type="text" id="uploadDeskripsi" placeholder="Deskripsi materi">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Isi Materi (HTML / Teks)</label>
+                            <textarea id="uploadIsi" rows="4" placeholder="Tulis materi di sini. Bisa menggunakan tag HTML untuk format."></textarea>
+                        </div>
+                        <button class="btn btn-success" onclick="tambahMateriUpload()"><i class="fas fa-plus"></i> Tambahkan Materi</button>
+
+                        <div class="uploaded-materials" id="uploadedMaterials">
+                            <h4 style="font-size:14px; font-weight:600; color:var(--gray-700); margin-bottom:8px;">Materi yang Diunggah</h4>
+                            <div id="uploadedList">
+                                <p class="text-muted">Belum ada materi yang diunggah.</p>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
                 <!-- ===== ADMINISTRASI ===== -->
                 <section id="page-admin" class="page-section">
                     <h1 class="page-title"><i class="fas fa-tasks"></i> Administrasi Pembelajaran</h1>
                     <p class="page-subtitle">Nilai, catatan, dan administrasi lainnya</p>
-                    <div class="admin-card" style="background:white; border-radius:var(--radius); border:1px solid var(--gray-200); padding:20px 24px; margin-bottom:16px;">
+                    <div class="admin-card">
                         <div class="admin-title"><i class="fas fa-file-alt"></i> Catatan Pembelajaran</div>
                         <div class="form-group">
                             <label>Judul Catatan</label>
@@ -1122,7 +1344,7 @@
                             <p class="text-muted">Belum ada catatan.</p>
                         </div>
                     </div>
-                    <div class="admin-card" style="background:white; border-radius:var(--radius); border:1px solid var(--gray-200); padding:20px 24px; margin-bottom:16px;">
+                    <div class="admin-card">
                         <div class="admin-title"><i class="fas fa-chart-simple"></i> Rekap Nilai</div>
                         <div class="filter-bar">
                             <select id="nilaiKelas" onchange="renderNilai()">
@@ -1150,17 +1372,17 @@
                     <h1 class="page-title"><i class="fas fa-file-import"></i> Impor / Ekspor Data</h1>
                     <p class="page-subtitle">Impor dan ekspor data menggunakan format Excel (.xlsx)</p>
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
-                        <div class="admin-card" style="background:white; border-radius:var(--radius); border:1px solid var(--gray-200); padding:20px 24px;">
+                        <div class="admin-card">
                             <div class="admin-title"><i class="fas fa-file-import"></i> Impor Data Siswa</div>
-                            <div class="file-upload-area" onclick="document.getElementById('fileInput').click()" style="border:2px dashed var(--gray-300); border-radius:var(--radius-sm); padding:32px; text-align:center; color:var(--gray-600); transition:var(--transition); cursor:pointer;">
-                                <i class="fas fa-cloud-upload-alt" style="font-size:40px; color:var(--gray-400); margin-bottom:8px;"></i>
+                            <div class="file-upload-area" onclick="document.getElementById('fileInput').click()">
+                                <i class="fas fa-cloud-upload-alt"></i>
                                 <p>Klik untuk upload file Excel</p>
                                 <p style="font-size:12px; color:var(--gray-500);">Format: .xlsx dengan kolom: Nama, NISN, Jenjang</p>
                             </div>
                             <input type="file" id="fileInput" accept=".xlsx,.xls" style="display:none;" onchange="imporData(event)">
                             <div id="imporStatus" style="margin-top:12px;"></div>
                         </div>
-                        <div class="admin-card" style="background:white; border-radius:var(--radius); border:1px solid var(--gray-200); padding:20px 24px;">
+                        <div class="admin-card">
                             <div class="admin-title"><i class="fas fa-file-export"></i> Ekspor Data & Template</div>
                             <p class="text-muted">Ekspor data atau unduh template</p>
                             <div class="template-grid">
@@ -1283,79 +1505,410 @@
         ];
 
         // ============================================================
-        // DATA MATERI AJAR (ringkas)
+        // DATA MATERI AJAR LENGKAP PER KELAS (Kurikulum Merdeka)
+        // Sumber: Buku Pendidikan Pancasila Kemendikbudristek [reference:1][reference:2]
         // ============================================================
-        const materiPancasila = [{
-            id: 1,
-            fase: "A",
-            jenjang: "SD",
-            judul: "Aku Cinta Pancasila",
-            deskripsi: "Mengenal lambang dan bunyi Pancasila serta sikap cinta tanah air.",
-            konten: `<p><strong>Lambang Pancasila</strong> Burung Garuda dengan 5 simbol: Bintang, Rantai, Pohon Beringin, Kepala Banteng, Padi dan Kapas.</p><p><strong>Bunyi Pancasila</strong> 1. Ketuhanan Yang Maha Esa, 2. Kemanusiaan yang Adil dan Beradab, 3. Persatuan Indonesia, 4. Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan, 5. Keadilan Sosial bagi Seluruh Rakyat Indonesia.</p>`
-        }, {
-            id: 2,
-            fase: "A",
-            jenjang: "SD",
-            judul: "Tata Tertib di Rumah dan Sekolah",
-            deskripsi: "Menerapkan kedisiplinan dan nilai-nilai Pancasila di lingkungan sekitar.",
-            konten: `<p><strong>Tata Tertib di Rumah</strong> Hormat kepada orang tua, membantu pekerjaan rumah, belajar dan bermain sesuai waktu.</p><p><strong>Tata Tertib di Sekolah</strong> Datang tepat waktu, mengikuti pelajaran dengan baik, menghormati guru dan teman.</p>`
-        }, {
-            id: 3,
-            fase: "B",
-            jenjang: "SD",
-            judul: "Nilai-Nilai Pancasila dalam Keluarga",
-            deskripsi: "Penerapan nilai-nilai Pancasila dalam kehidupan sehari-hari di rumah.",
-            konten: `<p><strong>Nilai Ketuhanan</strong> Berdoa sebelum dan sesudah kegiatan, menjalankan ibadah sesuai agama.</p><p><strong>Nilai Kemanusiaan</strong> Saling menyayangi, tolong-menolong, dan tidak membeda-bedakan.</p><p><strong>Nilai Persatuan</strong> Menjaga kerukunan dalam keluarga.</p>`
-        }, {
-            id: 4,
-            fase: "B",
-            jenjang: "SD",
-            judul: "Pancasila di Lingkungan Masyarakat",
-            deskripsi: "Peran serta masyarakat dalam menjaga nilai-nilai Pancasila.",
-            konten: `<p><strong>Kegiatan Masyarakat</strong> Kerja bakti, rukun tetangga, gotong royong membangun fasilitas umum.</p><p><strong>Sikap</strong> Toleransi, menghargai perbedaan, aktif dalam kegiatan sosial.</p>`
-        }, {
-            id: 5,
-            fase: "C",
-            jenjang: "SD",
-            judul: "Sejarah Perumusan Pancasila",
-            deskripsi: "Proses perumusan Pancasila oleh para pendiri bangsa.",
-            konten: `<p><strong>BPUPKI dan PPKI</strong> BPUPKI dibentuk 1 Maret 1945. Sidang pertama membahas dasar negara.</p><p><strong>Usulan</strong> Ir. Soekarno mengusulkan Pancasila pada 1 Juni 1945. PPKI mengesahkan Pancasila pada 18 Agustus 1945.</p>`
-        }, {
-            id: 6,
-            fase: "C",
-            jenjang: "SD",
-            judul: "Pancasila dan Bhinneka Tunggal Ika",
-            deskripsi: "Keberagaman Indonesia dan peran Pancasila sebagai perekat.",
-            konten: `<p><strong>Makna</strong> "Berbeda-beda tetapi tetap satu".</p><p><strong>Keberagaman</strong> Suku, agama, bahasa, dan budaya yang beragam. Pancasila menjadi dasar persatuan.</p>`
-        }, {
-            id: 7,
-            fase: "D",
-            jenjang: "SMP",
-            judul: "Pancasila dalam Sejarah Perjuangan Bangsa",
-            deskripsi: "Peran Pancasila dalam perjuangan kemerdekaan dan pembentukan negara.",
-            konten: `<p><strong>Latar Belakang</strong> Para tokoh nasional menyadari perlunya dasar negara.</p><p><strong>Sidang BPUPKI dan PPKI</strong> Ir. Soekarno mengusulkan Pancasila. PPKI mengesahkan Pancasila pada 18 Agustus 1945.</p>`
-        }, {
-            id: 8,
-            fase: "D",
-            jenjang: "SMP",
-            judul: "Pancasila sebagai Ideologi Terbuka",
-            deskripsi: "Pancasila sebagai ideologi yang dinamis dan terbuka terhadap perubahan.",
-            konten: `<p><strong>Pengertian</strong> Ideologi terbuka mampu berkembang sesuai dinamika masyarakat.</p><p><strong>Ciri</strong> Bersumber dari nilai luhur, mampu menyesuaikan dengan zaman, memberi ruang partisipasi.</p>`
-        }, {
-            id: 9,
-            fase: "D",
-            jenjang: "SMP",
-            judul: "Implementasi Pancasila di Era Globalisasi",
-            deskripsi: "Menghadapi tantangan global dengan berpegang teguh pada Pancasila.",
-            konten: `<p><strong>Tantangan</strong> Globalisasi membawa pengaruh positif dan negatif.</p><p><strong>Peran Pancasila</strong> Menjadi filter untuk memilah budaya asing.</p>`
-        }, {
-            id: 10,
-            fase: "E",
-            jenjang: "SMP",
-            judul: "Pancasila dan Wawasan Kebangsaan",
-            deskripsi: "Memperkuat wawasan kebangsaan melalui nilai-nilai Pancasila.",
-            konten: `<p><strong>Wawasan Kebangsaan</strong> Cara pandang bangsa Indonesia tentang diri dan lingkungannya.</p><p><strong>Unsur</strong> Cinta tanah air, kesadaran berbangsa, semangat persatuan.</p>`
-        }];
+        const materiPancasila = [
+            // ========== SD (SRD) Kelas I - VI ==========
+            {
+                id: 1,
+                kelas: 1,
+                jenjang: "SD",
+                judul: "Aku dan Teman Temanku",
+                deskripsi: "Mengenal diri sendiri, teman, dan lingkungan sekitar.",
+                konten: `<p><strong>A. Mengenal Diri Sendiri</strong><br>Setiap anak memiliki nama, ciri fisik, dan kesukaan yang berbeda. Kita harus saling menghargai perbedaan.</p>
+                        <p><strong>B. Berteman dengan Semua Orang</strong><br>Berteman tidak boleh membeda-bedakan. Semua teman adalah sahabat.</p>
+                        <p><strong>C. Bermain Bersama</strong><br>Bermain bersama mengajarkan kerja sama dan saling membantu.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas I, Kemendikbudristek[reference:3]</div>`
+            }, {
+                id: 2,
+                kelas: 1,
+                jenjang: "SD",
+                judul: "Aku Patuh Pada Aturan",
+                deskripsi: "Mematuhi aturan di rumah dan sekolah sebagai wujud disiplin.",
+                konten: `<p><strong>A. Aturan di Rumah</strong><br>Aturan di rumah dibuat oleh orang tua untuk kebaikan anak. Contoh: bangun pagi, membereskan mainan.</p>
+                        <p><strong>B. Aturan di Sekolah</strong><br>Aturan sekolah dibuat agar belajar nyaman. Contoh: datang tepat waktu, memakai seragam.</p>
+                        <p><strong>C. Manfaat Mematuhi Aturan</strong><br>Hidup menjadi tertib, aman, dan nyaman.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas I, Kemendikbudristek[reference:4]</div>`
+            }, {
+                id: 3,
+                kelas: 1,
+                jenjang: "SD",
+                judul: "Aku Mengenal Indonesia",
+                deskripsi: "Mengenal identitas bangsa Indonesia dan simbol-simbolnya.",
+                konten: `<p><strong>A. Lambang Negara Garuda Pancasila</strong><br>Garuda Pancasila adalah lambang negara Indonesia. Terdiri dari 5 sila.</p>
+                        <p><strong>B. Bendera Merah Putih</strong><br>Bendera Indonesia berwarna merah dan putih. Merah melambangkan keberanian, putih melambangkan kesucian.</p>
+                        <p><strong>C. Lagu Kebangsaan Indonesia Raya</strong><br>Lagu Indonesia Raya dinyanyikan pada upacara bendera.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas I, Kemendikbudristek[reference:5]</div>`
+            }, {
+                id: 4,
+                kelas: 1,
+                jenjang: "SD",
+                judul: "Aku dan Lingkunganku",
+                deskripsi: "Menjaga kebersihan dan kelestarian lingkungan sekitar.",
+                konten: `<p><strong>A. Lingkungan Rumah</strong><br>Menjaga kebersihan rumah adalah tanggung jawab semua anggota keluarga.</p>
+                        <p><strong>B. Lingkungan Sekolah</strong><br>Membuang sampah pada tempatnya, merawat tanaman di sekolah.</p>
+                        <p><strong>C. Menjaga Alam</strong><br>Mencintai alam berarti tidak merusak pohon dan menjaga kebersihan sungai.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas I, Kemendikbudristek[reference:6]</div>`
+            }, {
+                id: 5,
+                kelas: 2,
+                jenjang: "SD",
+                judul: "Aku Patuh Aturan",
+                deskripsi: "Kedisiplinan dalam kehidupan sehari-hari.",
+                konten: `<p><strong>A. Aturan di Tempat Umum</strong><br>Di tempat umum seperti pasar dan taman, kita harus menjaga ketertiban.</p>
+                        <p><strong>B. Aturan Berlalu Lintas</strong><br>Mematuhi rambu-rambu lalu lintas untuk keselamatan bersama.</p>
+                        <p><strong>C. Akibat Tidak Mematuhi Aturan</strong><br>Dapat membahayakan diri sendiri dan orang lain.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas II, Kemendikbudristek[reference:7]</div>`
+            }, {
+                id: 6,
+                kelas: 2,
+                jenjang: "SD",
+                judul: "Aku Berperilaku Pancasila",
+                deskripsi: "Menerapkan nilai-nilai Pancasila dalam tindakan sehari-hari.",
+                konten: `<p><strong>A. Sila Pertama: Ketuhanan</strong><br>Beribadah sesuai agama masing-masing.</p>
+                        <p><strong>B. Sila Kedua: Kemanusiaan</strong><br>Menolong teman yang kesulitan.</p>
+                        <p><strong>C. Sila Ketiga: Persatuan</strong><br>Bermain dengan semua teman tanpa membeda-bedakan.</p>
+                        <p><strong>D. Sila Keempat: Kerakyatan</strong><br>Musyawarah saat memilih permainan.</p>
+                        <p><strong>E. Sila Kelima: Keadilan</strong><br>Memberi giliran bermain secara adil.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas II, Kemendikbudristek[reference:8]</div>`
+            }, {
+                id: 7,
+                kelas: 2,
+                jenjang: "SD",
+                judul: "Aku dan Teman-Temanku",
+                deskripsi: "Hubungan pertemanan yang baik dan saling menghargai.",
+                konten: `<p><strong>A. Sifat Teman yang Baik</strong><br>Jujur, tidak sombong, suka menolong.</p>
+                        <p><strong>B. Menyelesaikan Konflik</strong><br>Jika bertengkar, selesaikan dengan bicara baik-baik.</p>
+                        <p><strong>C. Kerja Sama</strong><br>Mengerjakan tugas kelompok bersama-sama.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas II, Kemendikbudristek[reference:9]</div>`
+            }, {
+                id: 8,
+                kelas: 2,
+                jenjang: "SD",
+                judul: "Aku Peduli Lingkungan",
+                deskripsi: "Kepedulian terhadap lingkungan alam dan sosial.",
+                konten: `<p><strong>A. Peduli Sampah</strong><br>Membuang sampah pada tempatnya dan memilah sampah organik dan anorganik.</p>
+                        <p><strong>B. Peduli Tanaman</strong><br>Menyiram tanaman dan menanam pohon.</p>
+                        <p><strong>C. Peduli Sesama</strong><br>Menjenguk teman yang sakit, berbagi makanan.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas II, Kemendikbudristek[reference:10]</div>`
+            }, {
+                id: 9,
+                kelas: 3,
+                jenjang: "SD",
+                judul: "Aku Anak Indonesia",
+                deskripsi: "Identitas sebagai anak Indonesia dan kebanggaan terhadap bangsa.",
+                konten: `<p><strong>A. Ciri-Ciri Anak Indonesia</strong><br>Berbudi pekerti luhur, cinta tanah air, dan menjunjung tinggi persatuan.</p>
+                        <p><strong>B. Keberagaman Indonesia</strong><br>Indonesia memiliki beragam suku, agama, dan budaya.</p>
+                        <p><strong>C. Bangga Menjadi Anak Indonesia</strong><br>Menggunakan produk dalam negeri, melestarikan budaya.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas III, Kemendikbudristek[reference:11]</div>`
+            }, {
+                id: 10,
+                kelas: 3,
+                jenjang: "SD",
+                judul: "Aku Patuh Aturan",
+                deskripsi: "Kepatuhan pada aturan sebagai wujud tanggung jawab.",
+                konten: `<p><strong>A. Aturan di Masyarakat</strong><br>Aturan dibuat untuk kepentingan bersama.</p>
+                        <p><strong>B. Akibat Melanggar Aturan</strong><br>Dapat merugikan diri sendiri dan orang lain.</p>
+                        <p><strong>C. Menjadi Teladan</strong><br>Dengan mematuhi aturan, kita menjadi contoh bagi orang lain.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas III, Kemendikbudristek[reference:12]</div>`
+            }, {
+                id: 11,
+                kelas: 3,
+                jenjang: "SD",
+                judul: "Berbeda Itu Indah",
+                deskripsi: "Menghargai perbedaan sebagai kekayaan bangsa.",
+                konten: `<p><strong>A. Perbedaan Suku dan Budaya</strong><br>Setiap suku memiliki bahasa dan adat istiadat yang unik.</p>
+                        <p><strong>B. Toleransi Beragama</strong><br>Menghormati teman yang berbeda agama.</p>
+                        <p><strong>C. Semboyan Bhinneka Tunggal Ika</strong><br>Berbeda-beda tetapi tetap satu.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas III, Kemendikbudristek[reference:13]</div>`
+            }, {
+                id: 12,
+                kelas: 3,
+                jenjang: "SD",
+                judul: "Ayo Mengenal Pancasila",
+                deskripsi: "Mengenal lebih dalam tentang Pancasila sebagai dasar negara.",
+                konten: `<p><strong>A. Sejarah Singkat Pancasila</strong><br>Pancasila dirumuskan oleh para pendiri bangsa pada tahun 1945.</p>
+                        <p><strong>B. Makna 5 Sila</strong><br>Setiap sila memiliki makna yang dalam untuk kehidupan berbangsa.</p>
+                        <p><strong>C. Pancasila dalam Kehidupan</strong><br>Pancasila menjadi pedoman dalam bertindak sehari-hari.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas III, Kemendikbudristek[reference:14]</div>`
+            }, {
+                id: 13,
+                kelas: 4,
+                jenjang: "SD",
+                judul: "Mengenal Lingkungan Sekitar",
+                deskripsi: "Memahami lingkungan alam dan sosial di sekitar.",
+                konten: `<p><strong>A. Lingkungan Alam</strong><br>Mengenal ekosistem, flora, dan fauna di sekitar.</p>
+                        <p><strong>B. Lingkungan Sosial</strong><br>Hubungan antar warga masyarakat.</p>
+                        <p><strong>C. Menjaga Lingkungan</strong><br>Melestarikan alam untuk generasi mendatang.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas IV, Kemendikbudristek[reference:15]</div>`
+            }, {
+                id: 14,
+                kelas: 4,
+                jenjang: "SD",
+                judul: "Aku Anak yang Disiplin",
+                deskripsi: "Membangun kedisiplinan sejak dini.",
+                konten: `<p><strong>A. Disiplin Waktu</strong><br>Mengatur waktu belajar dan bermain.</p>
+                        <p><strong>B. Disiplin dalam Tugas</strong><br>Menyelesaikan tugas tepat waktu.</p>
+                        <p><strong>C. Disiplin dalam Berperilaku</strong><br>Berkata sopan dan bertindak santun.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas IV, Kemendikbudristek[reference:16]</div>`
+            }, {
+                id: 15,
+                kelas: 4,
+                jenjang: "SD",
+                judul: "Kerja Sama di Lingkunganku",
+                deskripsi: "Gotong royong dan kerja sama dalam kehidupan.",
+                konten: `<p><strong>A. Kerja Sama di Rumah</strong><br>Membantu orang tua membersihkan rumah.</p>
+                        <p><strong>B. Kerja Sama di Sekolah</strong><br>Piket kelas, belajar kelompok.</p>
+                        <p><strong>C. Kerja Sama di Masyarakat</strong><br>Kerja bakti membersihkan lingkungan.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas IV, Kemendikbudristek[reference:17]</div>`
+            }, {
+                id: 16,
+                kelas: 4,
+                jenjang: "SD",
+                judul: "Pancasila dalam Diriku",
+                deskripsi: "Menginternalisasi nilai-nilai Pancasila dalam diri.",
+                konten: `<p><strong>A. Mengamalkan Sila Pancasila</strong><br>Menerapkan nilai-nilai Pancasila dalam tindakan sehari-hari.</p>
+                        <p><strong>B. Menjadi Warga Negara Baik</strong><br>Cerdas dan berakhlak mulia.</p>
+                        <p><strong>C. Kebanggaan sebagai Bangsa Indonesia</strong><br>Menjaga nama baik bangsa.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas IV, Kemendikbudristek[reference:18]</div>`
+            }, {
+                id: 17,
+                kelas: 5,
+                jenjang: "SD",
+                judul: "Pancasila Dasar Negara",
+                deskripsi: "Pancasila sebagai landasan bernegara.",
+                konten: `<p><strong>A. Pancasila sebagai Ideologi</strong><br>Pancasila adalah ideologi yang mempersatukan bangsa.</p>
+                        <p><strong>B. Pancasila dan UUD 1945</strong><br>Hubungan antara Pancasila dan konstitusi.</p>
+                        <p><strong>C. Pancasila dalam Kehidupan Berbangsa</strong><br>Penerapan Pancasila dalam berbagai bidang kehidupan.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas V, Kemendikbudristek</div>`
+            }, {
+                id: 18,
+                kelas: 5,
+                jenjang: "SD",
+                judul: "Norma dan Keadilan",
+                deskripsi: "Norma dalam masyarakat dan pentingnya keadilan.",
+                konten: `<p><strong>A. Norma Agama</strong><br>Aturan yang bersumber dari ajaran agama.</p>
+                        <p><strong>B. Norma Kesusilaan</strong><br>Aturan tentang baik dan buruk.</p>
+                        <p><strong>C. Norma Kesopanan</strong><br>Aturan tentang sopan santun.</p>
+                        <p><strong>D. Norma Hukum</strong><br>Aturan yang mengikat dan memiliki sanksi.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas V, Kemendikbudristek</div>`
+            }, {
+                id: 19,
+                kelas: 5,
+                jenjang: "SD",
+                judul: "Kebebasan yang Bertanggung Jawab",
+                deskripsi: "Menjalankan kebebasan dengan penuh tanggung jawab.",
+                konten: `<p><strong>A. Hak dan Kewajiban</strong><br>Setiap hak diiringi dengan kewajiban.</p>
+                        <p><strong>B. Kebebasan Berpendapat</strong><br>Bebas berpendapat namun harus menghargai orang lain.</p>
+                        <p><strong>C. Tanggung Jawab Sosial</strong><br>Bertanggung jawab terhadap lingkungan dan masyarakat.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas V, Kemendikbudristek</div>`
+            }, {
+                id: 20,
+                kelas: 6,
+                jenjang: "SD",
+                judul: "Pancasila dan NKRI",
+                deskripsi: "Negara Kesatuan Republik Indonesia dalam bingkai Pancasila.",
+                konten: `<p><strong>A. NKRI Harga Mati</strong><br>Mempertahankan keutuhan NKRI.</p>
+                        <p><strong>B. Peran Warga Negara</strong><br>Menjaga persatuan dan kesatuan.</p>
+                        <p><strong>C. Cinta Tanah Air</strong><br>Mewujudkan rasa cinta tanah air dalam tindakan nyata.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas VI, Kemendikbudristek</div>`
+            }, {
+                id: 21,
+                kelas: 6,
+                jenjang: "SD",
+                judul: "Demokrasi dan Pancasila",
+                deskripsi: "Demokrasi Indonesia berdasarkan Pancasila.",
+                konten: `<p><strong>A. Demokrasi Pancasila</strong><br>Demokrasi yang berdasarkan nilai-nilai Pancasila.</p>
+                        <p><strong>B. Pemilu dan Partisipasi</strong><br>Partisipasi dalam pemilihan umum sebagai wujud demokrasi.</p>
+                        <p><strong>C. Musyawarah Mufakat</strong><br>Mengutamakan musyawarah dalam mengambil keputusan.</p>
+                        <div class="sumber">Sumber: Buku Siswa Pendidikan Pancasila SD/MI Kelas VI, Kemendikbudristek</div>`
+            },
+            // ========== SMP (SRMP) Kelas VII - IX ==========
+            {
+                id: 22,
+                kelas: 7,
+                jenjang: "SMP",
+                judul: "Sejarah Kelahiran Pancasila",
+                deskripsi: "Proses perumusan Pancasila sebagai dasar negara.",
+                konten: `<p><strong>A. Latar Belakang</strong><br>BPUPKI dibentuk untuk mempersiapkan kemerdekaan Indonesia.[reference:19]</p>
+                        <p><strong>B. Sidang BPUPKI</strong><br>Ir. Soekarno mengusulkan Pancasila pada 1 Juni 1945.</p>
+                        <p><strong>C. Pengesahan Pancasila</strong><br>PPKI mengesahkan Pancasila sebagai dasar negara pada 18 Agustus 1945.</p>
+                        <div class="sumber">Sumber: Buku Pendidikan Pancasila SMP/MTs Kelas VII, Kemendikbudristek[reference:20]</div>`
+            }, {
+                id: 23,
+                kelas: 7,
+                jenjang: "SMP",
+                judul: "Pancasila dan UUD 1945",
+                deskripsi: "Hubungan antara Pancasila dengan Undang-Undang Dasar.",
+                konten: `<p><strong>A. Pancasila sebagai Sumber Hukum</strong><br>Pancasila adalah sumber dari segala sumber hukum di Indonesia.</p>
+                        <p><strong>B. UUD 1945</strong><br>Undang-Undang Dasar yang menjadi konstitusi negara.</p>
+                        <p><strong>C. Keterkaitan</strong><br>UUD 1945 merupakan penjabaran dari nilai-nilai Pancasila.</p>
+                        <div class="sumber">Sumber: Buku Pendidikan Pancasila SMP/MTs Kelas VII, Kemendikbudristek[reference:21]</div>`
+            }, {
+                id: 24,
+                kelas: 7,
+                jenjang: "SMP",
+                judul: "Bhinneka Tunggal Ika",
+                deskripsi: "Keberagaman Indonesia sebagai kekayaan bangsa.",
+                konten: `<p><strong>A. Makna Bhinneka Tunggal Ika</strong><br>Berbeda-beda tetapi tetap satu.</p>
+                        <p><strong>B. Keberagaman Budaya</strong><br>Indonesia memiliki beragam suku, bahasa, dan budaya.</p>
+                        <p><strong>C. Toleransi</strong><br>Sikap saling menghormati antar sesama.</p>
+                        <div class="sumber">Sumber: Buku Pendidikan Pancasila SMP/MTs Kelas VII, Kemendikbudristek[reference:22]</div>`
+            }, {
+                id: 25,
+                kelas: 8,
+                jenjang: "SMP",
+                judul: "Pancasila sebagai Ideologi Terbuka",
+                deskripsi: "Pancasila sebagai ideologi yang dinamis.",
+                konten: `<p><strong>A. Pengertian Ideologi Terbuka</strong><br>Ideologi yang mampu beradaptasi dengan perkembangan zaman.</p>
+                        <p><strong>B. Ciri-Ciri</strong><br>Bersumber dari nilai-nilai luhur bangsa, mampu menyesuaikan dengan dinamika masyarakat.</p>
+                        <p><strong>C. Pancasila dan Globalisasi</strong><br>Pancasila sebagai filter budaya asing.</p>
+                        <div class="sumber">Sumber: Buku Pendidikan Pancasila SMP/MTs Kelas VIII, Kemendikbudristek[reference:23]</div>`
+            }, {
+                id: 26,
+                kelas: 8,
+                jenjang: "SMP",
+                judul: "Hak dan Kewajiban Warga Negara",
+                deskripsi: "Hak dan kewajiban dalam kehidupan berbangsa.",
+                konten: `<p><strong>A. Hak Warga Negara</strong><br>Hak atas pendidikan, kesehatan, pekerjaan, dan partisipasi politik.</p>
+                        <p><strong>B. Kewajiban Warga Negara</strong><br>Membayar pajak, menjaga ketertiban, membela negara.</p>
+                        <p><strong>C. Keseimbangan Hak dan Kewajiban</strong><br>Setiap hak diimbangi dengan kewajiban.</p>
+                        <div class="sumber">Sumber: Buku Pendidikan Pancasila SMP/MTs Kelas VIII, Kemendikbudristek[reference:24]</div>`
+            }, {
+                id: 27,
+                kelas: 8,
+                jenjang: "SMP",
+                judul: "Demokrasi dan Musyawarah",
+                deskripsi: "Demokrasi Pancasila dan musyawarah sebagai budaya.",
+                konten: `<p><strong>A. Demokrasi Pancasila</strong><br>Demokrasi yang berdasarkan musyawarah dan mufakat.</p>
+                        <p><strong>B. Prinsip Musyawarah</strong><br>Menghargai pendapat, mencari solusi bersama.</p>
+                        <p><strong>C. Pemilu</strong><br>Pemilihan umum sebagai sarana demokrasi.</p>
+                        <div class="sumber">Sumber: Buku Pendidikan Pancasila SMP/MTs Kelas VIII, Kemendikbudristek[reference:25]</div>`
+            }, {
+                id: 28,
+                kelas: 9,
+                jenjang: "SMP",
+                judul: "Pancasila dan Ketahanan Nasional",
+                deskripsi: "Peran Pancasila dalam memperkuat ketahanan nasional.",
+                konten: `<p><strong>A. Ketahanan Nasional</strong><br>Kemampuan bangsa untuk bertahan dan mengatasi ancaman.</p>
+                        <p><strong>B. Dimensi Ketahanan</strong><br>Ideologi, politik, ekonomi, sosial budaya, pertahanan keamanan.</p>
+                        <p><strong>C. Implementasi</strong><br>Menerapkan Pancasila dalam kehidupan sehari-hari.</p>
+                        <div class="sumber">Sumber: Buku Pendidikan Pancasila SMP/MTs Kelas IX, Kemendikbudristek[reference:26]</div>`
+            }, {
+                id: 29,
+                kelas: 9,
+                jenjang: "SMP",
+                judul: "Pancasila dan Wawasan Kebangsaan",
+                deskripsi: "Memperkuat wawasan kebangsaan melalui Pancasila.",
+                konten: `<p><strong>A. Wawasan Kebangsaan</strong><br>Cara pandang bangsa Indonesia tentang diri dan lingkungannya.</p>
+                        <p><strong>B. Unsur-Unsur</strong><br>Cinta tanah air, kesadaran berbangsa, semangat persatuan.</p>
+                        <p><strong>C. Peran Generasi Muda</strong><br>Mengamalkan Pancasila sebagai generasi penerus.</p>
+                        <div class="sumber">Sumber: Buku Pendidikan Pancasila SMP/MTs Kelas IX, Kemendikbudristek[reference:27]</div>`
+            }, {
+                id: 30,
+                kelas: 9,
+                jenjang: "SMP",
+                judul: "Pancasila dan Politik Luar Negeri",
+                deskripsi: "Landasan Pancasila dalam politik luar negeri Indonesia.",
+                konten: `<p><strong>A. Politik Bebas Aktif</strong><br>Indonesia tidak memihak blok manapun dan aktif dalam perdamaian dunia.</p>
+                        <p><strong>B. Landasan Pancasila</strong><br>Sila ke-2 dan ke-3 sebagai dasar hubungan internasional.</p>
+                        <p><strong>C. Peran Indonesia di Dunia</strong><br>ASEAN, PBB, Gerakan Non-Blok.</p>
+                        <div class="sumber">Sumber: Buku Pendidikan Pancasila SMP/MTs Kelas IX, Kemendikbudristek[reference:28]</div>`
+            },
+            // ========== SMA (SRMA) Kelas X - XII ==========
+            {
+                id: 31,
+                kelas: 10,
+                jenjang: "SMA",
+                judul: "Pancasila dalam Kajian Sejarah",
+                deskripsi: "Pancasila dalam perspektif sejarah dan perkembangan.",
+                konten: `<p><strong>A. Pancasila Sebelum Kemerdekaan</strong><br>Gagasan tentang dasar negara sudah muncul sejak masa pergerakan.</p>
+                        <p><strong>B. Pancasila pada Masa Kemerdekaan</strong><br>Pengesahan Pancasila sebagai dasar negara.</p>
+                        <p><strong>C. Pancasila pada Masa Orde Baru dan Reformasi</strong><br>Perjalanan Pancasila dalam dinamika politik Indonesia.</p>
+                        <div class="sumber">Sumber: Buku Pendidikan Pancasila SMA/MA Kelas X, Kemendikbudristek[reference:29]</div>`
+            }, {
+                id: 32,
+                kelas: 10,
+                jenjang: "SMA",
+                judul: "Pancasila dan Ideologi Dunia",
+                deskripsi: "Perbandingan Pancasila dengan ideologi-ideologi lain.",
+                konten: `<p><strong>A. Ideologi Liberalisme</strong><br>Menekankan kebebasan individu.</p>
+                        <p><strong>B. Ideologi Komunisme</strong><br>Menekankan kesetaraan dan kepemilikan bersama.</p>
+                        <p><strong>C. Pancasila sebagai Ideologi Tengah</strong><br>Menggabungkan nilai-nilai terbaik dari berbagai ideologi.</p>
+                        <div class="sumber">Sumber: Buku Pendidikan Pancasila SMA/MA Kelas X, Kemendikbudristek[reference:30]</div>`
+            }, {
+                id: 33,
+                kelas: 10,
+                jenjang: "SMA",
+                judul: "Pancasila dan Konstitusi",
+                deskripsi: "Hubungan Pancasila dengan konstitusi dan sistem ketatanegaraan.",
+                konten: `<p><strong>A. UUD 1945 sebagai Konstitusi</strong><br>Konstitusi yang berdasarkan Pancasila.</p>
+                        <p><strong>B. Sistem Pemerintahan</strong><br>Sistem presidensial dengan pembagian kekuasaan.</p>
+                        <p><strong>C. Lembaga Negara</strong><br>DPR, MPR, MA, MK, dan lembaga lainnya.</p>
+                        <div class="sumber">Sumber: Buku Pendidikan Pancasila SMA/MA Kelas X, Kemendikbudristek[reference:31]</div>`
+            }, {
+                id: 34,
+                kelas: 11,
+                jenjang: "SMA",
+                judul: "Menjiwai Pancasila",
+                deskripsi: "Menginternalisasi nilai-nilai Pancasila dalam kehidupan.",
+                konten: `<p><strong>A. Pancasila sebagai Jiwa Bangsa</strong><br>Pancasila adalah kepribadian bangsa Indonesia.[reference:32]</p>
+                        <p><strong>B. Implementasi Pancasila</strong><br>Menerapkan Pancasila dalam berbagai bidang kehidupan.</p>
+                        <p><strong>C. Tantangan Implementasi</strong><br>Menghadapi tantangan global dengan berpegang pada Pancasila.</p>
+                        <div class="sumber">Sumber: Buku Pendidikan Pancasila SMA/MA Kelas XI, Kemendikbudristek[reference:33]</div>`
+            }, {
+                id: 35,
+                kelas: 11,
+                jenjang: "SMA",
+                judul: "Demokrasi Berdasarkan UUD NRI 1945",
+                deskripsi: "Demokrasi Indonesia dalam kerangka UUD 1945.",
+                konten: `<p><strong>A. Demokrasi Konstitusional</strong><br>Demokrasi yang berlandaskan konstitusi.</p>
+                        <p><strong>B. Hak dan Kewajiban Warga Negara</strong><br>Dalam sistem demokrasi.</p>
+                        <p><strong>C. Partisipasi Politik</strong><br>Peran serta masyarakat dalam proses demokrasi.</p>
+                        <div class="sumber">Sumber: Buku Pendidikan Pancasila SMA/MA Kelas XI, Kemendikbudristek[reference:34]</div>`
+            }, {
+                id: 36,
+                kelas: 11,
+                jenjang: "SMA",
+                judul: "Harmoni dalam Keberagaman",
+                deskripsi: "Menjaga harmoni di tengah keberagaman Indonesia.",
+                konten: `<p><strong>A. Keberagaman sebagai Kekuatan</strong><br>Keberagaman adalah aset bangsa.</p>
+                        <p><strong>B. Tantangan Keberagaman</strong><br>Konflik, intoleransi, dan radikalisme.</p>
+                        <p><strong>C. Memperkuat Harmoni</strong><br>Dialog, toleransi, dan kerja sama.</p>
+                        <div class="sumber">Sumber: Buku Pendidikan Pancasila SMA/MA Kelas XI, Kemendikbudristek[reference:35]</div>`
+            }, {
+                id: 37,
+                kelas: 12,
+                jenjang: "SMA",
+                judul: "Pancasila dalam Kehidupan Global",
+                deskripsi: "Penerapan Pancasila di tengah arus globalisasi.",
+                konten: `<p><strong>A. Peluang Globalisasi</strong><br>Kemudahan akses informasi dan teknologi.[reference:36]</p>
+                        <p><strong>B. Tantangan Globalisasi</strong><br>Masuknya budaya asing yang bertentangan dengan Pancasila.</p>
+                        <p><strong>C. Peran Pancasila</strong><br>Pancasila sebagai filter dan pedoman dalam menghadapi globalisasi.</p>
+                        <div class="sumber">Sumber: Buku Pendidikan Pancasila SMA/MA Kelas XII, Kemendikbudristek[reference:37]</div>`
+            }, {
+                id: 38,
+                kelas: 12,
+                jenjang: "SMA",
+                judul: "Pancasila dan Pembangunan Berkelanjutan",
+                deskripsi: "Implementasi Pancasila dalam pembangunan berkelanjutan.",
+                konten: `<p><strong>A. Konsep Pembangunan Berkelanjutan</strong><br>Memenuhi kebutuhan masa kini tanpa mengorbankan generasi mendatang.</p>
+                        <p><strong>B. Pancasila dan SDGs</strong><br>Keterkaitan nilai-nilai Pancasila dengan Tujuan Pembangunan Berkelanjutan.</p>
+                        <p><strong>C. Peran Generasi Muda</strong><br>Mewujudkan pembangunan yang berkeadilan sosial.</p>
+                        <div class="sumber">Sumber: Buku Pendidikan Pancasila SMA/MA Kelas XII, Kemendikbudristek</div>`
+            }, {
+                id: 39,
+                kelas: 12,
+                jenjang: "SMA",
+                judul: "Pancasila dan Ketahanan Nasional",
+                deskripsi: "Memperkuat ketahanan nasional melalui Pancasila.",
+                konten: `<p><strong>A. Ketahanan Nasional</strong><br>Kemampuan bangsa untuk menghadapi ancaman.</p>
+                        <p><strong>B. Dimensi Ketahanan</strong><br>Ideologi, politik, ekonomi, sosial budaya, dan pertahanan.</p>
+                        <p><strong>C. Implementasi</strong><br>Mengamalkan Pancasila untuk memperkuat ketahanan nasional.</p>
+                        <div class="sumber">Sumber: Buku Pendidikan Pancasila SMA/MA Kelas XII, Kemendikbudristek</div>`
+            }
+        ];
 
         // ============================================================
         // STATE
@@ -1365,6 +1918,7 @@
         let agendaData = JSON.parse(localStorage.getItem('agendaPancasila')) || [];
         let catatanData = JSON.parse(localStorage.getItem('catatanPancasila')) || [];
         let nilaiData = JSON.parse(localStorage.getItem('nilaiPancasila')) || [];
+        let uploadedMateri = JSON.parse(localStorage.getItem('uploadedMateriPancasila')) || [];
         let qrScannerInstance = null;
         let scannedSiswa = null;
 
@@ -1409,6 +1963,7 @@
             renderMateri();
             renderCatatan();
             renderNilai();
+            renderUploadedMateri();
             updateTotalSiswa();
         }
 
@@ -1536,7 +2091,7 @@
         }
 
         // ============================================================
-        // GENERATE QR CODE - DIPERBAIKI dengan database siswa
+        // GENERATE QR CODE - Menggunakan API qrzap.fun (gratis, tanpa API key)
         // ============================================================
         function generateQRForClass() {
             const jenjang = document.getElementById('qrGenerateKelas').value;
@@ -1550,29 +2105,20 @@
                 return;
             }
 
-            // Cek library QRCode
-            if (typeof QRCode === 'undefined') {
-                status.innerHTML =
-                    `<span style="color:var(--danger);">❌ Library QR Code belum dimuat. Silakan refresh halaman.</span>`;
-                showToast('Library QR Code belum dimuat!', 'error');
-                // Coba load ulang
-                loadQRCodeLibrary();
-                return;
-            }
-
             container.innerHTML = '';
-            status.textContent = `⏳ Membuat ${siswaJenjang.length} QR Code...`;
+            status.textContent = `⏳ Menghasilkan ${siswaJenjang.length} QR Code via qrzap.fun...`;
 
             let count = 0;
-            siswaJenjang.forEach((s, index) => {
+            siswaJenjang.forEach((s) => {
                 const data = `${s.nisn}|${s.nama}|${s.jenjang}`;
                 const card = document.createElement('div');
                 card.className = 'qr-card';
 
-                const canvas = document.createElement('canvas');
-                canvas.width = 130;
-                canvas.height = 130;
-                canvas.style.cssText = 'display:block; margin:0 auto;';
+                const img = document.createElement('img');
+                // Gunakan API qrzap.fun untuk generate QR Code [reference:38]
+                img.src = `https://qrzap.fun/api/generate?type=text&text=${encodeURIComponent(data)}&size=200&margin=4`;
+                img.alt = `QR Code ${s.nama}`;
+                img.loading = 'lazy';
 
                 const label = document.createElement('p');
                 label.className = 'qr-name';
@@ -1587,62 +2133,40 @@
                 downloadBtn.innerHTML = '<i class="fas fa-download"></i> Unduh';
                 downloadBtn.onclick = function(e) {
                     e.stopPropagation();
-                    downloadQRCode(canvas, s.nama, s.nisn);
+                    downloadQRCode(img.src, s.nama, s.nisn);
                 };
 
-                card.appendChild(canvas);
+                card.appendChild(img);
                 card.appendChild(label);
                 card.appendChild(nisnLabel);
                 card.appendChild(downloadBtn);
                 container.appendChild(card);
-
-                try {
-                    new QRCode(canvas, {
-                        text: data,
-                        width: 130,
-                        height: 130,
-                        colorDark: "#1a4b8c",
-                        colorLight: "#ffffff",
-                        correctLevel: QRCode.CorrectLevel.H
-                    });
-                    count++;
-                } catch (err) {
-                    console.error('QR error for', s.nama, err);
-                    const ctx = canvas.getContext('2d');
-                    ctx.fillStyle = '#f8d7da';
-                    ctx.fillRect(0, 0, 130, 130);
-                    ctx.fillStyle = '#721c24';
-                    ctx.font = '10px sans-serif';
-                    ctx.textAlign = 'center';
-                    ctx.fillText('Error', 65, 65);
-                }
+                count++;
             });
 
             // Tombol Unduh Semua
             if (count > 0) {
                 const downloadAllBtn = document.createElement('button');
                 downloadAllBtn.className = 'btn btn-success btn-download-all';
-                downloadAllBtn.innerHTML = '<i class="fas fa-download"></i> Unduh Semua QR Code (' + count + ')';
+                downloadAllBtn.innerHTML = `<i class="fas fa-download"></i> Unduh Semua QR Code (${count})`;
                 downloadAllBtn.onclick = function() {
                     downloadAllQRCodes();
                 };
                 container.appendChild(downloadAllBtn);
-                status.innerHTML = `<span style="color:var(--success);">✅ Berhasil membuat ${count} QR Code untuk ${jenjang}.</span>`;
+                status.innerHTML =
+                    `<span style="color:var(--success);">✅ ${count} QR Code berhasil dibuat via qrzap.fun[reference:39].</span>`;
                 showToast(`✅ ${count} QR Code berhasil dibuat!`, 'success');
             } else {
-                status.innerHTML = `<span style="color:var(--danger);">❌ Gagal membuat QR Code. Coba refresh halaman.</span>`;
+                status.innerHTML = `<span style="color:var(--danger);">❌ Gagal membuat QR Code. Coba lagi.</span>`;
             }
         }
 
-        // ============================================================
-        // UNDUH QR CODE (Perorangan)
-        // ============================================================
-        function downloadQRCode(canvas, nama, nisn) {
+        function downloadQRCode(src, nama, nisn) {
             try {
                 const link = document.createElement('a');
                 const sanitizedNama = nama.replace(/\s+/g, '_').substring(0, 30);
                 link.download = `QR_${sanitizedNama}_${nisn}.png`;
-                link.href = canvas.toDataURL('image/png', 1.0);
+                link.href = src;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -1652,17 +2176,14 @@
             }
         }
 
-        // ============================================================
-        // UNDUH SEMUA QR CODE
-        // ============================================================
         function downloadAllQRCodes() {
             const cards = document.querySelectorAll('.qr-card');
             const validCards = [];
             cards.forEach(card => {
-                const canvas = card.querySelector('canvas');
+                const img = card.querySelector('img');
                 const nameEl = card.querySelector('.qr-name');
-                if (canvas && nameEl) {
-                    validCards.push({ canvas, nama: nameEl.textContent });
+                if (img && nameEl) {
+                    validCards.push({ src: img.src, nama: nameEl.textContent });
                 }
             });
 
@@ -1671,7 +2192,6 @@
                 return;
             }
 
-            // Download satu per satu dengan delay untuk menghindari block
             let idx = 0;
 
             function downloadNext() {
@@ -1684,49 +2204,22 @@
                     const link = document.createElement('a');
                     const sanitized = item.nama.replace(/\s+/g, '_').substring(0, 30);
                     link.download = `QR_${sanitized}.png`;
-                    link.href = item.canvas.toDataURL('image/png', 1.0);
+                    link.href = item.src;
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
-                } catch (err) {
-                    console.error('Download error:', err);
-                }
+                } catch (err) { console.error(err); }
                 idx++;
                 setTimeout(downloadNext, 400);
             }
-
             showToast(`⏳ Mengunduh ${validCards.length} QR Code...`, 'warning');
             downloadNext();
         }
 
-        // ============================================================
-        // HAPUS SEMUA QR CARD
-        // ============================================================
         function clearQRCards() {
-            const container = document.getElementById('qrGeneratedArea');
-            container.innerHTML = '';
+            document.getElementById('qrGeneratedArea').innerHTML = '';
             document.getElementById('qrGenStatus').textContent = '';
             showToast('Semua QR Code telah dihapus.', 'warning');
-        }
-
-        // ============================================================
-        // LOAD QRCODE LIBRARY
-        // ============================================================
-        function loadQRCodeLibrary() {
-            if (typeof QRCode !== 'undefined') {
-                showToast('Library QR Code sudah tersedia.', 'success');
-                return;
-            }
-            const script = document.createElement('script');
-            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
-            script.onload = function() {
-                showToast('✅ Library QR Code berhasil dimuat!', 'success');
-                document.getElementById('qrGenStatus').textContent = '✅ Library siap digunakan.';
-            };
-            script.onerror = function() {
-                showToast('❌ Gagal memuat library QR Code. Periksa koneksi internet.', 'error');
-            };
-            document.head.appendChild(script);
         }
 
         // ============================================================
@@ -1766,11 +2259,11 @@
             const sorted = [...agendaData].sort((a, b) => b.tanggal.localeCompare(a.tanggal));
             let html = '';
             sorted.forEach((a, idx) => {
-                html += `<div class="agenda-item" style="background:white; border-radius:var(--radius-sm); padding:16px 20px; border-left:4px solid var(--primary); margin-bottom:12px; box-shadow:var(--shadow); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                html += `<div class="agenda-item">
                     <div class="agenda-info">
-                        <div class="agenda-date" style="font-size:12px; color:var(--gray-500); font-weight:500;"><i class="far fa-calendar-alt"></i> ${a.tanggal}</div>
-                        <div class="agenda-title" style="font-weight:600; font-size:15px; color:var(--gray-800);">${a.judul}</div>
-                        <div class="agenda-desc" style="font-size:13px; color:var(--gray-600); margin-top:2px;">${a.deskripsi || ''}</div>
+                        <div class="agenda-date"><i class="far fa-calendar-alt"></i> ${a.tanggal}</div>
+                        <div class="agenda-title">${a.judul}</div>
+                        <div class="agenda-desc">${a.deskripsi || ''}</div>
                     </div>
                     <div class="agenda-actions">
                         <button class="btn btn-danger btn-sm" onclick="hapusAgenda(${idx})"><i class="fas fa-trash"></i></button>
@@ -1811,33 +2304,45 @@
         }
 
         // ============================================================
-        // MATERI
+        // MATERI AJAR - Lengkap per Kelas
         // ============================================================
         function renderMateri() {
-            const filterFase = document.getElementById('filterMateriFase').value;
             const filterJenjang = document.getElementById('filterMateriJenjang').value;
+            const filterKelas = document.getElementById('filterMateriKelas').value;
             const container = document.getElementById('materiList');
-            let data = materiPancasila;
-            if (filterFase !== 'all') data = data.filter(m => m.fase === filterFase);
-            if (filterJenjang !== 'all') data = data.filter(m => m.jenjang === filterJenjang);
-            if (data.length === 0) {
+
+            // Gabungkan materi bawaan + upload
+            let allMateri = [...materiPancasila, ...uploadedMateri];
+
+            if (filterJenjang !== 'all') allMateri = allMateri.filter(m => m.jenjang === filterJenjang);
+            if (filterKelas !== 'all') allMateri = allMateri.filter(m => m.kelas == filterKelas);
+
+            if (allMateri.length === 0) {
                 container.innerHTML = '<p class="text-muted">Tidak ada materi untuk filter ini.</p>';
                 return;
             }
+
+            // Urutkan berdasarkan kelas
+            allMateri.sort((a, b) => a.kelas - b.kelas);
+
             let html = '';
-            data.forEach(m => {
-                const badgeClass = `badge-fase-${m.fase.toLowerCase()}`;
-                html += `<div class="material-card" onclick="toggleMateri(${m.id})" style="background:white; border-radius:var(--radius); border:1px solid var(--gray-200); padding:20px 24px; margin-bottom:16px; transition:var(--transition); cursor:pointer;">
-                    <div class="material-title" style="font-weight:600; font-size:16px; color:var(--gray-900); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-                        <span>${m.judul}</span>
+            allMateri.forEach(m => {
+                const badgeClass = m.jenjang === 'SD' ? 'badge-sd' : m.jenjang === 'SMP' ? 'badge-smp' :
+                    'badge-sma';
+                const isUploaded = m.isUploaded ? true : false;
+                html += `<div class="material-card" onclick="toggleMateri(${m.id})">
+                    <div class="material-title">
+                        <span>${m.judul} ${isUploaded ? '<i class="fas fa-upload" style="color:var(--success);font-size:12px;"></i>' : ''}</span>
                         <span>
-                            <span class="badge-level ${badgeClass}" style="font-size:11px; font-weight:700; padding:2px 12px; border-radius:20px; color:white; background:#6c757d;">Fase ${m.fase}</span>
-                            <span class="badge-level" style="font-size:11px; font-weight:700; padding:2px 12px; border-radius:20px; color:white; background:var(--primary-light);">${m.jenjang}</span>
+                            <span class="badge-level ${badgeClass}">${m.jenjang}</span>
+                            <span class="badge-level" style="background:var(--gray-600);">Kelas ${m.kelas}</span>
+                            ${isUploaded ? '<span class="badge-level" style="background:var(--success);">Upload</span>' : ''}
                         </span>
                     </div>
-                    <div class="material-desc" style="color:var(--gray-600); font-size:14px; margin-top:6px;">${m.deskripsi}</div>
-                    <div class="material-body" id="materiBody_${m.id}" style="display:none; margin-top:16px; padding-top:16px; border-top:1px solid var(--gray-200);">
+                    <div class="material-desc">${m.deskripsi}</div>
+                    <div class="material-body" id="materiBody_${m.id}">
                         ${m.konten}
+                        ${isUploaded ? `<div class="sumber">📤 Diunggah oleh Guru</div>` : ''}
                     </div>
                 </div>`;
             });
@@ -1846,7 +2351,75 @@
 
         function toggleMateri(id) {
             const body = document.getElementById('materiBody_' + id);
-            if (body) body.style.display = body.style.display === 'block' ? 'none' : 'block';
+            if (body) body.classList.toggle('open');
+        }
+
+        // ============================================================
+        // UNGGAH MATERI
+        // ============================================================
+        function tambahMateriUpload() {
+            const judul = document.getElementById('uploadJudul').value.trim();
+            const kelas = parseInt(document.getElementById('uploadKelas').value);
+            const jenjang = document.getElementById('uploadJenjang').value;
+            const deskripsi = document.getElementById('uploadDeskripsi').value.trim();
+            const konten = document.getElementById('uploadIsi').value.trim();
+
+            if (!judul || !konten) {
+                showToast('Judul dan isi materi wajib diisi!', 'error');
+                return;
+            }
+
+            const newMateri = {
+                id: Date.now() + Math.random() * 1000,
+                kelas: kelas,
+                jenjang: jenjang,
+                judul: judul,
+                deskripsi: deskripsi || 'Materi yang diunggah oleh guru.',
+                konten: `<p>${konten.replace(/\n/g, '<br>')}</p>`,
+                isUploaded: true
+            };
+
+            uploadedMateri.push(newMateri);
+            localStorage.setItem('uploadedMateriPancasila', JSON.stringify(uploadedMateri));
+
+            document.getElementById('uploadJudul').value = '';
+            document.getElementById('uploadDeskripsi').value = '';
+            document.getElementById('uploadIsi').value = '';
+
+            renderUploadedMateri();
+            renderMateri();
+            showToast('✅ Materi berhasil diunggah!', 'success');
+        }
+
+        function renderUploadedMateri() {
+            const container = document.getElementById('uploadedList');
+            if (uploadedMateri.length === 0) {
+                container.innerHTML = '<p class="text-muted">Belum ada materi yang diunggah.</p>';
+                return;
+            }
+            let html = '';
+            uploadedMateri.forEach((m, idx) => {
+                html += `<div class="upload-item">
+                    <div>
+                        <span class="upload-title">${m.judul}</span>
+                        <span class="upload-meta"> - Kelas ${m.kelas} ${m.jenjang}</span>
+                    </div>
+                    <div>
+                        <button class="btn btn-danger btn-sm" onclick="hapusUploadMateri(${idx})"><i class="fas fa-trash"></i> Hapus</button>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function hapusUploadMateri(idx) {
+            if (confirm('Hapus materi yang diunggah ini?')) {
+                uploadedMateri.splice(idx, 1);
+                localStorage.setItem('uploadedMateriPancasila', JSON.stringify(uploadedMateri));
+                renderUploadedMateri();
+                renderMateri();
+                showToast('Materi dihapus.', 'warning');
+            }
         }
 
         // ============================================================
@@ -1872,11 +2445,11 @@
             }
             let html = '';
             [...catatanData].reverse().forEach((c, idx) => {
-                html += `<div class="agenda-item" style="background:white; border-radius:var(--radius-sm); padding:16px 20px; border-left:4px solid var(--success); margin-bottom:12px; box-shadow:var(--shadow); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                html += `<div class="agenda-item" style="border-left-color:var(--success);">
                     <div class="agenda-info">
-                        <div class="agenda-date" style="font-size:12px; color:var(--gray-500);"><i class="far fa-calendar-alt"></i> ${c.tanggal}</div>
-                        <div class="agenda-title" style="font-weight:600; font-size:15px; color:var(--gray-800);">${c.judul}</div>
-                        <div class="agenda-desc" style="font-size:13px; color:var(--gray-600);">${c.isi}</div>
+                        <div class="agenda-date"><i class="far fa-calendar-alt"></i> ${c.tanggal}</div>
+                        <div class="agenda-title">${c.judul}</div>
+                        <div class="agenda-desc">${c.isi}</div>
                     </div>
                     <button class="btn btn-danger btn-sm" onclick="hapusCatatan(${idx})"><i class="fas fa-trash"></i></button>
                 </div>`;
@@ -2037,11 +2610,8 @@
             renderAgenda();
             renderCatatan();
             renderNilai();
+            renderUploadedMateri();
             updateStats();
-            // Load QRCode library
-            if (typeof QRCode === 'undefined') {
-                loadQRCodeLibrary();
-            }
         });
 
         document.getElementById('loginPage').style.display = 'flex';
@@ -2050,7 +2620,9 @@
         console.log('📚 e-Learning Pendidikan Pancasila SRT 39 Garut');
         console.log('👨‍🏫 Login: guru / pancasila');
         console.log('📊 Total siswa:', siswaData.length);
-        console.log('🔹 Fitur: Generate QR Code dari database siswa + Unduh perorangan / semua');
+        console.log('📖 Materi lengkap per kelas (SD I-VI, SMP VII-IX, SMA X-XII)');
+        console.log('🔹 QR Code via qrzap.fun (gratis, tanpa API key)');
+        console.log('📤 Fitur unggah materi tersedia');
     </script>
 
 </body>

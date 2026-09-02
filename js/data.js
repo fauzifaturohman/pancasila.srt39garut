@@ -80,8 +80,22 @@ const siswaData = [
 ];
 
 // ============================================================
-// DATA MATERI AJAR LENGKAP PER KELAS + E-BOOK
+// DATA MATERI AJAR DEFAULT (LENGKAP SD, SMP, SMA)
 // ============================================================
-// data.js
-const siswaData = [ ... ]; // tetap sama
+const defaultMateriPancasila = [
+    // SD Kelas 1-6
+    { id: 1, kelas: 1, jenjang: "SD", judul: "Aku Cinta Pancasila", deskripsi: "Pengenalan lambang dan bunyi Pancasila", konten: "<p>Pancasila adalah dasar negara Indonesia. Terdiri dari lima sila...</p><ul><li>Sila ke-1: Ketuhanan Yang Maha Esa</li><li>Sila ke-2: Kemanusiaan yang Adil dan Beradab</li><li>Sila ke-3: Persatuan Indonesia</li><li>Sila ke-4: Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan</li><li>Sila ke-5: Keadilan Sosial bagi Seluruh Rakyat Indonesia</li></ul>", sumber: "Buku PPKn SD Kelas I" },
+    { id: 2, kelas: 2, jenjang: "SD", judul: "Hidup Rukun dengan Pancasila", deskripsi: "Menerapkan nilai-nilai Pancasila dalam kehidupan sehari-hari", konten: "<p>Nilai-nilai Pancasila dapat kita terapkan di rumah, sekolah, dan masyarakat...</p>", sumber: "Buku PPKn SD Kelas II" },
+    { id: 3, kelas: 3, jenjang: "SD", judul: "Sikap Sesuai Pancasila", deskripsi: "Mengidentifikasi sikap yang sesuai dan tidak sesuai dengan Pancasila", konten: "<p>Sikap baik seperti tolong-menolong, menghargai perbedaan, dan gotong royong adalah contoh pengamalan Pancasila...</p>", sumber: "Buku PPKn SD Kelas III" },
+    { id: 4, kelas: 4, jenjang: "SD", judul: "Makna Sila-Sila Pancasila", deskripsi: "Mendalami makna setiap sila", konten: "<p>Setiap sila memiliki makna yang dalam, misalnya sila ke-1 mengajarkan kita untuk beriman dan bertakwa...</p>", sumber: "Buku PPKn SD Kelas IV" },
+    { id: 5, kelas: 5, jenjang: "SD", judul: "Penerapan Pancasila dalam Berbangsa", deskripsi: "Penerapan Pancasila di lingkungan bangsa", konten: "<p>Pancasila menjadi panduan dalam kehidupan berbangsa dan bernegara...</p>", sumber: "Buku PPKn SD Kelas V" },
+    { id: 6, kelas: 6, jenjang: "SD", judul: "Pancasila dan Konstitusi", deskripsi: "Hubungan Pancasila dengan UUD 1945", konten: "<p>Pancasila adalah sumber dari segala sumber hukum di Indonesia...</p>", sumber: "Buku PPKn SD Kelas VI" },
+    // SMP Kelas 7-9
+    { id: 7, kelas: 7, jenjang: "SMP", judul: "Pancasila sebagai Pandangan Hidup", deskripsi: "Memahami Pancasila sebagai ideologi dan pandangan hidup bangsa", konten: "<p>Pancasila bukan hanya dasar negara, tetapi juga pandangan hidup yang mempersatukan...</p>", sumber: "Buku PPKn SMP Kelas VII" },
+    { id: 8, kelas: 8, jenjang: "SMP", judul: "Nilai-Nilai Pancasila", deskripsi: "Mengidentifikasi nilai-nilai Pancasila dalam kehidupan", konten: "<p>Nilai ketuhanan, kemanusiaan, persatuan, kerakyatan, dan keadilan...</p>", sumber: "Buku PPKn SMP Kelas VIII" },
+    { id: 9, kelas: 9, jenjang: "SMP", judul: "Pancasila dalam Sejarah", deskripsi: "Perjalanan Pancasila dari masa ke masa", konten: "<p>Pancasila dirumuskan oleh para pendiri bangsa pada tahun 1945...</p>", sumber: "Buku PPKn SMP Kelas IX" },
+    // SMA Kelas 10-12
+    { id: 10, kelas: 10, jenjang: "SMA", judul: "Filsafat Pancasila", deskripsi: "Pendalaman filosofis tentang Pancasila", konten: "<p>Pancasila sebagai sistem filsafat yang holistik...</p>", sumber: "Buku PPKn SMA Kelas X" },
+    { id: 11, kelas: 11, jenjang: "SMA", judul: "Pancasila dan Demokrasi", deskripsi: "Hubungan Pancasila dengan sistem demokrasi", konten: "<p>Demokrasi Pancasila berbeda dengan demokrasi liberal...</p>", sumber: "Buku PPKn SMA Kelas XI" },
+    { id: 12, kelas: 12, jenjang: "SMA", judul: "Pancasila di Era Globalisasi", deskripsi: "Tantangan dan peluang Pancasila di era global", konten: "<p>Globalisasi membawa perubahan, namun Pancasila tetap menjadi filter budaya asing...</p>", sumber: "Buku PPKn SMA Kelas XII" }
 ];

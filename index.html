@@ -1473,8 +1473,9 @@
                 <!-- ===== MATERI ===== -->
                 <section id="page-materi" class="page-section">
                     <h1 class="page-title"><i class="fas fa-book"></i> Materi Ajar Pendidikan Pancasila</h1>
-                    <p class="page-subtitle">Materi lengkap per kelas (SD I-VI, SMP VII-IX, SMA X-XII) sesuai Kurikulum Merdeka</p>
+                    <p class="page-subtitle">Unggah dan kelola file materi (PDF/PPT) untuk setiap kelas.</p>
 
+                    <!-- Filter -->
                     <div class="filter-bar">
                         <select id="filterMateriJenjang" onchange="renderMateri()">
                             <option value="all">Semua Jenjang</option>
@@ -1494,18 +1495,20 @@
                         </select>
                     </div>
 
+                    <!-- Daftar Materi -->
                     <div id="materiList"></div>
 
+                    <!-- Form Upload -->
                     <div class="admin-card" style="margin-top:24px;">
-                        <div class="admin-title"><i class="fas fa-upload"></i> Unggah Materi Ajar</div>
-                        <p class="text-muted">Tambahkan materi ajar secara manual jika materi di atas belum lengkap.</p>
+                        <div class="admin-title"><i class="fas fa-upload"></i> Unggah Materi Baru</div>
+                        <p class="text-muted">Upload file PDF atau PPT (maks. 5MB).</p>
                         <div class="grid-2">
                             <div class="form-group">
                                 <label>Judul Materi</label>
-                                <input type="text" id="uploadJudul" placeholder="Misal: Bab 5 Pancasila dan NKRI" />
+                                <input type="text" id="uploadJudul" placeholder="Misal: Bab 1 Pancasila" />
                             </div>
                             <div class="form-group">
-                                <label>Kelas</label>
+                            <label>Kelas</label>
                                 <select id="uploadKelas">
                                     <option value="1">Kelas I</option><option value="2">Kelas II</option>
                                     <option value="3">Kelas III</option><option value="4">Kelas IV</option>
@@ -1527,25 +1530,18 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Deskripsi Singkat</label>
-                                <input type="text" id="uploadDeskripsi" placeholder="Deskripsi materi" />
+                                <label>Deskripsi (opsional)</label>
+                                <input type="text" id="uploadDeskripsi" placeholder="Deskripsi singkat" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Isi Materi (HTML / Teks)</label>
-                            <textarea id="uploadIsi" rows="4" placeholder="Tulis materi di sini. Bisa menggunakan tag HTML untuk format."></textarea>
+                            <label>Pilih File (PDF / PPT)</label>
+                            <input type="file" id="uploadFile" accept=".pdf,.ppt,.pptx" />
                         </div>
-                        <button class="btn btn-success" onclick="tambahMateriUpload()"><i class="fas fa-plus"></i> Tambahkan Materi</button>
-
-                        <div class="uploaded-materials" id="uploadedMaterials">
-                            <h4 style="font-size:14px; font-weight:600; color:var(--gray-700); margin-bottom:8px;">Materi yang Diunggah</h4>
-                            <div id="uploadedList">
-                                <p class="text-muted">Belum ada materi yang diunggah.</p>
-                            </div>
-                        </div>
-                    </div>
+                    <button class="btn btn-success" onclick="uploadMateri()"><i class="fas fa-upload"></i> Unggah Materi</button>
+                </div>
                 </section>
-
+                
                 <!-- ===== ADMINISTRASI ===== -->
                 <section id="page-admin" class="page-section">
                     <h1 class="page-title"><i class="fas fa-tasks"></i> Administrasi Pembelajaran</h1>

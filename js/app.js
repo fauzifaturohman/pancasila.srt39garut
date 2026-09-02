@@ -6,7 +6,7 @@ let kehadiranData = JSON.parse(localStorage.getItem('kehadiranPancasila')) || []
 let agendaData = JSON.parse(localStorage.getItem('agendaPancasila')) || [];
 let catatanData = JSON.parse(localStorage.getItem('catatanPancasila')) || [];
 let nilaiData = JSON.parse(localStorage.getItem('nilaiPancasila')) || [];
-let uploadedMateri = JSON.parse(localStorage.getItem('uploadedMateriPancasila')) || [];
+let materiFiles = JSON.parse(localStorage.getItem('materiFilesPancasila')) || [];
 let qrScannerInstance = null;
 let scannedSiswa = null;
 let editingMateriId = null;
@@ -49,7 +49,6 @@ function initApp() {
     updateStats();
     renderKehadiran();
     renderAgenda();
-    renderMateri();
     renderCatatan();
     renderNilai();
     renderUploadedMateri();
@@ -88,7 +87,6 @@ function navigateTo(page) {
     if (page === 'kehadiran') renderKehadiran();
     if (page === 'agenda') renderAgenda();
     if (page === 'admin') { renderCatatan(); renderNilai(); }
-    if (page === 'materi') renderMateri();
     if (page === 'dashboard') updateStats();
 }
 
@@ -406,46 +404,39 @@ function renderMateri() {
     const filterKelas = document.getElementById('filterMateriKelas').value;
     const container = document.getElementById('materiList');
 
-    let allMateri = getAllMateri();
+    let filtered = [...materiFiles];
+    if (filterJenjang !== 'all') filtered = filtered.filter(m => m.jenjang === filterJenjang);
+    if (filterKelas !== 'all') filtered = filtered.filter(m => m.kelas == filterKelas);
 
-    if (filterJenjang !== 'all') allMateri = allMateri.filter(m => m.jenjang === filterJenjang);
-    if (filterKelas !== 'all') allMateri = allMateri.filter(m => m.kelas == filterKelas);
-
-    if (allMateri.length === 0) {
-        container.innerHTML = '<p class="text-muted">Tidak ada materi untuk filter ini.</p>';
+    if (filtered.length === 0) {
+        container.innerHTML = '<p class="text-muted">Belum ada materi yang diunggah. Silakan unggah file PDF/PPT.</p>';
         return;
     }
 
-    allMateri.sort((a, b) => a.kelas - b.kelas);
-
     let html = '';
-    allMateri.forEach(m => {
-        const badgeClass = m.jenjang === 'SD' ? 'badge-sd' : m.jenjang === 'SMP' ? 'badge-smp' : 'badge-sma';
-        const isEdited = m.isEdited || m.isUploaded;
-        const editBadge = isEdited ? '<span class="badge-level badge-edited" style="font-size:10px;">✏️ Diedit</span>' : '';
-        const uploadBadge = m.isUploaded && !m.isEdited ? '<span class="badge-level" style="background:var(--success);font-size:10px;">📤 Upload</span>' : '';
-        html += `<div class="material-card">
-            <div class="material-title">
-                <span>${m.judul}</span>
-                <span>
-                    <span class="badge-level ${badgeClass}">${m.jenjang}</span>
-                    <span class="badge-level" style="background:var(--gray-600);">Kelas ${m.kelas}</span>
-                    ${uploadBadge}
-                    ${editBadge}
-                </span>
+    filtered.forEach((m, idx) => {
+        const fileIcon = m.fileType.includes('pdf') ? 'fa-file-pdf' : 'fa-file-powerpoint';
+        const iconColor = m.fileType.includes('pdf') ? 'var(--danger)' : 'var(--warning)';
+        html += `
+            <div class="material-card">
+                <div class="material-title">
+                    <span><i class="fas ${fileIcon}" style="color:${iconColor}; margin-right:8px;"></i> ${m.judul}</span>
+                    <span>
+                        <span class="badge-level ${m.jenjang === 'SD' ? 'badge-sd' : m.jenjang === 'SMP' ? 'badge-smp' : 'badge-sma'}">${m.jenjang}</span>
+                        <span class="badge-level" style="background:var(--gray-600);">Kelas ${m.kelas}</span>
+                    </span>
+                </div>
+                <div class="material-desc">${m.deskripsi || 'Tidak ada deskripsi'}</div>
+                <div class="material-meta">
+                    <small><i class="far fa-file"></i> ${m.fileName}</small>
+                    <small><i class="far fa-calendar-alt"></i> ${m.tanggalUpload}</small>
+                </div>
+                <div class="material-actions">
+                    <button class="btn btn-primary btn-sm" onclick="downloadMateri(${m.id})"><i class="fas fa-download"></i> Unduh</button>
+                    <button class="btn btn-danger btn-sm" onclick="hapusMateri(${m.id})"><i class="fas fa-trash"></i> Hapus</button>
+                </div>
             </div>
-            <div class="material-desc">${m.deskripsi}</div>
-            <div class="material-body" id="materiBody_${m.id}">
-                ${m.konten}
-                ${m.sumber ? `<div class="sumber">${m.sumber}</div>` : ''}
-            </div>
-            <div class="material-actions">
-                <button class="btn btn-primary btn-sm" onclick="toggleMateri(${m.id})"><i class="fas fa-eye"></i> Lihat</button>
-                <button class="btn btn-warning btn-sm" onclick="bukaEditMateri(${m.id})"><i class="fas fa-edit"></i> Edit</button>
-                ${m.isUploaded ? `<button class="btn btn-danger btn-sm" onclick="hapusMateriUpload(${m.id})"><i class="fas fa-trash"></i> Hapus</button>` : ''}
-                ${!m.isUploaded ? `<button class="btn btn-outline btn-sm" onclick="duplikatMateri(${m.id})"><i class="fas fa-copy"></i> Duplikat</button>` : ''}
-            </div>
-        </div>`;
+        `;
     });
     container.innerHTML = html;
 }
@@ -456,173 +447,104 @@ function toggleMateri(id) {
 }
 
 // ============================================================
-// EDIT MATERI
+// UPLOAD MATERI (FILE)
 // ============================================================
-function bukaEditMateri(id) {
-    const all = getAllMateri();
-    const materi = all.find(m => m.id === id);
-    if (!materi) { showToast('Materi tidak ditemukan!', 'error'); return; }
-
-    editingMateriId = id;
-    document.getElementById('editMateriId').value = id;
-    document.getElementById('editJudul').value = materi.judul || '';
-    document.getElementById('editKelas').value = materi.kelas || 1;
-    document.getElementById('editJenjang').value = materi.jenjang || 'SD';
-    document.getElementById('editDeskripsi').value = materi.deskripsi || '';
-    document.getElementById('editIsi').value = materi.konten ? materi.konten.replace(/<[^>]+>/g, '') : '';
-
-    document.getElementById('modalEditMateri').classList.add('show');
-}
-
-function tutupModalEditMateri() {
-    document.getElementById('modalEditMateri').classList.remove('show');
-    editingMateriId = null;
-}
-
-function simpanEditMateri() {
-    const id = parseInt(document.getElementById('editMateriId').value);
-    const judul = document.getElementById('editJudul').value.trim();
-    const kelas = parseInt(document.getElementById('editKelas').value);
-    const jenjang = document.getElementById('editJenjang').value;
-    const deskripsi = document.getElementById('editDeskripsi').value.trim();
-    const isi = document.getElementById('editIsi').value.trim();
-
-    if (!judul || !isi) { showToast('Judul dan isi materi wajib diisi!', 'error'); return; }
-
-    const idx = uploadedMateri.findIndex(m => m.id === id);
-    if (idx !== -1) {
-        uploadedMateri[idx] = {
-            ...uploadedMateri[idx],
-            judul,
-            kelas,
-            jenjang,
-            deskripsi: deskripsi || uploadedMateri[idx].deskripsi,
-            konten: `<p>${isi.replace(/\n/g, '<br>')}</p>`,
-            isEdited: true
-        };
-    } else {
-        uploadedMateri.push({
-            id: id,
-            judul,
-            kelas,
-            jenjang,
-            deskripsi: deskripsi || 'Materi yang telah diedit.',
-            konten: `<p>${isi.replace(/\n/g, '<br>')}</p>`,
-            isUploaded: true,
-            isEdited: true
-        });
-    }
-
-    localStorage.setItem('uploadedMateriPancasila', JSON.stringify(uploadedMateri));
-    tutupModalEditMateri();
-    renderMateri();
-    renderUploadedMateri();
-    showToast('✅ Materi berhasil diperbarui!', 'success');
-}
-
-// ============================================================
-// DUPLIKAT MATERI
-// ============================================================
-function duplikatMateri(id) {
-    const all = getAllMateri();
-    const materi = all.find(m => m.id === id);
-    if (!materi) { showToast('Materi tidak ditemukan!', 'error'); return; }
-
-    const newId = Date.now() + Math.random() * 1000;
-    const newMateri = {
-        id: newId,
-        kelas: materi.kelas,
-        jenjang: materi.jenjang,
-        judul: materi.judul + ' (Salinan)',
-        deskripsi: materi.deskripsi + ' (Salinan)',
-        konten: materi.konten,
-        isUploaded: true,
-        isEdited: true
-    };
-    uploadedMateri.push(newMateri);
-    localStorage.setItem('uploadedMateriPancasila', JSON.stringify(uploadedMateri));
-    renderMateri();
-    renderUploadedMateri();
-    showToast('✅ Duplikat materi berhasil dibuat!', 'success');
-}
-
-// ============================================================
-// HAPUS MATERI UPLOAD
-// ============================================================
-function hapusMateriUpload(id) {
-    if (!confirm('Hapus materi yang diunggah ini?')) return;
-    const idx = uploadedMateri.findIndex(m => m.id === id);
-    if (idx !== -1) {
-        uploadedMateri.splice(idx, 1);
-        localStorage.setItem('uploadedMateriPancasila', JSON.stringify(uploadedMateri));
-        renderMateri();
-        renderUploadedMateri();
-        showToast('Materi dihapus.', 'warning');
-    } else {
-        showToast('Materi tidak ditemukan di daftar unggahan.', 'error');
-    }
-}
-
-// ============================================================
-// UNGGAH MATERI BARU
-// ============================================================
-function tambahMateriUpload() {
+function uploadMateri() {
     const judul = document.getElementById('uploadJudul').value.trim();
     const kelas = parseInt(document.getElementById('uploadKelas').value);
     const jenjang = document.getElementById('uploadJenjang').value;
     const deskripsi = document.getElementById('uploadDeskripsi').value.trim();
-    const konten = document.getElementById('uploadIsi').value.trim();
+    const fileInput = document.getElementById('uploadFile');
+    const file = fileInput.files[0];
 
-    if (!judul || !konten) {
-        showToast('Judul dan isi materi wajib diisi!', 'error');
+    if (!judul || !file) {
+        showToast('Judul dan file wajib diisi!', 'error');
         return;
     }
 
-    const newMateri = {
-        id: Date.now() + Math.random() * 1000,
-        kelas: kelas,
-        jenjang: jenjang,
-        judul: judul,
-        deskripsi: deskripsi || 'Materi yang diunggah oleh guru.',
-        konten: `<p>${konten.replace(/\n/g, '<br>')}</p>`,
-        isUploaded: true,
-        isEdited: true
+    // Validasi tipe file
+    const allowedTypes = ['application/pdf', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation'];
+    if (!allowedTypes.includes(file.type)) {
+        showToast('Hanya file PDF atau PPT yang diperbolehkan.', 'error');
+        return;
+    }
+
+    // Batas ukuran file (misal 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+        showToast('Ukuran file maksimal 5MB.', 'error');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const fileData = e.target.result; // base64
+        const newMateri = {
+            id: Date.now() + Math.random() * 1000,
+            judul,
+            kelas,
+            jenjang,
+            deskripsi: deskripsi || 'Tidak ada deskripsi',
+            fileName: file.name,
+            fileType: file.type,
+            fileData: fileData,
+            tanggalUpload: new Date().toISOString().split('T')[0]
+        };
+        materiFiles.push(newMateri);
+        localStorage.setItem('materiFilesPancasila', JSON.stringify(materiFiles));
+        // Reset form
+        document.getElementById('uploadJudul').value = '';
+        document.getElementById('uploadDeskripsi').value = '';
+        fileInput.value = '';
+        renderMateri();
+        showToast(`✅ Materi "${judul}" berhasil diunggah!`, 'success');
     };
-
-    uploadedMateri.push(newMateri);
-    localStorage.setItem('uploadedMateriPancasila', JSON.stringify(uploadedMateri));
-
-    document.getElementById('uploadJudul').value = '';
-    document.getElementById('uploadDeskripsi').value = '';
-    document.getElementById('uploadIsi').value = '';
-
-    renderUploadedMateri();
-    renderMateri();
-    showToast('✅ Materi berhasil diunggah!', 'success');
+    reader.onerror = function() {
+        showToast('Gagal membaca file.', 'error');
+    };
+    reader.readAsDataURL(file);
 }
 
-function renderUploadedMateri() {
-    const container = document.getElementById('uploadedList');
-    const uploaded = uploadedMateri.filter(m => m.isUploaded);
-    if (uploaded.length === 0) {
-        container.innerHTML = '<p class="text-muted">Belum ada materi yang diunggah.</p>';
+// ============================================================
+// DOWNLOAD MATERI
+// ============================================================
+function downloadMateri(id) {
+    const materi = materiFiles.find(m => m.id === id);
+    if (!materi) {
+        showToast('Materi tidak ditemukan.', 'error');
         return;
     }
-    let html = '';
-    uploaded.forEach((m) => {
-        html += `<div class="upload-item">
-            <div>
-                <span class="upload-title">${m.judul}</span>
-                <span class="upload-meta"> - Kelas ${m.kelas} ${m.jenjang}</span>
-                ${m.isEdited ? '<span class="upload-meta" style="color:var(--warning);"> ✏️ diedit</span>' : ''}
-            </div>
-            <div>
-                <button class="btn btn-danger btn-sm" onclick="hapusMateriUpload(${m.id})"><i class="fas fa-trash"></i> Hapus</button>
-            </div>
-        </div>`;
-    });
-    container.innerHTML = html;
+    try {
+        const link = document.createElement('a');
+        link.href = materi.fileData;
+        link.download = materi.fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast(`Mengunduh ${materi.fileName}`, 'success');
+    } catch (err) {
+        showToast('Gagal mengunduh file.', 'error');
+    }
 }
+
+// ============================================================
+// HAPUS MATERI
+// ============================================================
+function hapusMateri(id) {
+    if (!confirm('Hapus materi ini?')) return;
+    const idx = materiFiles.findIndex(m => m.id === id);
+    if (idx !== -1) {
+        materiFiles.splice(idx, 1);
+        localStorage.setItem('materiFilesPancasila', JSON.stringify(materiFiles));
+        renderMateri();
+        showToast('Materi dihapus.', 'warning');
+    }
+}
+
+// ============================================================
+// INIT - panggil renderMateri() di DOMContentLoaded
+// ============================================================
+// Pastikan di bagian initApp() atau DOMContentLoaded ada renderMateri()
+// dan update total siswa, dll.
 
 // ============================================================
 // CATATAN

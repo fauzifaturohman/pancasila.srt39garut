@@ -1500,7 +1500,7 @@
 
                     <!-- Form Upload -->
                     <div class="admin-card" style="margin-top:24px;">
-                        <div class="admin-title"><i class="fas fa-upload"></i> Unggah Materi Baru</div>
+                        <div class="admin-title"><i class="fas fa-upload"></i> Unggah  Baru</div>
                         <p class="text-muted">Upload file PDF atau PPT (maks. 5MB).</p>
                         <div class="grid-2">
                             <div class="form-group">
@@ -1833,49 +1833,7 @@
             { nama: "ZAKI MUHAMAD KUSUMAH", nisn: "3133946425", jenjang: "SD" },
             { nama: "ZIDAN ABDUL JAILANI", nisn: "3169526039", jenjang: "SD" }
         ];
-
-        // ============================================================
-        // DEFAULT MATERI (diringkas untuk menjaga ukuran)
-        // ============================================================
-        const defaultMateriPancasila = [
-            { id: 1, kelas: 1, jenjang: "SD", judul: "Aku dan Teman Temanku",
-                deskripsi: "Mengenal diri sendiri, teman, dan pentingnya berteman tanpa membeda-bedakan.",
-                konten: "<p><strong>A. Mengenal Diri Sendiri</strong><br>Setiap anak memiliki nama, ciri fisik, dan kesukaan yang berbeda. Kita harus saling menghargai perbedaan.</p><p><strong>B. Berteman dengan Semua Orang</strong><br>Berteman tidak boleh membeda-bedakan. Semua teman adalah sahabat.</p><p><strong>C. Bermain Bersama</strong><br>Bermain bersama mengajarkan kerja sama dan saling membantu.</p>" },
-            { id: 2, kelas: 2, jenjang: "SD", judul: "Aku Patuh Aturan",
-                deskripsi: "Kedisiplinan dalam kehidupan sehari-hari di berbagai tempat.",
-                konten: "<p><strong>A. Aturan di Tempat Umum</strong><br>Di tempat umum seperti pasar dan taman, kita harus menjaga ketertiban.</p><p><strong>B. Aturan Berlalu Lintas</strong><br>Mematuhi rambu-rambu lalu lintas untuk keselamatan bersama.</p><p><strong>C. Akibat Tidak Mematuhi Aturan</strong><br>Dapat membahayakan diri sendiri dan orang lain.</p>" },
-            { id: 3, kelas: 3, jenjang: "SD", judul: "Aku Anak Indonesia",
-                deskripsi: "Identitas sebagai anak Indonesia dan kebanggaan terhadap bangsa.",
-                konten: "<p><strong>A. Ciri-Ciri Anak Indonesia</strong><br>Berbudi pekerti luhur, cinta tanah air, dan menjunjung tinggi persatuan.</p><p><strong>B. Keberagaman Indonesia</strong><br>Indonesia memiliki beragam suku, agama, dan budaya.</p><p><strong>C. Bangga Menjadi Anak Indonesia</strong><br>Menggunakan produk dalam negeri, melestarikan budaya.</p>" },
-            { id: 4, kelas: 4, jenjang: "SD", judul: "Mengenal Lingkungan Sekitar",
-                deskripsi: "Memahami lingkungan alam dan sosial di sekitar.",
-                konten: "<p><strong>A. Lingkungan Alam</strong><br>Mengenal ekosistem, flora, dan fauna di sekitar.</p><p><strong>B. Lingkungan Sosial</strong><br>Hubungan antar warga masyarakat.</p><p><strong>C. Menjaga Lingkungan</strong><br>Melestarikan alam untuk generasi mendatang.</p>" },
-            { id: 5, kelas: 5, jenjang: "SD", judul: "Pancasila dalam Kehidupanku",
-                deskripsi: "Memahami Pancasila sebagai dasar negara, pandangan hidup, dan ideologi negara.",
-                konten: "<p><strong>A. Pancasila sebagai Ideologi</strong><br>Pancasila adalah ideologi yang mempersatukan bangsa.</p><p><strong>B. Pancasila dan UUD 1945</strong><br>Hubungan antara Pancasila dan konstitusi.</p><p><strong>C. Pancasila dalam Kehidupan Berbangsa</strong><br>Penerapan Pancasila dalam berbagai bidang kehidupan.</p>" },
-            { id: 6, kelas: 6, jenjang: "SD", judul: "Belajar Pancasila dengan Menyenangkan",
-                deskripsi: "Mempelajari nilai-nilai Pancasila sebagai kebaikan yang saling berhubungan.",
-                konten: "<p><strong>A. Nilai-nilai Pancasila</strong><br>Pancasila terdiri dari 5 nilai yang saling berkaitan.</p><p><strong>B. Penerapan dalam Kehidupan</strong><br>Mengamalkan nilai-nilai Pancasila dalam kegiatan sehari-hari.</p><p><strong>C. Menjadi Pribadi yang Baik</strong><br>Dengan mengamalkan Pancasila, kita menjadi pribadi yang lebih baik.</p>" },
-            { id: 7, kelas: 7, jenjang: "SMP", judul: "Sejarah Kelahiran Pancasila",
-                deskripsi: "Proses perumusan Pancasila oleh para pendiri bangsa dan penetapannya sebagai dasar negara.",
-                konten: "<p><strong>A. Latar Belakang</strong><br>BPUPKI dibentuk untuk mempersiapkan kemerdekaan Indonesia.</p><p><strong>B. Sidang BPUPKI</strong><br>Ir. Soekarno mengusulkan Pancasila pada 1 Juni 1945.</p><p><strong>C. Pengesahan Pancasila</strong><br>PPKI mengesahkan Pancasila sebagai dasar negara pada 18 Agustus 1945.</p>" },
-            { id: 8, kelas: 8, jenjang: "SMP", judul: "Pancasila sebagai Ideologi Terbuka",
-                deskripsi: "Pancasila sebagai ideologi yang dinamis dan terbuka terhadap perubahan zaman.",
-                konten: "<p><strong>A. Pengertian Ideologi Terbuka</strong><br>Ideologi yang mampu beradaptasi dengan perkembangan zaman.</p><p><strong>B. Ciri-Ciri</strong><br>Bersumber dari nilai-nilai luhur bangsa, mampu menyesuaikan dengan dinamika masyarakat.</p><p><strong>C. Pancasila dan Globalisasi</strong><br>Pancasila sebagai filter budaya asing.</p>" },
-            { id: 9, kelas: 9, jenjang: "SMP", judul: "Pancasila dan Ketahanan Nasional",
-                deskripsi: "Peran Pancasila dalam memperkuat ketahanan nasional di berbagai bidang.",
-                konten: "<p><strong>A. Ketahanan Nasional</strong><br>Kemampuan bangsa untuk bertahan dan mengatasi ancaman.</p><p><strong>B. Dimensi Ketahanan</strong><br>Ideologi, politik, ekonomi, sosial budaya, pertahanan keamanan.</p><p><strong>C. Implementasi</strong><br>Menerapkan Pancasila dalam kehidupan sehari-hari.</p>" },
-            { id: 10, kelas: 10, jenjang: "SMA", judul: "Pancasila sebagai Pemersatu Bangsa",
-                deskripsi: "Pancasila sebagai ideologi pemersatu dalam keberagaman Indonesia.",
-                konten: "<p><strong>A. Pancasila dalam Keberagaman</strong><br>Pancasila menjadi perekat berbagai suku, agama, dan budaya.</p><p><strong>B. Nilai Persatuan</strong><br>Sila ke-3 sebagai dasar untuk menjaga keutuhan NKRI.</p><p><strong>C. Implementasi</strong><br>Mengamalkan Pancasila dalam kehidupan berbangsa.</p>" },
-            { id: 11, kelas: 11, jenjang: "SMA", judul: "Menjiwai Pancasila",
-                deskripsi: "Menginternalisasi nilai-nilai Pancasila sebagai jiwa bangsa.",
-                konten: "<p><strong>A. Pancasila sebagai Jiwa Bangsa</strong><br>Pancasila adalah kepribadian bangsa Indonesia.</p><p><strong>B. Implementasi Pancasila</strong><br>Menerapkan Pancasila dalam berbagai bidang kehidupan.</p><p><strong>C. Tantangan Implementasi</strong><br>Menghadapi tantangan global dengan berpegang pada Pancasila.</p>" },
-            { id: 12, kelas: 12, jenjang: "SMA", judul: "Pancasila dalam Pusaran Globalisasi",
-                deskripsi: "Pancasila sebagai filter dalam menghadapi arus globalisasi.",
-                konten: "<p><strong>A. Dampak Globalisasi</strong><br>Perubahan sosial, budaya, ekonomi, dan politik.</p><p><strong>B. Pancasila sebagai Filter</strong><br>Menyaring nilai-nilai asing yang sesuai dengan kepribadian bangsa.</p><p><strong>C. Strategi Menghadapi Globalisasi</strong><br>Memperkuat identitas nasional dan nilai-nilai Pancasila.</p>" }
-        ];
-
+        
         // ============================================================
         // STATE
         // ============================================================

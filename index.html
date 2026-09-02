@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-Learning Pendidikan Pancasila - SRT 39 Garut</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js">
+    </script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js">
+    </script>
+    <!-- Babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js">
+    </script>
+    <!-- Excel & QR Scanner -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js">
+    </script>
+    <script src="https://unpkg.com/html5-qrcode">
+    </script>
+
+    <style>
+        .animate-fade-in-up {
+            animation: fadeInUp 0.4s ease-out forwards;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        /* Scroll tipis untuk tabel */
+        .table-wrap {
+            max-height: 480px;
+            overflow-y: auto;
+        }
+        .table-wrap thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // ============================================================
+        //  DATA SISWA DARI SCREENSHOT (75 siswa)
+        //  Sumber: Screenshot 2026-08-28 093220 s.d. 093826
+        // ============================================================
+        const defaultStudents = [
+            // 1–5 (093220)
+            { id: 1, nama: 'ADE MUSTOPA', nisn: '3139453861', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 2, nama: 'AGUS RAMDANI', nisn: '0104915906', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 3, nama: 'AHMAD PADILAH', nisn: '3137836817', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 4, nama: 'AI SITI NUROHMAH', nisn: '3158260386', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 5, nama: 'ANDIKA NUROHMAN', nisn: '0141419382', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            // 6–11 (093244)
+            { id: 6, nama: 'ANISA SAPUTRI', nisn: '0123595071', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 7, nama: 'ARDIANSYAH SAPUTRA', nisn: '3162522983', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 8, nama: 'ARIF FIRMANSYAH', nisn: '3120690349', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 9, nama: 'ARMAN MAULANA', nisn: '3132152714', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 10, nama: 'DEPAHRI PUTRA RAMADAN', nisn: '3111636292', kelas: '7B', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 11, nama: 'DERIMUHAMMAD', nisn: '3122527422', kelas: '7B', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            // 12–17 (093305)
+            { id: 12, nama: 'DEWANGGNA NUGRAHA', nisn: '3124835417', kelas: '7B', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 13, nama: 'DEWI TANIA', nisn: '3124764226', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 14, nama: 'ELSA SABILA NURHALIMAH', nisn: '3130228888', kelas: '7B', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 15, nama: 'EVA FAUZIAH', nisn: '0094884752', kelas: '9A', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 16, nama: 'FANESA ANASTASYA', nisn: '0106857181', kelas: '9A', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 17, nama: 'FEBI', nisn: '0129226857', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            // 18–23 (093339)
+            { id: 18, nama: 'HISMA HOLIPATUL PADILAH', nisn: '0113316745', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 19, nama: 'IHSAN MAULANA', nisn: '3126090468', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 20, nama: 'INDRIA DELIA PUTRI', nisn: '97311050', kelas: '9A', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 21, nama: 'IRNA RAODOTUL ZANAH', nisn: '3133143373', kelas: '7B', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 22, nama: 'IRSAL KHAERUNA', nisn: '3146716444', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 23, nama: 'LESTI JULIANTI', nisn: '3128365677', kelas: '7B', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            // 24–29 (093403)
+            { id: 24, nama: 'M RIZKY MAULANA', nisn: '3172776475', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 25, nama: 'M. FATIR', nisn: '0102903616', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 26, nama: 'MOCH AKBAR TRI HERMAWAN', nisn: '0106566909', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 27, nama: 'MOH PAISAL APRILIANSAH', nisn: '0147560005', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 28, nama: 'MUHAMAD FATTAN SAPUTRA', nisn: '3155276593', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 29, nama: 'MUHAMAD HANIF ALIYUDIN', nisn: '102243542', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            // 30–35 (093431)
+            { id: 30, nama: 'MUHAMAD HASANUDIN', nisn: '0113191027', kelas: '7B', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 31, nama: 'MUHAMAD REHAN NURUL JANAH', nisn: '0111987988', kelas: '9A', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 32, nama: 'MUHAMAD RISKI ABDULLOH', nisn: '3161059263', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 33, nama: 'MUHAMAD RIVAL ALFARIZI', nisn: '3169279715', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 34, nama: 'MUHAMAD SAMIN NUGRAHA', nisn: '0119673298', kelas: '7B', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 35, nama: 'MUHAMAD SANDI', nisn: '0115109325', kelas: '7B', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            // 36–41 (093502)
+            { id: 36, nama: 'MUHAMMAD IDRUS PAHMI JAHARSAH', nisn: '0115015547', kelas: '7B', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 37, nama: 'MUHAMMAD RAEHAN', nisn: '3094108589', kelas: '7B', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 38, nama: 'MUHAMMAD ZAKI ARIPIN', nisn: '0127300770', kelas: '7B', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 39, nama: 'MUSNAN FIRDAUS', nisn: '3108593390', kelas: '7B', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 40, nama: 'NAZHAN', nisn: '0102332909', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 41, nama: 'NOVI RAHMADANI', nisn: '0127825608', kelas: '7B', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            // 42–47 (093531)
+            { id: 42, nama: 'PARHAN HERIYANSAH', nisn: '3137252816', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 43, nama: 'PERDIANSAH PRATAMA', nisn: '0128988677', kelas: '7B', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 44, nama: 'PIRMANSYAH RAMDANI', nisn: '3108187441', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 45, nama: 'PONI YULIA', nisn: '0124893928', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 46, nama: 'RAIHAN SAPUTRA', nisn: '0119552685', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 47, nama: 'RAISA AURELIA PUTRI', nisn: '3142169447', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            // 48–53 (093701)
+            { id: 48, nama: 'RAISYA NURPADILAH', nisn: '0104449370', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 49, nama: 'RANI', nisn: '3128636723', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 50, nama: 'RAYAA RAFSANJANI', nisn: '3151327926', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 51, nama: 'REGI', nisn: '0092815396', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 52, nama: 'REHAN', nisn: '0098060608', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 53, nama: 'REZA HANAFIYAH', nisn: '3129196277', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            // 54–59 (093724)
+            { id: 54, nama: 'RINA', nisn: '3129604730', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 55, nama: 'RISKY', nisn: '0103304248', kelas: '7B', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 56, nama: 'RIYAD FADILAH', nisn: '0131133087', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 57, nama: 'RIYAN AGUNG FAUZI', nisn: '3129425558', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 58, nama: 'RIZKI MIRAJ NAWAWI', nisn: '3120958649', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 59, nama: 'SABIT MAULANA', nisn: '3117684281', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            // 60–65 (093754)
+            { id: 60, nama: 'SALMAN SAEPUL BAGRI', nisn: '0115635878', kelas: '9A', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 61, nama: 'SALSA BILA', nisn: '0124232598', kelas: '8B', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 62, nama: 'SALWA AULIA ZAKIAWAN', nisn: '0109385868', kelas: '7B', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 63, nama: 'SELLI KHAIRUNNISA', nisn: '3124008773', kelas: '8B', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 64, nama: 'SIFA NURAINI', nisn: '0103955647', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 65, nama: 'SITI FADILAH', nisn: '3154325333', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            // 66–70 (093815)
+            { id: 66, nama: 'SITIMASITOH', nisn: '3125474904', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 67, nama: 'SITIPASWA', nisn: '3131493765', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 68, nama: 'SRIMULYANI', nisn: '0108334564', kelas: '7B', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            { id: 69, nama: 'SUDIRMAN', nisn: '0119440168', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 70, nama: 'SYIFANURHAYATI', nisn: '0103927661', kelas: '9A', ttl: '-', alamat: '-', status: '-', gender: 'P' },
+            // 71–75 (093826)
+            { id: 71, nama: 'YAN YAN ABDUL HADI', nisn: '0106183939', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 72, nama: 'YANA MULYANA', nisn: '3138754482', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 73, nama: 'YUSUP AWALUDIN', nisn: '0114870689', kelas: '7A', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 74, nama: 'ZAKI MUHAMAD KUSUMAH', nisn: '3133946425', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+            { id: 75, nama: 'ZIDAN ABDUL JAILANI', nisn: '3169526039', kelas: 'SD', ttl: '-', alamat: '-', status: '-', gender: 'L' },
+        ];
+
+        // Data materi & agenda tetap (dummy)
+        const defaultMaterials = [
+            { id: 1, title: 'Modul 1: Sejarah Pancasila', type: 'pdf', level: 'SRMA', date: '2023-10-01' },
+            { id: 2, title: 'Presentasi: Nilai-Nilai Sila ke-3', type: 'pptx', level: 'SRMP', date: '2023-10-05' },
+            { id: 3, title: 'Video Dokumenter Kemerdekaan', type: 'mp4', level: 'SRD', date: '2023-10-10' },
+        ];
+        const defaultAgendas = [
+            { id: 1, date: '2023-10-12', class: 'SRMA 1', title: 'Diskusi Sila Ke-1', notes: 'Siswa aktif bertanya mengenai toleransi beragama.' }
+        ];
+
+        // ============================================================
+        //  KOMPONEN ICON
+        // ============================================================
+        const Icon = ({ name, size = 20, className = "" }) => {
+            const icons = {
+                user: <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2 M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" />,
+                lock: <path d="M19 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2z M7 11V7a5 5 0 0 1 10 0v4" />,
+                book: <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20 M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />,
+                calendar: <path d="M3 4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4z M16 2v4 M8 2v4 M3 10h18" />,
+                qrcode: <path d="M3 3h6v6H3z M15 3h6v6h-6z M3 15h6v6H3z M15 15h6v6h-6z" />,
+                upload: <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4 M17 8l-5-5-5 5 M12 3v12" />,
+                download: <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4 M7 10l5 5 5-5 M12 15V3" />,
+                logout: <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4 M16 17l5-5-5-5 M21 12H9" />,
+                check: <path d="M20 6L9 17l-5-5" />,
+                plus: <path d="M12 5v14 M5 12h14" />,
+                fileText: <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8" />,
+                trash: <path d="M3 6h18 M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2 M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6 M10 11v6 M14 11v6" />,
+                x: <path d="M18 6L6 18 M6 6l12 12" />,
+            };
+            return ( <
+                    svg xmlns = "http://www.w3.org/2000/svg"
+                    width = { size }
+                    height = { size }
+                    viewBox = "0 0 24 24"
+                    fill = "none"
+                    stroke = "currentColor"
+                    strokeWidth = "2"
+                    strokeLinecap = "round"
+                    strokeLinejoin = "round"
+                    className = { className } >
+                    { icons[name] } <
+                    /svg>
+                );
+            };
+
+            // ============================================================
+            //  LOGIN
+            // ============================================================
+            const LoginScreen = ({ onLogin }) => {
+                const [username, setUsername] = useState('');
+                const [password, setPassword] = useState('');
+                const [error, setError] = useState('');
+
+                const handleLogin = (e) => {
+                    e.preventDefault();
+                    const clean = username.trim();
+                    if (clean === 'gurupancasila' && password === 'srt39garut') {
+                        onLogin({ role: 'teacher', name: 'Guru Pendidikan Pancasila' });
+                        return;
+                    }
+                    if (password === 'pancasila') {
+                        onLogin({ role: 'student', name: clean, username: clean });
+                        return;
+                    }
+                    setError('Username atau Password tidak valid!');
+                };
+
+                return ( <
+                        div className = "min-h-screen bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center p-4" >
+                        <
+                        div className = "bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md relative overflow-hidden" >
+                        <
+                        div className = "absolute top-0 left-0 w-full h-2 bg-yellow-400" > < /div> <
+                        div className = "text-center mb-8" >
+                        <
+                        div className = "bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 border-4 border-blue-50" >
+                        <
+                        Icon name = "book"
+                        size = { 40 }
+                        className = "text-blue-700" />
+                        <
+                        /div> <
+                        h1 className = "text-2xl font-bold text-gray-800" > E - Learning Pancasila < /h1> <
+                        p className = "text-gray-500 text-sm mt-1" > Sekolah Rakyat Terintegrasi 39 Garut < /p> <
+                        /div> {
+                            error && < div className = "bg-red-100 border-l-4 border-red-500 text-red-700 p-3 mb-6 rounded text-sm" > { error } < /div>} <
+                                form onSubmit = { handleLogin }
+                            className = "space-y-5" >
+                            <
+                            div >
+                            <
+                            label className = "block text-sm font-medium text-gray-700 mb-1" > Username < /label> <
+                            div className = "relative" >
+                            <
+                            div className = "absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none" >
+                            <
+                            Icon name = "user"
+                            className = "text-gray-400"
+                            size = { 18 }
+                            /> < /div> <
+                            input type = "text"
+                            value = { username }
+                            onChange = { (e) => setUsername(e.target.value) }
+                            required className = "pl-10 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                            placeholder = "Masukkan username" />
+                            <
+                            /div> <
+                            /div> <
+                            div >
+                            <
+                            label className = "block text-sm font-medium text-gray-700 mb-1" > Password < /label> <
+                            div className = "relative" >
+                            <
+                            div className = "absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none" >
+                            <
+                            Icon name = "lock"
+                            className = "text-gray-400"
+                            size = { 18 }
+                            /> < /div> <
+                            input type = "password"
+                            value = { password }
+                            onChange = { (e) => setPassword(e.target.value) }
+                            required className = "pl-10 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                            placeholder = "Masukkan password" />
+                            <
+                            /div> <
+                            /div> <
+                            button type = "submit"
+                            className = "w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-4 rounded-lg flex justify-center items-center gap-2" >
+                            Masuk < Icon name = "check"
+                            size = { 18 }
+                            /> <
+                            /button> <
+                            /form> <
+                            div className = "mt-8 bg-blue-50 p-4 rounded-lg border border-blue-100" >
+                            <
+                            p className = "text-xs text-blue-800 font-semibold mb-1" > Panduan Login Siswa: < /p> <
+                            p className = "text-xs text-gray-600" > user: < span className = "font-mono bg-white px-1 border rounded" > namalengkap < /span> (tanpa spasi) < /p> <
+                            p className = "text-xs text-gray-600 mt-1" > pass: < span className = "font-mono bg-white px-1 border rounded" > pancasila < /span></p >
+                            <
+                            /div> <
+                            /div> <
+                            /div>
+                        );
+                    };
+
+                    // ============================================================
+                    //  KOMPONEN KEHADIRAN + CRUD SISWA
+                    // ============================================================
+                    const TeacherAttendance = ({ students, setStudents }) => {
+                        // State untuk form tambah
+                        const [showAddForm, setShowAddForm] = useState(false);
+                        const [newNama, setNewNama] = useState('');
+                        const [newNisn, setNewNisn] = useState('');
+                        const [newKelas, setNewKelas] = useState('SD');
+                        const [newGender, setNewGender] = useState('L');
+                        const [newTtl, setNewTtl] = useState('-');
+                        const [newAlamat, setNewAlamat] = useState('-');
+
+                        // ---- Ekspor / Impor Excel (sama seperti sebelumnya) ----
+                        const handleDownloadTemplate = () => {
+                            if (typeof XLSX === 'undefined') return alert("Tunggu, library Excel sedang dimuat.");
+                            const ws = XLSX.utils.aoa_to_sheet([
+                                ["No", "Nama", "NISN", "Kelas", "Gender", "Kehadiran (Hadir/Sakit/Izin/Alpa)"],
+                                [1, "Contoh Siswa", "0012345678", "SD", "L", "Hadir"]
+                            ]);
+                            const wb = XLSX.utils.book_new();
+                            XLSX.utils.book_append_sheet(wb, ws, "Template_Presensi");
+                            XLSX.writeFile(wb, "Template_Presensi_Siswa.xlsx");
+                        };
+
+                        const handleExport = () => {
+                            if (typeof XLSX === 'undefined') return;
+                            const data = [
+                                ["No", "Nama", "NISN", "Kelas", "Gender", "Kehadiran"]
+                            ];
+                            students.forEach((s, i) => data.push([i + 1, s.nama, s.nisn, s.kelas, s.gender || '-', s.status]));
+                            const ws = XLSX.utils.aoa_to_sheet(data);
+                            const wb = XLSX.utils.book_new();
+                            XLSX.utils.book_append_sheet(wb, ws, "Data_Presensi");
+                            XLSX.writeFile(wb, "Data_Presensi_Pancasila.xlsx");
+                        };
+
+                        const handleImport = (e) => {
+                            if (typeof XLSX === 'undefined') return;
+                            const file = e.target.files[0];
+                            if (!file) return;
+                            const reader = new FileReader();
+                            reader.onload = (evt) => {
+                                const bstr = evt.target.result;
+                                const wb = XLSX.read(bstr, { type: 'binary' });
+                                const ws = wb.Sheets[wb.SheetNames[0]];
+                                const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+                                const imported = [];
+                                for (let i = 1; i < data.length; i++) {
+                                    const row = data[i];
+                                    if (row.length > 1) {
+                                        imported.push({
+                                            id: Date.now() + i,
+                                            nama: row[1] || 'Unknown',
+                                            nisn: row[2] || '-',
+                                            kelas: row[3] || '-',
+                                            gender: row[4] || '-',
+                                            ttl: '-',
+                                            alamat: '-',
+                                            status: row[5] || '-'
+                                        });
+                                    }
+                                }
+                                if (imported.length > 0) {
+                                    setStudents(imported);
+                                    alert(`Berhasil mengimpor ${imported.length} siswa.`);
+                                }
+                            };
+                            reader.readAsBinaryString(file);
+                        };
+
+                        // ---- Update status ----
+                        const updateStatus = (id, newStatus) => {
+                            setStudents(students.map(s => s.id === id ? { ...s, status: newStatus } : s));
+                        };
+
+                        // ---- Hapus siswa ----
+                        const deleteStudent = (id) => {
+                            if (window.confirm('Yakin ingin menghapus data siswa ini?')) {
+                                setStudents(students.filter(s => s.id !== id));
+                            }
+                        };
+
+                        // ---- Tambah siswa ----
+                        const handleAddStudent = (e) => {
+                            e.preventDefault();
+                            if (!newNama.trim() || !newNisn.trim()) {
+                                alert('Nama dan NISN wajib diisi!');
+                                return;
+                            }
+                            // Cek duplikat NISN
+                            if (students.some(s => s.nisn === newNisn.trim())) {
+                                alert('NISN sudah terdaftar!');
+                                return;
+                            }
+                            const newStudent = {
+                                id: Date.now(),
+                                nama: newNama.trim(),
+                                nisn: newNisn.trim(),
+                                kelas: newKelas,
+                                gender: newGender,
+                                ttl: newTtl || '-',
+                                alamat: newAlamat || '-',
+                                status: '-'
+                            };
+                            setStudents([...students, newStudent]);
+                            setNewNama('');
+                            setNewNisn('');
+                            setNewKelas('SD');
+                            setNewGender('L');
+                            setNewTtl('-');
+                            setNewAlamat('-');
+                            setShowAddForm(false);
+                            alert('Siswa berhasil ditambahkan!');
+                        };
+
+                        // ---- Generate opsi kelas unik ----
+                        const kelasOptions = ['SD', '7A', '7B', '8B', '9A'];
+
+                        return ( <
+                                div className = "bg-white p-6 rounded-xl shadow-sm border border-gray-100" >
+                                <
+                                div className = "flex flex-col sm:flex-row justify-between mb-6 gap-4" >
+                                <
+                                div >
+                                <
+                                h2 className = "text-xl font-bold text-gray-800" > Daftar Kehadiran Murid < /h2> <
+                                p className = "text-sm text-gray-500" >
+                                Total { students.length }
+                                siswa • Kelola absensi atau tambah / hapus data. < /p> <
+                                /div> <
+                                div className = "flex flex-wrap gap-2" >
+                                <
+                                button onClick = { handleDownloadTemplate }
+                                className = "flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium" >
+                                <
+                                Icon name = "download"
+                                size = { 16 }
+                                /> Template <
+                                /button> <
+                                label className = "flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-medium cursor-pointer" >
+                                <
+                                Icon name = "upload"
+                                size = { 16 }
+                                /> Impor <
+                                input type = "file"
+                                accept = ".xlsx,.xls"
+                                className = "hidden"
+                                onChange = { handleImport }
+                                /> <
+                                /label> <
+                                button onClick = { handleExport }
+                                className = "flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium" >
+                                <
+                                Icon name = "download"
+                                size = { 16 }
+                                /> Ekspor <
+                                /button> <
+                                button onClick = {
+                                    () => setShowAddForm(!showAddForm) }
+                                className = "flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium" >
+                                <
+                                Icon name = "plus"
+                                size = { 16 }
+                                /> { showAddForm ? 'Batal' : 'Tambah' } <
+                                /button> <
+                                /div> <
+                                /div>
+
+                                { /* FORM TAMBAH SISWA */ } {
+                                    showAddForm && ( <
+                                        form onSubmit = { handleAddStudent }
+                                        className = "mb-6 p-5 bg-indigo-50 rounded-xl border border-indigo-200 grid grid-cols-1 md:grid-cols-3 gap-4" >
+                                        <
+                                        div >
+                                        <
+                                        label className = "text-xs font-semibold block mb-1" > Nama Lengkap * < /label> <
+                                        input type = "text"
+                                        value = { newNama }
+                                        onChange = { (e) => setNewNama(e.target.value) }
+                                        required className = "w-full p-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none"
+                                        placeholder = "Nama siswa" />
+                                        <
+                                        /div> <
+                                        div >
+                                        <
+                                        label className = "text-xs font-semibold block mb-1" > NISN * < /label> <
+                                        input type = "text"
+                                        value = { newNisn }
+                                        onChange = { (e) => setNewNisn(e.target.value) }
+                                        required className = "w-full p-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none"
+                                        placeholder = "Nomor NISN" />
+                                        <
+                                        /div> <
+                                        div >
+                                        <
+                                        label className = "text-xs font-semibold block mb-1" > Kelas < /label> <
+                                        select value = { newKelas }
+                                        onChange = { (e) => setNewKelas(e.target.value) }
+                                        className = "w-full p-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none" >
+                                        {
+                                            kelasOptions.map(k => < option key = { k }
+                                            value = { k } > { k } < /option>) } <
+                                            /select> <
+                                            /div> <
+                                            div >
+                                            <
+                                            label className = "text-xs font-semibold block mb-1" > Gender < /label> <
+                                            select value = { newGender }
+                                            onChange = { (e) => setNewGender(e.target.value) }
+                                            className = "w-full p-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none" >
+                                            <
+                                            option value = "L" > Laki - laki < /option> <
+                                            option value = "P" > Perempuan < /option> <
+                                            /select> <
+                                            /div> <
+                                            div >
+                                            <
+                                            label className = "text-xs font-semibold block mb-1" > TTL < /label> <
+                                            input type = "text"
+                                            value = { newTtl }
+                                            onChange = { (e) => setNewTtl(e.target.value) }
+                                            className = "w-full p-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none"
+                                            placeholder = "Tempat, Tanggal Lahir" />
+                                            <
+                                            /div> <
+                                            div >
+                                            <
+                                            label className = "text-xs font-semibold block mb-1" > Alamat < /label> <
+                                            input type = "text"
+                                            value = { newAlamat }
+                                            onChange = { (e) => setNewAlamat(e.target.value) }
+                                            className = "w-full p-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none"
+                                            placeholder = "Alamat" />
+                                            <
+                                            /div> <
+                                            div className = "md:col-span-3 flex justify-end gap-3 mt-2" >
+                                            <
+                                            button type = "submit"
+                                            className = "px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium" >
+                                            Simpan Siswa <
+                                            /button> <
+                                            /div> <
+                                            /form>
+                                        )
+                                    }
+
+                                    { /* TABEL */ } <
+                                    div className = "border border-gray-200 rounded-lg overflow-hidden" >
+                                    <
+                                    div className = "table-wrap" >
+                                    <
+                                    table className = "w-full text-left text-sm" >
+                                    <
+                                    thead className = "bg-gray-50 border-b sticky top-0 z-10" >
+                                    <
+                                    tr >
+                                    <
+                                    th className = "p-3 whitespace-nowrap" > # < /th> <
+                                    th className = "p-3 whitespace-nowrap" > Nama < /th> <
+                                    th className = "p-3 whitespace-nowrap" > NISN < /th> <
+                                    th className = "p-3 whitespace-nowrap" > Kelas < /th> <
+                                    th className = "p-3 whitespace-nowrap" > Gender < /th> <
+                                    th className = "p-3 whitespace-nowrap text-center" > Status < /th> <
+                                    th className = "p-3 whitespace-nowrap text-center" > Aksi < /th> <
+                                    /tr> <
+                                    /thead> <
+                                    tbody > {
+                                        students.map((s, idx) => ( <
+                                            tr key = { s.id }
+                                            className = "border-b hover:bg-gray-50" >
+                                            <
+                                            td className = "p-3 text-gray-500" > { idx + 1 } < /td> <
+                                            td className = "p-3 font-medium text-gray-800" > { s.nama } < /td> <
+                                            td className = "p-3 text-gray-600 font-mono text-xs" > { s.nisn } < /td> <
+                                            td className = "p-3" >
+                                            <
+                                            span className = "bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs font-bold" >
+                                            { s.kelas } <
+                                            /span> <
+                                            /td> <
+                                            td className = "p-3 text-center" > { s.gender || '-' } < /td> <
+                                            td className = "p-3" >
+                                            <
+                                            div className = "flex flex-wrap justify-center gap-1" > {
+                                                ['Hadir', 'Sakit', 'Izin', 'Alpa'].map((st) => ( <
+                                                    button key = { st }
+                                                    onClick = {
+                                                        () => updateStatus(s.id, st) }
+                                                    className = { `px-2 py-1 rounded-full text-xs font-bold transition ${s.status === st ?
+                                                            (st === 'Hadir' ? 'bg-green-500 text-white' :
+                                                                st === 'Alpa' ? 'bg-red-500 text-white' :
+                                                                'bg-yellow-500 text-white') :
+                                                            'bg-gray-100 text-gray-500 hover:bg-gray-200'}` } >
+                                                    { st } <
+                                                    /button>
+                                                ))
+                                            } <
+                                            /div> <
+                                            /td> <
+                                            td className = "p-3 text-center" >
+                                            <
+                                            button onClick = {
+                                                () => deleteStudent(s.id) }
+                                            className = "text-red-500 hover:text-red-700 transition p-1 rounded hover:bg-red-50" >
+                                            <
+                                            Icon name = "trash"
+                                            size = { 18 }
+                                            /> <
+                                            /button> <
+                                            /td> <
+                                            /tr>
+                                        ))
+                                    } <
+                                    /tbody> <
+                                    /table> <
+                                    /div> <
+                                    /div> <
+                                    /div>
+                                );
+                            };
+
+                            // ============================================================
+                            //  KOMPONEN QR SCANNER (sama seperti sebelumnya)
+                            // ============================================================
+                            const TeacherQRScanner = ({ students, setStudents }) => {
+                                const [scanResult, setScanResult] = useState(null);
+                                const scannerRef = useRef(null);
+
+                                useEffect(() => {
+                                    if (typeof Html5QrcodeScanner !== 'undefined' && !scannerRef.current) {
+                                        const scanner = new Html5QrcodeScanner("reader", { qrbox: { width: 250,
+                                                height: 250 }, fps: 5 });
+                                        scanner.render(
+                                            (decodedText) => {
+                                                setScanResult(decodedText);
+                                                const idx = students.findIndex(s => s.nisn === decodedText);
+                                                if (idx !== -1) {
+                                                    const updated = [...students];
+                                                    updated[idx].status = 'Hadir';
+                                                    setStudents(updated);
+                                                    alert(`✅ ${updated[idx].nama} hadir.`);
+                                                    setTimeout(() => setScanResult(null), 3000);
+                                                } else {
+                                                    alert(`❌ NISN ${decodedText} tidak ditemukan.`);
+                                                }
+                                            },
+                                            (error) => {}
+                                        );
+                                        scannerRef.current = scanner;
+                                    }
+                                    return () => {
+                                        if (scannerRef.current) {
+                                            scannerRef.current.clear().catch(e => console.error(e));
+                                            scannerRef.current = null;
+                                        }
+                                    };
+                                }, [students]);
+
+                                return ( <
+                                        div className = "bg-white p-6 rounded-xl shadow-sm border border-gray-100 max-w-2xl mx-auto" >
+                                        <
+                                        div className = "text-center mb-6" >
+                                        <
+                                        h2 className = "text-xl font-bold flex justify-center gap-2" >
+                                        <
+                                        Icon name = "qrcode"
+                                        className = "text-blue-600" /> Scan Presensi <
+                                        /h2> <
+                                        /div> <
+                                        div className = "border-4 border-dashed rounded-xl overflow-hidden p-2 bg-gray-50" >
+                                        <
+                                        div id = "reader"
+                                        className = "w-full" > < /div> <
+                                        /div> {
+                                            scanResult && < div className = "mt-4 p-4 bg-green-50 border border-green-200 rounded-lg text-center text-green-700" >
+                                            <
+                                            p className = "font-bold" > Terakhir di - scan: < /p> <
+                                            p className = "font-mono text-lg" > { scanResult } < /p> <
+                                            /div>} <
+                                            /div>
+                                        );
+                                    };
+
+                                    // ============================================================
+                                    //  KOMPONEN MATERI (sama)
+                                    // ============================================================
+                                    const Materials = ({ isTeacher, materials, setMaterials }) => {
+                                        const [activeTab, setActiveTab] = useState('SRMA');
+                                        const [showUpload, setShowUpload] = useState(false);
+                                        const [newTitle, setNewTitle] = useState('');
+                                        const [newLevel, setNewLevel] = useState('SRMA');
+                                        const [newType, setNewType] = useState('pdf');
+                                        const handleUpload = (e) => {
+                                            e.preventDefault();
+                                            setMaterials([...materials, {
+                                                id: Date.now(),
+                                                title: newTitle,
+                                                type: newType,
+                                                level: newLevel,
+                                                date: new Date().toISOString().split('T')[0]
+                                            }]);
+                                            setNewTitle('');
+                                            setShowUpload(false);
+                                        };
+                                        const filtered = materials.filter(m => m.level === activeTab);
+                                        return ( <
+                                                div className = "bg-white p-6 rounded-xl shadow-sm border border-gray-100" >
+                                                <
+                                                div className = "flex justify-between items-center mb-6" >
+                                                <
+                                                h2 className = "text-xl font-bold text-gray-800" > Materi Ajar < /h2> {
+                                                    isTeacher && < button onClick = {
+                                                            () => setShowUpload(!showUpload) }
+                                                        className = "flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm" >
+                                                        <
+                                                        Icon name = "plus"
+                                                        size = { 16 }
+                                                        /> Unggah <
+                                                        /button>} <
+                                                        /div> {
+                                                            showUpload && isTeacher && ( <
+                                                                form onSubmit = { handleUpload }
+                                                                className = "mb-6 p-4 bg-blue-50 rounded-xl grid grid-cols-1 md:grid-cols-4 gap-4" >
+                                                                <
+                                                                div className = "md:col-span-2" >
+                                                                <
+                                                                label className = "text-xs mb-1 block" > Judul < /label> <
+                                                                input type = "text"
+                                                                value = { newTitle }
+                                                                onChange = { (e) => setNewTitle(e.target.value) }
+                                                                required className = "w-full p-2 border rounded" />
+                                                                <
+                                                                /div> <
+                                                                div >
+                                                                <
+                                                                label className = "text-xs mb-1 block" > Jenjang < /label> <
+                                                                select value = { newLevel }
+                                                                onChange = { (e) => setNewLevel(e.target.value) }
+                                                                className = "w-full p-2 border rounded" >
+                                                                <
+                                                                option > SRD < /option> <
+                                                                option > SRMP < /option> <
+                                                                option > SRMA < /option> <
+                                                                /select> <
+                                                                /div> <
+                                                                div >
+                                                                <
+                                                                label className = "text-xs mb-1 block" > Format < /label> <
+                                                                select value = { newType }
+                                                                onChange = { (e) => setNewType(e.target.value) }
+                                                                className = "w-full p-2 border rounded" >
+                                                                <
+                                                                option value = "pdf" > PDF < /option> <
+                                                                option value = "pptx" > PPTX < /option> <
+                                                                option value = "mp4" > MP4 < /option> <
+                                                                /select> <
+                                                                /div> <
+                                                                div className = "md:col-span-4 text-right" >
+                                                                <
+                                                                button type = "submit"
+                                                                className = "px-6 py-2 bg-green-500 text-white rounded" >
+                                                                Simpan <
+                                                                /button> <
+                                                                /div> <
+                                                                /form>
+                                                            )
+                                                        } <
+                                                        div className = "flex border-b mb-6" > {
+                                                            ['SRD', 'SRMP', 'SRMA'].map(level => ( <
+                                                                button key = { level }
+                                                                onClick = {
+                                                                    () => setActiveTab(level) }
+                                                                className = { `px-6 py-3 font-bold border-b-2 ${activeTab === level ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-500'}` } >
+                                                                Jenjang { level } <
+                                                                /button>
+                                                            ))
+                                                        } <
+                                                        /div> <
+                                                        div className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" > {
+                                                            filtered.map(mat => ( <
+                                                                div key = { mat.id }
+                                                                className = "p-4 border rounded-xl flex gap-4" >
+                                                                <
+                                                                div className = "p-3 rounded-lg bg-gray-100 border" >
+                                                                <
+                                                                Icon name = "fileText"
+                                                                size = { 24 }
+                                                                /> <
+                                                                /div> <
+                                                                div >
+                                                                <
+                                                                h4 className = "font-semibold text-sm mb-1" > { mat.title } < /h4> <
+                                                                p className = "text-xs text-gray-500 uppercase" > { mat.type } • { mat.date } < /p> <
+                                                                /div> <
+                                                                /div>
+                                                            ))
+                                                        } <
+                                                        /div> <
+                                                        /div>
+                                                    );
+                                                };
+
+                                                // ============================================================
+                                                //  KOMPONEN AGENDA (sama)
+                                                // ============================================================
+                                                const TeacherAgenda = ({ agendas, setAgendas }) => {
+                                                    const [title, setTitle] = useState('');
+                                                    const [notes, setNotes] = useState('');
+                                                    const [className, setClassName] = useState('SRMA 1');
+                                                    const handleAdd = (e) => {
+                                                        e.preventDefault();
+                                                        setAgendas([{
+                                                            id: Date.now(),
+                                                            date: new Date().toISOString().split('T')[0],
+                                                            class: className,
+                                                            title,
+                                                            notes
+                                                        }, ...agendas]);
+                                                        setTitle('');
+                                                        setNotes('');
+                                                    };
+                                                    return ( <
+                                                            div className = "grid grid-cols-1 lg:grid-cols-3 gap-6" >
+                                                            <
+                                                            div className = "bg-white p-6 rounded-xl border col-span-1" >
+                                                            <
+                                                            h2 className = "font-bold mb-4" > Tambah Agenda < /h2> <
+                                                            form onSubmit = { handleAdd }
+                                                            className = "space-y-4" >
+                                                            <
+                                                            select value = { className }
+                                                            onChange = { (e) => setClassName(e.target.value) }
+                                                            className = "w-full p-2 border rounded" >
+                                                            <
+                                                            option > SRD 1 < /option> <
+                                                            option > SRMP 1 < /option> <
+                                                            option > SRMA 1 < /option> <
+                                                            /select> <
+                                                            input type = "text"
+                                                            placeholder = "Topik"
+                                                            value = { title }
+                                                            onChange = { (e) => setTitle(e.target.value) }
+                                                            required className = "w-full p-2 border rounded" />
+                                                            <
+                                                            textarea placeholder = "Catatan..."
+                                                            value = { notes }
+                                                            onChange = { (e) => setNotes(e.target.value) }
+                                                            rows = "3"
+                                                            className = "w-full p-2 border rounded" > < /textarea> <
+                                                            button className = "w-full bg-blue-600 text-white py-2 rounded" >
+                                                            Simpan Agenda <
+                                                            /button> <
+                                                            /form> <
+                                                            /div> <
+                                                            div className = "bg-white p-6 rounded-xl border col-span-2" >
+                                                            <
+                                                            h2 className = "font-bold mb-4" > Riwayat Agenda < /h2> <
+                                                            div className = "space-y-4" > {
+                                                                agendas.map(a => ( <
+                                                                    div key = { a.id }
+                                                                    className = "p-4 border-l-4 border-blue-500 bg-gray-50" >
+                                                                    <
+                                                                    h4 className = "font-bold" > { a.title } < /h4> <
+                                                                    p className = "text-xs text-gray-500 mb-1" > { a.class } • { a.date } < /p> <
+                                                                    p className = "text-sm" > { a.notes } < /p> <
+                                                                    /div>
+                                                                ))
+                                                            } <
+                                                            /div> <
+                                                            /div> <
+                                                            /div>
+                                                        );
+                                                    };
+
+                                                    // ============================================================
+                                                    //  KARTU PELAJAR (sama)
+                                                    // ============================================================
+                                                    const StudentIDCard = ({ user, students }) => {
+                                                        const studentData = students.find(s => s.nama.toLowerCase() === user.name
+                                                            .toLowerCase()) || {
+                                                            nama: user.name,
+                                                            nisn: '0050000000',
+                                                            kelas: 'SRMA 1',
+                                                            ttl: 'Garut, 01 Jan 2005',
+                                                            alamat: 'Jl. Raya Samarang, Garut',
+                                                            gender: 'L'
+                                                        };
+                                                        const qrUrl =
+                                                            `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${studentData.nisn}&color=000000&bgcolor=ffffff`;
+                                                        return ( <
+                                                                div className = "flex flex-col md:flex-row justify-center gap-8 py-4" >
+                                                                <
+                                                                div className = "relative w-[340px] h-[520px] rounded-xl overflow-hidden shadow-2xl border border-gray-700"
+                                                                style = { { backgroundColor: '#0f3a58' } } >
+                                                                <
+                                                                div className = "flex justify-between px-4 pt-4 pb-2" >
+                                                                <
+                                                                div className = "w-10 h-10 relative flex items-center justify-center" >
+                                                                <
+                                                                div className = "absolute w-6 h-6 bg-blue-500 rounded-full top-0 left-2" > < /div> <
+                                                                div className = "absolute w-8 h-4 bg-green-500 rounded-full top-4 right-0 transform -rotate-45" > < /div> <
+                                                                div className = "absolute w-10 h-5 bg-yellow-400 rounded-full bottom-0"
+                                                                style = { { borderRadius: '0 0 20px 20px' } } > < /div> <
+                                                                /div> <
+                                                                div className = "text-red-500" > < Icon name = "book"
+                                                                size = { 32 }
+                                                                /></div >
+                                                                <
+                                                                /div> <
+                                                                div className = "text-center px-4 mb-4" >
+                                                                <
+                                                                h3 className = "text-[11px] font-black text-red-500" >
+                                                                KEMENTERIAN SOSIAL REPUBLIK INDONESIA < /h3> <
+                                                                h4 className = "text-[13px] font-bold text-white mt-1" >
+                                                                Sekolah Rakyat Terintegrasi 39 Garut < /h4> <
+                                                                /div> <
+                                                                div className = "bg-yellow-500 text-[#0f3a58] text-center py-1 mb-4" >
+                                                                <
+                                                                h2 className = "text-sm font-black tracking-widest" >
+                                                                KARTU PELAJAR SISWA < /h2> <
+                                                                /div> <
+                                                                div className = "px-4 flex gap-3 h-[180px]" >
+                                                                <
+                                                                div className = "w-[90px] h-[120px] bg-blue-100 rounded-md flex flex-col items-center justify-center" >
+                                                                <
+                                                                div className = "w-8 h-8 bg-white rounded-full mb-1" > < /div> <
+                                                                div className = "w-14 h-10 bg-white rounded-t-xl" > < /div> <
+                                                                /div> <
+                                                                div className = "flex-1 text-[10px] text-white space-y-1.5 pt-1" >
+                                                                <
+                                                                div >
+                                                                <
+                                                                span className = "block text-gray-300" > Nama: < /span> <
+                                                                span className = "font-bold" > { studentData.nama } < /span> <
+                                                                /div> <
+                                                                div >
+                                                                <
+                                                                span className = "block text-gray-300" > NISN: < /span> <
+                                                                span className = "font-bold" > { studentData.nisn } < /span> <
+                                                                /div> <
+                                                                div >
+                                                                <
+                                                                span className = "block text-gray-300" > Kelas: < /span> <
+                                                                span className = "font-bold" > { studentData.kelas } < /span> <
+                                                                /div> <
+                                                                /div> <
+                                                                /div> <
+                                                                div className = "absolute bottom-4 right-4 bg-white p-1 rounded" >
+                                                                <
+                                                                img src = { qrUrl }
+                                                                alt = "QR Code"
+                                                                className = "w-[70px] h-[70px]"
+                                                                crossOrigin = "anonymous" />
+                                                                <
+                                                                /div> <
+                                                                /div> <
+                                                                /div>
+                                                            );
+                                                        };
+
+                                                        // ============================================================
+                                                        //  DASHBOARD
+                                                        // ============================================================
+                                                        const Dashboard = ({ user, onLogout }) => {
+                                                            const isTeacher = user.role === 'teacher';
+                                                            const [activeMenu, setActiveMenu] = useState(isTeacher ? 'attendance' :
+                                                                'materials');
+                                                            const [students, setStudents] = useState(defaultStudents);
+                                                            const [materials, setMaterials] = useState(defaultMaterials);
+                                                            const [agendas, setAgendas] = useState(defaultAgendas);
+
+                                                            const menus = isTeacher ? [
+                                                                { id: 'attendance', label: 'Kehadiran Murid',
+                                                                    icon: 'fileText' },
+                                                                { id: 'scanner', label: 'Scan Presensi', icon: 'qrcode' },
+                                                                { id: 'materials', label: 'Materi Ajar', icon: 'book' },
+                                                                { id: 'agenda', label: 'Agenda Guru', icon: 'calendar' },
+                                                            ] : [
+                                                                { id: 'materials', label: 'Materi Pembelajaran',
+                                                                    icon: 'book' },
+                                                                { id: 'idcard', label: 'Kartu Pelajar', icon: 'user' },
+                                                            ];
+
+                                                            return ( <
+                                                                    div className = "min-h-screen flex flex-col md:flex-row" >
+                                                                    <
+                                                                    aside className = "w-full md:w-64 bg-blue-900 text-white flex flex-col min-h-screen shadow-xl" >
+                                                                    <
+                                                                    div className = "p-6 text-center border-b border-blue-800" >
+                                                                    <
+                                                                    h2 className = "font-bold text-lg" > E - Learning Pancasila < /h2> <
+                                                                    /div> <
+                                                                    div className = "p-4 flex-1" >
+                                                                    <
+                                                                    nav className = "space-y-1" > {
+                                                                        menus.map(menu => ( <
+                                                                            button key = { menu.id }
+                                                                            onClick = {
+                                                                                () => setActiveMenu(menu.id) }
+                                                                            className = { `w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium ${activeMenu === menu.id ? 'bg-blue-800 text-white' : 'text-blue-200 hover:bg-blue-800'}` } >
+                                                                            <
+                                                                            Icon name = { menu.icon }
+                                                                            size = { 18 }
+                                                                            /> { menu.label } <
+                                                                            /button>
+                                                                        ))
+                                                                    } <
+                                                                    /nav> <
+                                                                    /div> <
+                                                                    div className = "p-4 border-t border-blue-800" >
+                                                                    <
+                                                                    div className = "flex items-center gap-3 px-4 py-3 bg-blue-950 rounded-lg mb-4" >
+                                                                    <
+                                                                    div className = "text-left flex-1" >
+                                                                    <
+                                                                    p className = "text-xs text-blue-300" > Masuk sebagai < /p> <
+                                                                    p className = "text-sm font-bold truncate" > { user
+                                                                            .name } < /p> <
+                                                                    /div> <
+                                                                    /div> <
+                                                                    button onClick = { onLogout }
+                                                                    className = "w-full flex items-center justify-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 rounded-lg text-sm font-bold" >
+                                                                    <
+                                                                    Icon name = "logout"
+                                                                    size = { 16 }
+                                                                    /> Keluar <
+                                                                    /button> <
+                                                                    /div> <
+                                                                    /aside> <
+                                                                    main className = "flex-1 p-4 md:p-8 overflow-y-auto bg-gray-50" >
+                                                                    <
+                                                                    header className = "mb-8" >
+                                                                    <
+                                                                    h1 className = "text-3xl font-extrabold text-gray-800" >
+                                                                    { menus.find(m => m.id === activeMenu)?.label } <
+                                                                    /h1> <
+                                                                    /header> <
+                                                                    div className = "animate-fade-in-up" > {
+                                                                        activeMenu === 'attendance' && < TeacherAttendance students =
+                                                                            { students }
+                                                                        setStudents = { setStudents }
+                                                                        />} {
+                                                                            activeMenu === 'scanner' && < TeacherQRScanner students =
+                                                                                { students }
+                                                                            setStudents = { setStudents }
+                                                                            />} {
+                                                                                activeMenu === 'materials' && < Materials isTeacher =
+                                                                                    { isTeacher }
+                                                                                materials = { materials }
+                                                                                setMaterials = { setMaterials }
+                                                                                />} {
+                                                                                    activeMenu === 'agenda' && < TeacherAgenda agendas =
+                                                                                        { agendas }
+                                                                                    setAgendas = { setAgendas }
+                                                                                    />} {
+                                                                                        activeMenu === 'idcard' && < StudentIDCard user =
+                                                                                            { user }
+                                                                                        students = { students }
+                                                                                        />} <
+                                                                                        /div> <
+                                                                                        /main> <
+                                                                                        /div>
+                                                                                    );
+                                                                                };
+
+                                                                                // ============================================================
+                                                                                //  APP
+                                                                                // ============================================================
+                                                                                function App() {
+                                                                                    const [currentUser, setCurrentUser] = useState(null);
+                                                                                    return currentUser ? < Dashboard user = { currentUser }
+                                                                                    onLogout = {
+                                                                                        () => setCurrentUser(null) }
+                                                                                    /> : < LoginScreen onLogin = { setCurrentUser }
+                                                                                    />;
+                                                                                }
+
+                                                                                const root = ReactDOM.createRoot(document.getElementById(
+                                                                                'root'));
+                                                                                root.render( < App / > );
+    </script>
+</body>
+</html>

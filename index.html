@@ -1257,13 +1257,25 @@
     <div id="toast" class="toast"></div>
 
     <!-- ===== LOGIN ===== -->
-    <div id="loginPage">
-        <div class="login-box">
-            <div class="logo">
-                <h1>e-Learning <span>Pancasila</span></h1>
-                <p>SRT 39 Garut • Pusdiklat Bangprofkesos</p>
-                <p style="font-size:12px; color:var(--gray-500); margin-top:2px;">Pendidikan Pancasila • Guru</p>
-            </div>
+<div id="loginPage">
+    <div class="login-box">
+        <div class="logo">
+            <h1>e-Learning <span>Pancasila</span></h1>
+            <p>SRT 39 Garut • Pusdiklat Bangprofkesos</p>
+            <p style="font-size:12px; color:var(--gray-500); margin-top:2px;">Pendidikan Pancasila</p>
+        </div>
+
+        <!-- Pilih Peran -->
+        <div class="form-group" style="margin-bottom:16px;">
+            <label><i class="fas fa-user-tag"></i> Login Sebagai</label>
+            <select id="loginRole" onchange="toggleLoginForm()" style="width:100%; padding:10px 14px; border:2px solid var(--gray-200); border-radius:var(--radius-sm); font-size:14px;">
+                <option value="guru">Guru</option>
+                <option value="murid">Murid</option>
+            </select>
+        </div>
+
+        <!-- Form Guru -->
+        <div id="loginGuruForm">
             <div class="form-group">
                 <label><i class="fas fa-user"></i> Username</label>
                 <input type="text" id="loginUser" value="guru" placeholder="Masukkan username" />
@@ -1272,11 +1284,26 @@
                 <label><i class="fas fa-lock"></i> Password</label>
                 <input type="password" id="loginPass" value="pancasila" placeholder="Masukkan password" />
             </div>
-            <button class="btn-login" onclick="handleLogin()"><i class="fas fa-sign-in-alt"></i> Masuk</button>
-            <div id="loginError" class="login-error"><i class="fas fa-exclamation-circle"></i> Username atau password salah!</div>
-            <p style="text-align:center; margin-top:16px; font-size:12px; color:var(--gray-500);">Default: guru / pancasila</p>
         </div>
+
+        <!-- Form Murid -->
+        <div id="loginMuridForm" style="display:none;">
+            <div class="form-group">
+                <label><i class="fas fa-id-card"></i> NISN</label>
+                <input type="text" id="loginNISN" placeholder="Masukkan NISN" />
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Nama Lengkap</label>
+                <input type="text" id="loginNamaMurid" placeholder="Masukkan nama lengkap" />
+            </div>
+            <p style="font-size:12px; color:var(--gray-500); margin-top:-8px; margin-bottom:12px;">Masukkan NISN dan nama sesuai data sekolah.</p>
+        </div>
+
+        <button class="btn-login" onclick="handleLogin()"><i class="fas fa-sign-in-alt"></i> Masuk</button>
+        <div id="loginError" class="login-error"><i class="fas fa-exclamation-circle"></i> Username/password atau NISN/nama salah!</div>
+        <p style="text-align:center; margin-top:16px; font-size:12px; color:var(--gray-500);">Guru: guru / pancasila • Murid: gunakan NISN & nama</p>
     </div>
+</div>
 
     <!-- ===== APP ===== -->
     <div id="app">

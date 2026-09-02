@@ -4,1259 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>e-Learning Pancasila - SRT 39 Garut</title>
-
-    <!-- Font & Ikon -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
-    <!-- Library Excel & QR Code -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js">
-    </script>
-    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
-    </script>
-
-    <style>
-        /* ===== RESET & VARIABEL ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-        :root {
-            --primary: #1a4b8c;
-            --primary-light: #2d6bb8;
-            --primary-dark: #0d2b4f;
-            --secondary: #e8a838;
-            --success: #22a65e;
-            --danger: #dc3545;
-            --warning: #f0ad4e;
-            --info: #17a2b8;
-            --gray-50: #f8f9fa;
-            --gray-100: #f1f3f5;
-            --gray-200: #e9ecef;
-            --gray-300: #dee2e6;
-            --gray-400: #ced4da;
-            --gray-500: #adb5bd;
-            --gray-600: #6c757d;
-            --gray-700: #495057;
-            --gray-800: #343a40;
-            --gray-900: #212529;
-            --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
-            --radius: 12px;
-            --radius-sm: 8px;
-            --transition: all 0.3s ease;
-        }
-        body {
-            background: var(--gray-50);
-            color: var(--gray-800);
-            min-height: 100vh;
-        }
-
-        /* ===== TOAST ===== */
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background: var(--gray-900);
-            color: #fff;
-            padding: 14px 24px;
-            border-radius: var(--radius-sm);
-            box-shadow: var(--shadow-lg);
-            font-size: 14px;
-            font-weight: 500;
-            z-index: 2000;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.4s ease;
-            max-width: 400px;
-        }
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        .toast.success {
-            background: var(--success);
-        }
-        .toast.error {
-            background: var(--danger);
-        }
-        .toast.warning {
-            background: var(--warning);
-        }
-
-        /* ===== LOGIN ===== */
-        #loginPage {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
-            padding: 20px;
-        }
-        .login-box {
-            background: #fff;
-            border-radius: var(--radius);
-            padding: 48px 40px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: var(--shadow-lg);
-            animation: fadeUp 0.6s ease;
-        }
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .login-box .logo {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-        .login-box .logo h1 {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--primary);
-            letter-spacing: -0.5px;
-        }
-        .login-box .logo h1 span {
-            color: var(--secondary);
-        }
-        .login-box .logo p {
-            font-size: 13px;
-            color: var(--gray-600);
-            margin-top: 4px;
-        }
-        .form-group {
-            margin-bottom: 16px;
-        }
-        .form-group label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--gray-700);
-            margin-bottom: 4px;
-        }
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 10px 14px;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-sm);
-            font-size: 14px;
-            transition: var(--transition);
-            background: #fff;
-        }
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(26, 75, 140, 0.08);
-        }
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-        .btn-login {
-            width: 100%;
-            padding: 14px;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-top: 8px;
-        }
-        .btn-login:hover {
-            background: var(--primary-dark);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(26, 75, 140, 0.3);
-        }
-        .login-error {
-            color: var(--danger);
-            font-size: 13px;
-            text-align: center;
-            margin-top: 12px;
-            display: none;
-        }
-
-        /* ===== APP ===== */
-        #app {
-            display: none;
-            min-height: 100vh;
-        }
-
-        /* HEADER */
-        .app-header {
-            background: #fff;
-            border-bottom: 1px solid var(--gray-200);
-            padding: 12px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: var(--shadow);
-        }
-        .app-header .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .app-header .brand h2 {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-        .app-header .brand h2 span {
-            color: var(--secondary);
-        }
-        .app-header .brand .badge {
-            background: var(--secondary);
-            color: #fff;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 2px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-        }
-        .app-header .user-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        .app-header .user-info .name {
-            font-weight: 600;
-            font-size: 14px;
-        }
-        .logout-btn {
-            background: none;
-            border: none;
-            color: var(--gray-600);
-            cursor: pointer;
-            font-size: 18px;
-            transition: var(--transition);
-            padding: 6px;
-            border-radius: 50%;
-        }
-        .logout-btn:hover {
-            color: var(--danger);
-            background: rgba(220, 53, 69, 0.08);
-        }
-
-        /* BODY */
-        .app-body {
-            display: flex;
-            min-height: calc(100vh - 72px);
-        }
-
-        /* SIDEBAR */
-        .sidebar {
-            width: 250px;
-            background: #fff;
-            border-right: 1px solid var(--gray-200);
-            padding: 20px 0;
-            flex-shrink: 0;
-            overflow-y: auto;
-            height: calc(100vh - 72px);
-            position: sticky;
-            top: 72px;
-        }
-        .sidebar .menu-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 12px 24px;
-            color: var(--gray-700);
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            border-left: 3px solid transparent;
-        }
-        .sidebar .menu-item:hover {
-            background: var(--gray-50);
-            color: var(--primary);
-        }
-        .sidebar .menu-item.active {
-            background: rgba(26, 75, 140, 0.06);
-            color: var(--primary);
-            border-left-color: var(--primary);
-            font-weight: 600;
-        }
-        .sidebar .menu-item i {
-            width: 20px;
-            text-align: center;
-            font-size: 16px;
-        }
-        .sidebar .menu-divider {
-            height: 1px;
-            background: var(--gray-200);
-            margin: 12px 24px;
-        }
-        .sidebar .menu-label {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--gray-500);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 8px 24px;
-        }
-
-        /* MAIN */
-        .main-content {
-            flex: 1;
-            padding: 28px 32px;
-            overflow-y: auto;
-            max-height: calc(100vh - 72px);
-        }
-        .page-section {
-            display: none;
-            animation: fadeUp 0.4s ease;
-        }
-        .page-section.active {
-            display: block;
-        }
-        .page-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--gray-900);
-            margin-bottom: 4px;
-        }
-        .page-subtitle {
-            color: var(--gray-600);
-            font-size: 14px;
-            margin-bottom: 24px;
-        }
-
-        /* STATS */
-        .stat-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-            margin-bottom: 28px;
-        }
-        .stat-card {
-            background: #fff;
-            border-radius: var(--radius);
-            padding: 20px 24px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--gray-200);
-        }
-        .stat-card .stat-label {
-            font-size: 13px;
-            color: var(--gray-600);
-            font-weight: 500;
-        }
-        .stat-card .stat-value {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--gray-900);
-            margin-top: 4px;
-        }
-        .stat-card .stat-icon {
-            float: right;
-            font-size: 28px;
-            opacity: 0.2;
-            color: var(--primary);
-        }
-        .stat-card.green .stat-value {
-            color: var(--success);
-        }
-        .stat-card.red .stat-value {
-            color: var(--danger);
-        }
-        .stat-card.orange .stat-value {
-            color: var(--warning);
-        }
-        .stat-card.blue .stat-value {
-            color: var(--info);
-        }
-
-        /* TABLE */
-        .table-wrap {
-            background: #fff;
-            border-radius: var(--radius);
-            border: 1px solid var(--gray-200);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
-        }
-        .table-wrap .table-header {
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--gray-200);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            background: var(--gray-50);
-        }
-        .table-wrap .table-header h3 {
-            font-size: 16px;
-            font-weight: 600;
-        }
-        .table-wrap table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
-        .table-wrap table th {
-            background: var(--gray-50);
-            text-align: left;
-            padding: 12px 16px;
-            font-weight: 600;
-            color: var(--gray-700);
-            border-bottom: 2px solid var(--gray-200);
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-        .table-wrap table td {
-            padding: 10px 16px;
-            border-bottom: 1px solid var(--gray-100);
-            vertical-align: middle;
-        }
-        .table-wrap table tr:hover td {
-            background: var(--gray-50);
-        }
-
-        /* BADGE */
-        .badge-status {
-            display: inline-block;
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .badge-status.hadir {
-            background: #d4edda;
-            color: #155724;
-        }
-        .badge-status.absen {
-            background: #f8d7da;
-            color: #721c24;
-        }
-        .badge-status.izin {
-            background: #fff3cd;
-            color: #856404;
-        }
-        .badge-status.sakit {
-            background: #d1ecf1;
-            color: #0c5460;
-        }
-
-        /* BUTTONS */
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-primary {
-            background: var(--primary);
-            color: #fff;
-        }
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            box-shadow: 0 4px 12px rgba(26, 75, 140, 0.25);
-        }
-        .btn-success {
-            background: var(--success);
-            color: #fff;
-        }
-        .btn-success:hover {
-            background: #1a8a4a;
-        }
-        .btn-danger {
-            background: var(--danger);
-            color: #fff;
-        }
-        .btn-danger:hover {
-            background: #b02a37;
-        }
-        .btn-warning {
-            background: var(--warning);
-            color: #fff;
-        }
-        .btn-warning:hover {
-            background: #d39e00;
-        }
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--gray-300);
-            color: var(--gray-700);
-        }
-        .btn-outline:hover {
-            background: var(--gray-50);
-            border-color: var(--gray-400);
-        }
-        .btn-sm {
-            padding: 6px 14px;
-            font-size: 12px;
-        }
-
-        /* FILTER BAR */
-        .filter-bar {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-        .filter-bar select,
-        .filter-bar input {
-            padding: 8px 14px;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-sm);
-            font-size: 13px;
-            background: #fff;
-        }
-        .filter-bar select:focus,
-        .filter-bar input:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-
-        /* MODAL */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .modal-overlay.show {
-            display: flex;
-        }
-        .modal-box {
-            background: #fff;
-            border-radius: var(--radius);
-            padding: 32px;
-            max-width: 640px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: slideUp 0.3s ease;
-        }
-        @keyframes slideUp {
-            from {
-                transform: translateY(30px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-        .modal-box .modal-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-        .modal-close {
-            float: right;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: var(--gray-500);
-            cursor: pointer;
-        }
-
-        /* QR */
-        .qr-container {
-            background: #fff;
-            border-radius: var(--radius);
-            border: 1px solid var(--gray-200);
-            padding: 24px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow);
-            max-width: 640px;
-        }
-        .qr-container .qr-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-        .qr-scanner-box {
-            background: var(--gray-900);
-            border-radius: var(--radius-sm);
-            overflow: hidden;
-            position: relative;
-            min-height: 300px;
-        }
-        .qr-scanner-box #qr-reader {
-            width: 100%;
-        }
-        .qr-scanner-box #qr-reader video {
-            border-radius: var(--radius-sm);
-        }
-        .qr-scanner-box .qr-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border: 3px solid rgba(255, 255, 255, 0.4);
-            width: 180px;
-            height: 180px;
-            border-radius: 16px;
-            pointer-events: none;
-        }
-        .qr-status {
-            margin-top: 12px;
-            font-size: 14px;
-            color: var(--gray-600);
-            text-align: center;
-        }
-        .qr-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            justify-content: center;
-            margin-top: 12px;
-        }
-        .qr-card {
-            text-align: center;
-            padding: 14px 12px 12px 12px;
-            border: 1px solid var(--gray-200);
-            border-radius: 12px;
-            background: #fff;
-            min-width: 140px;
-            max-width: 160px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-        .qr-card:hover {
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-2px);
-        }
-        .qr-card img {
-            display: block;
-            margin: 0 auto;
-            border-radius: 4px;
-            width: 120px;
-            height: 120px;
-            background: #fff;
-        }
-        .qr-card .qr-name {
-            font-size: 11px;
-            font-weight: 600;
-            margin: 6px 0 2px 0;
-            color: var(--gray-800);
-            word-break: break-word;
-        }
-        .qr-card .qr-nisn {
-            font-size: 9px;
-            color: var(--gray-500);
-            margin: 0 0 8px 0;
-        }
-        .qr-card .btn-download {
-            padding: 4px 12px;
-            font-size: 11px;
-            width: 100%;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-        }
-        .qr-card .btn-download:hover {
-            background: var(--primary-dark);
-        }
-
-        /* ADMIN CARD */
-        .admin-card {
-            background: #fff;
-            border-radius: var(--radius);
-            border: 1px solid var(--gray-200);
-            padding: 20px 24px;
-            margin-bottom: 16px;
-        }
-        .admin-card .admin-title {
-            font-weight: 600;
-            font-size: 16px;
-            color: var(--gray-800);
-            margin-bottom: 12px;
-        }
-
-        /* AGENDA */
-        .agenda-item {
-            background: #fff;
-            border-radius: var(--radius-sm);
-            padding: 16px 20px;
-            border-left: 4px solid var(--primary);
-            margin-bottom: 12px;
-            box-shadow: var(--shadow);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        .agenda-item .agenda-info .agenda-date {
-            font-size: 12px;
-            color: var(--gray-500);
-            font-weight: 500;
-        }
-        .agenda-item .agenda-info .agenda-title {
-            font-weight: 600;
-            font-size: 15px;
-            color: var(--gray-800);
-        }
-        .agenda-item .agenda-info .agenda-desc {
-            font-size: 13px;
-            color: var(--gray-600);
-            margin-top: 2px;
-        }
-
-        /* MATERIAL */
-        .material-card {
-            background: #fff;
-            border-radius: var(--radius);
-            border: 1px solid var(--gray-200);
-            padding: 20px 24px;
-            margin-bottom: 16px;
-            transition: var(--transition);
-            cursor: default;
-        }
-        .material-card:hover {
-            box-shadow: var(--shadow);
-            border-color: var(--primary-light);
-        }
-        .material-card .material-title {
-            font-weight: 600;
-            font-size: 16px;
-            color: var(--gray-900);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .material-card .material-title .badge-level {
-            font-size: 11px;
-            font-weight: 700;
-            padding: 2px 12px;
-            border-radius: 20px;
-            color: #fff;
-        }
-        .badge-sd {
-            background: #28a745;
-        }
-        .badge-smp {
-            background: #007bff;
-        }
-        .badge-sma {
-            background: #6f42c1;
-        }
-        .badge-edited {
-            background: #fd7e14 !important;
-        }
-        .material-card .material-desc {
-            color: var(--gray-600);
-            font-size: 14px;
-            margin-top: 6px;
-        }
-        .material-card .material-body {
-            display: none;
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid var(--gray-200);
-        }
-        .material-card .material-body.open {
-            display: block;
-        }
-        .material-card .material-body .sumber {
-            font-size: 12px;
-            color: var(--gray-500);
-            margin-top: 12px;
-            border-top: 1px dashed var(--gray-200);
-            padding-top: 8px;
-        }
-        .material-card .material-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-            border-top: 1px solid var(--gray-100);
-            padding-top: 12px;
-            flex-wrap: wrap;
-        }
-        .uploaded-materials {
-            margin-top: 16px;
-            border-top: 2px solid var(--gray-200);
-            padding-top: 16px;
-        }
-        .uploaded-materials .upload-item {
-            background: var(--gray-50);
-            padding: 12px 16px;
-            border-radius: var(--radius-sm);
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .uploaded-materials .upload-item .upload-title {
-            font-weight: 500;
-            font-size: 14px;
-        }
-        .uploaded-materials .upload-item .upload-meta {
-            font-size: 12px;
-            color: var(--gray-500);
-        }
-
-        /* GRID */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-        .flex-center {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .text-muted {
-            color: var(--gray-600);
-            font-size: 13px;
-        }
-        .text-center {
-            text-align: center;
-        }
-        .mt-12 {
-            margin-top: 12px;
-        }
-        .mb-12 {
-            margin-bottom: 12px;
-        }
-        .w-full {
-            width: 100%;
-        }
-
-        /* ===== KARTU PELAJAR ===== */
-        .kartu-pelajar-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-        }
-        @media (max-width: 1024px) {
-            .kartu-pelajar-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .kartu-form-side {
-            background: #fff;
-            border-radius: var(--radius);
-            border: 1px solid var(--gray-200);
-            padding: 24px;
-            box-shadow: var(--shadow);
-        }
-        .kartu-form-side .form-group {
-            margin-bottom: 14px;
-        }
-        .kartu-form-side .form-group label {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--gray-700);
-            margin-bottom: 4px;
-            display: block;
-        }
-        .kartu-form-side .form-group input,
-        .kartu-form-side .form-group select {
-            width: 100%;
-            padding: 10px 14px;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-sm);
-            font-size: 14px;
-            transition: var(--transition);
-            background: #fff;
-        }
-        .kartu-form-side .form-group input:focus,
-        .kartu-form-side .form-group select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(26, 75, 140, 0.08);
-        }
-
-        .kartu-preview-side {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-        }
-
-        /* === CARD DESIGN (matching PDF) === */
-        .kartu-pelajar-card {
-            width: 100%;
-            max-width: 420px;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--gray-200);
-            overflow: hidden;
-            transition: var(--transition);
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-        }
-        .kartu-pelajar-card .card-header {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-            padding: 18px 24px 14px 24px;
-            text-align: center;
-            border-bottom: 4px solid var(--secondary);
-        }
-        .kartu-pelajar-card .card-header .kemdikbud {
-            font-size: 13px;
-            font-weight: 700;
-            color: rgba(255, 255, 255, 0.85);
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-        .kartu-pelajar-card .card-header .kemdikbud i {
-            margin-right: 6px;
-            font-size: 14px;
-        }
-        .kartu-pelajar-card .card-header .school-name {
-            font-size: 18px;
-            font-weight: 800;
-            color: #fff;
-            margin-top: 2px;
-            letter-spacing: -0.3px;
-        }
-        .kartu-pelajar-card .card-header .school-name span {
-            color: var(--secondary);
-        }
-        .kartu-pelajar-card .card-header .school-address {
-            font-size: 10px;
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: 2px;
-            font-weight: 400;
-            letter-spacing: 0.2px;
-        }
-        .kartu-pelajar-card .card-body {
-            padding: 20px 24px 18px 24px;
-        }
-        .kartu-pelajar-card .card-title {
-            text-align: center;
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--primary);
-            letter-spacing: 1px;
-            margin-bottom: 16px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--secondary);
-            position: relative;
-        }
-        .kartu-pelajar-card .card-title::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 2px;
-            background: var(--primary);
-        }
-        .kartu-pelajar-card .card-field {
-            display: flex;
-            padding: 5px 0;
-            font-size: 13px;
-            border-bottom: 1px solid var(--gray-100);
-        }
-        .kartu-pelajar-card .card-field:last-of-type {
-            border-bottom: none;
-        }
-        .kartu-pelajar-card .card-field .label {
-            font-weight: 600;
-            color: var(--gray-700);
-            min-width: 80px;
-            flex-shrink: 0;
-        }
-        .kartu-pelajar-card .card-field .value {
-            color: var(--gray-900);
-            font-weight: 500;
-            word-break: break-word;
-        }
-        .kartu-pelajar-card .card-qr-section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 12px 0 6px 0;
-            border-top: 2px dashed var(--gray-300);
-            margin-top: 12px;
-        }
-        .kartu-pelajar-card .card-qr-box {
-            background: #fafafa;
-            border: 2px solid var(--gray-200);
-            border-radius: 8px;
-            padding: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 140px;
-            min-height: 140px;
-            justify-content: center;
-        }
-        .kartu-pelajar-card .card-qr-box img {
-            width: 120px;
-            height: 120px;
-            display: block;
-            border-radius: 4px;
-            background: #fff;
-        }
-        .kartu-pelajar-card .card-qr-box .qr-placeholder {
-            font-size: 11px;
-            color: var(--gray-500);
-            text-align: center;
-            font-weight: 500;
-            padding: 20px 0;
-        }
-        .kartu-pelajar-card .card-qr-box .qr-placeholder i {
-            font-size: 32px;
-            display: block;
-            margin-bottom: 6px;
-            color: var(--gray-400);
-        }
-        .kartu-pelajar-card .card-footer {
-            background: var(--gray-50);
-            padding: 10px 24px;
-            border-top: 1px solid var(--gray-200);
-            text-align: center;
-            font-size: 9px;
-            color: var(--gray-500);
-            font-weight: 500;
-            letter-spacing: 0.3px;
-        }
-        .kartu-pelajar-card .card-footer i {
-            margin-right: 4px;
-        }
-
-        .kartu-actions {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 8px;
-        }
-
-        .kartu-list-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 16px;
-            margin-top: 16px;
-        }
-        .kartu-list-item {
-            background: #fff;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--gray-200);
-            padding: 12px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-        .kartu-list-item:hover {
-            border-color: var(--primary);
-            box-shadow: var(--shadow);
-        }
-        .kartu-list-item .kartu-list-name {
-            font-weight: 600;
-            font-size: 14px;
-        }
-        .kartu-list-item .kartu-list-meta {
-            font-size: 12px;
-            color: var(--gray-500);
-        }
-        .kartu-list-item .btn-sm {
-            padding: 4px 12px;
-            font-size: 11px;
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .app-body {
-                flex-direction: column;
-            }
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-                top: 0;
-                border-right: none;
-                border-bottom: 1px solid var(--gray-200);
-                display: flex;
-                flex-wrap: wrap;
-                padding: 8px 12px;
-                gap: 4px;
-            }
-            .sidebar .menu-item {
-                padding: 8px 14px;
-                border-left: none;
-                border-bottom: 2px solid transparent;
-                font-size: 12px;
-            }
-            .sidebar .menu-item.active {
-                border-left: none;
-                border-bottom-color: var(--primary);
-            }
-            .sidebar .menu-divider,
-            .sidebar .menu-label {
-                display: none;
-            }
-            .main-content {
-                padding: 16px;
-                max-height: none;
-                height: auto;
-            }
-            .app-header .brand h2 {
-                font-size: 15px;
-            }
-            .stat-cards {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-            .kartu-pelajar-card {
-                max-width: 100%;
-            }
-            .kartu-pelajar-card .card-field {
-                font-size: 12px;
-                flex-wrap: wrap;
-            }
-            .kartu-pelajar-card .card-field .label {
-                min-width: 60px;
-            }
-            .kartu-pelajar-card .card-qr-box {
-                min-width: 100px;
-                min-height: 100px;
-            }
-            .kartu-pelajar-card .card-qr-box img {
-                width: 90px;
-                height: 90px;
-            }
-            .filter-bar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .filter-bar select,
-            .filter-bar input {
-                width: 100%;
-            }
-            .login-box {
-                padding: 32px 24px;
-            }
-        }
-        @media (max-width: 480px) {
-            .stat-cards {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
-            .stat-card {
-                padding: 14px 16px;
-            }
-            .stat-card .stat-value {
-                font-size: 20px;
-            }
-            .app-header {
-                padding: 8px 16px;
-                flex-wrap: wrap;
-                gap: 8px;
-            }
-            .app-header .user-info .name {
-                font-size: 12px;
-            }
-            .main-content {
-                padding: 12px;
-            }
-            .table-wrap table {
-                font-size: 12px;
-            }
-            .table-wrap table th,
-            .table-wrap table td {
-                padding: 8px 10px;
-            }
-            .qr-card {
-                min-width: 100px;
-                max-width: 120px;
-                padding: 10px 8px;
-            }
-            .qr-card img {
-                width: 80px;
-                height: 80px;
-            }
-            .modal-box {
-                padding: 20px;
-            }
-            .kartu-pelajar-card .card-header .school-name {
-                font-size: 15px;
-            }
-            .kartu-pelajar-card .card-title {
-                font-size: 15px;
-            }
-            .kartu-pelajar-card .card-qr-box img {
-                width: 80px;
-                height: 80px;
-            }
-        }
-
-        /* scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--gray-100);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--gray-400);
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--gray-500);
-        }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-    <!-- ===== TOAST ===== -->
-    <div id="toast" class="toast"></div>
+<!-- Toast -->
+<div id="toast" class="toast"></div>
 
-    <!-- ===== LOGIN ===== -->
+<!-- Login -->
 <div id="loginPage">
     <div class="login-box">
         <div class="logo">
@@ -1264,8 +23,6 @@
             <p>SRT 39 Garut • Pusdiklat Bangprofkesos</p>
             <p style="font-size:12px; color:var(--gray-500); margin-top:2px;">Pendidikan Pancasila</p>
         </div>
-
-        <!-- Pilih Peran -->
         <div class="form-group" style="margin-bottom:16px;">
             <label><i class="fas fa-user-tag"></i> Login Sebagai</label>
             <select id="loginRole" onchange="toggleLoginForm()" style="width:100%; padding:10px 14px; border:2px solid var(--gray-200); border-radius:var(--radius-sm); font-size:14px;">
@@ -1273,8 +30,6 @@
                 <option value="murid">Murid</option>
             </select>
         </div>
-
-        <!-- Form Guru -->
         <div id="loginGuruForm">
             <div class="form-group">
                 <label><i class="fas fa-user"></i> Username</label>
@@ -1285,8 +40,6 @@
                 <input type="password" id="loginPass" value="pancasila" placeholder="Masukkan password" />
             </div>
         </div>
-
-        <!-- Form Murid -->
         <div id="loginMuridForm" style="display:none;">
             <div class="form-group">
                 <label><i class="fas fa-id-card"></i> NISN</label>
@@ -1298,458 +51,169 @@
             </div>
             <p style="font-size:12px; color:var(--gray-500); margin-top:-8px; margin-bottom:12px;">Masukkan NISN dan nama sesuai data sekolah.</p>
         </div>
-
         <button class="btn-login" onclick="handleLogin()"><i class="fas fa-sign-in-alt"></i> Masuk</button>
         <div id="loginError" class="login-error"><i class="fas fa-exclamation-circle"></i> Username/password atau NISN/nama salah!</div>
         <p style="text-align:center; margin-top:16px; font-size:12px; color:var(--gray-500);">Guru: guru / pancasila • Murid: gunakan NISN & nama</p>
     </div>
 </div>
 
-    <!-- ===== APP ===== -->
-    <div id="app">
+<!-- App -->
+<div id="app">
+    <header class="app-header">
+        <div class="brand">
+            <h2>e-Learning <span>Pancasila</span></h2>
+            <span class="badge">SRT 39 Garut</span>
+        </div>
+        <div class="user-info">
+            <span class="name"><i class="fas fa-user-graduate"></i> Guru Pancasila</span>
+            <button class="logout-btn" onclick="handleLogout()" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </header>
 
-        <!-- HEADER -->
-        <header class="app-header">
-            <div class="brand">
-                <h2>e-Learning <span>Pancasila</span></h2>
-                <span class="badge">SRT 39 Garut</span>
-            </div>
-            <div class="user-info">
-                <span class="name"><i class="fas fa-user-graduate"></i> Guru Pancasila</span>
-                <button class="logout-btn" onclick="handleLogout()" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
-            </div>
-        </header>
+    <div class="app-body">
+        <nav class="sidebar" id="sidebar">
+            <div class="menu-label">Navigasi</div>
+            <div class="menu-item active" data-page="dashboard" onclick="navigateTo('dashboard')"><i class="fas fa-th-large"></i> Dashboard</div>
+            <div class="menu-item" data-page="qr" onclick="navigateTo('qr')"><i class="fas fa-qrcode"></i> Absensi QR</div>
+            <div class="menu-item" data-page="kehadiran" onclick="navigateTo('kehadiran')"><i class="fas fa-clipboard-list"></i> Daftar Kehadiran</div>
+            <div class="menu-divider"></div>
+            <div class="menu-item" data-page="agenda" onclick="navigateTo('agenda')"><i class="fas fa-calendar-day"></i> Agenda Harian</div>
+            <div class="menu-item" data-page="materi" onclick="navigateTo('materi')"><i class="fas fa-book"></i> Materi Ajar</div>
+            <div class="menu-item" data-page="admin" onclick="navigateTo('admin')"><i class="fas fa-tasks"></i> Administrasi</div>
+            <div class="menu-divider"></div>
+            <div class="menu-item" data-page="kartu-pelajar" onclick="navigateTo('kartu-pelajar')"><i class="fas fa-id-card"></i> Kartu Pelajar</div>
+            <div class="menu-item" data-page="impor" onclick="navigateTo('impor')"><i class="fas fa-file-import"></i> Impor / Ekspor</div>
+        </nav>
 
-        <div class="app-body">
+        <main class="main-content">
+            <!-- Dashboard -->
+            <section id="page-dashboard" class="page-section active">
+                <h1 class="page-title">Dashboard</h1>
+                <p class="page-subtitle">Ringkasan aktivitas pembelajaran Pendidikan Pancasila</p>
+                <div class="stat-cards" id="statCards">
+                    <div class="stat-card blue"><div class="stat-icon"><i class="fas fa-user-graduate"></i></div><div class="stat-label">Total Siswa</div><div class="stat-value" id="totalSiswa">0</div></div>
+                    <div class="stat-card green"><div class="stat-icon"><i class="fas fa-check-circle"></i></div><div class="stat-label">Hadir Hari Ini</div><div class="stat-value" id="hadirHariIni">0</div></div>
+                    <div class="stat-card orange"><div class="stat-icon"><i class="fas fa-clock"></i></div><div class="stat-label">Izin / Sakit</div><div class="stat-value" id="izinSakit">0</div></div>
+                    <div class="stat-card red"><div class="stat-icon"><i class="fas fa-times-circle"></i></div><div class="stat-label">Alpha</div><div class="stat-value" id="alpha">0</div></div>
+                </div>
+                <div style="background:white; border-radius:var(--radius); border:1px solid var(--gray-200); padding:20px 24px; box-shadow:var(--shadow);">
+                    <h3 style="margin-bottom:12px;"><i class="fas fa-info-circle" style="color:var(--primary);"></i> Selamat Datang, Guru Pendidikan Pancasila!</h3>
+                    <p class="text-muted">Gunakan menu di samping untuk mengelola pembelajaran. Fitur tersedia: Absensi QR Code, Daftar Kehadiran, Agenda Harian, Materi Ajar lengkap per Kelas (SD I-VI, SMP VII-IX, SMA X-XII), Administrasi, Kartu Pelajar dengan QR Code, dan Impor/Ekspor Data.</p>
+                    <p class="text-muted" style="margin-top:8px;"><strong>SRT 39 Garut</strong> • Sekolah Rakyat Terintegrasi 39 Garut • Tahun Ajaran 2026/2027</p>
+                    <p class="text-muted" style="margin-top:4px;"><i class="fas fa-users"></i> Total siswa: <span id="totalSiswa2">0</span> (SD: <span id="totalSD">0</span>, SMP: <span id="totalSMP">0</span>)</p>
+                </div>
+            </section>
 
-            <!-- SIDEBAR -->
-            <nav class="sidebar" id="sidebar">
-                <div class="menu-label">Navigasi</div>
-                <div class="menu-item active" data-page="dashboard" onclick="navigateTo('dashboard')">
-                    <i class="fas fa-th-large"></i> Dashboard
-                </div>
-                <div class="menu-item" data-page="qr" onclick="navigateTo('qr')">
-                    <i class="fas fa-qrcode"></i> Absensi QR
-                </div>
-                <div class="menu-item" data-page="kehadiran" onclick="navigateTo('kehadiran')">
-                    <i class="fas fa-clipboard-list"></i> Daftar Kehadiran
-                </div>
-                <div class="menu-divider"></div>
-                <div class="menu-item" data-page="agenda" onclick="navigateTo('agenda')">
-                    <i class="fas fa-calendar-day"></i> Agenda Harian
-                </div>
-                <div class="menu-item" data-page="materi" onclick="navigateTo('materi')">
-                    <i class="fas fa-book"></i> Materi Ajar
-                </div>
-                <div class="menu-item" data-page="admin" onclick="navigateTo('admin')">
-                    <i class="fas fa-tasks"></i> Administrasi
-                </div>
-                <div class="menu-divider"></div>
-                <div class="menu-item" data-page="kartu-pelajar" onclick="navigateTo('kartu-pelajar')">
-                    <i class="fas fa-id-card"></i> Kartu Pelajar
-                </div>
-                <div class="menu-item" data-page="impor" onclick="navigateTo('impor')">
-                    <i class="fas fa-file-import"></i> Impor / Ekspor
-                </div>
-            </nav>
-
-            <!-- MAIN CONTENT -->
-            <main class="main-content">
-
-                <!-- ===== DASHBOARD ===== -->
-                <section id="page-dashboard" class="page-section active">
-                    <h1 class="page-title">Dashboard</h1>
-                    <p class="page-subtitle">Ringkasan aktivitas pembelajaran Pendidikan Pancasila</p>
-                    <div class="stat-cards" id="statCards">
-                        <div class="stat-card blue">
-                            <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
-                            <div class="stat-label">Total Siswa</div>
-                            <div class="stat-value" id="totalSiswa">0</div>
-                        </div>
-                        <div class="stat-card green">
-                            <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
-                            <div class="stat-label">Hadir Hari Ini</div>
-                            <div class="stat-value" id="hadirHariIni">0</div>
-                        </div>
-                        <div class="stat-card orange">
-                            <div class="stat-icon"><i class="fas fa-clock"></i></div>
-                            <div class="stat-label">Izin / Sakit</div>
-                            <div class="stat-value" id="izinSakit">0</div>
-                        </div>
-                        <div class="stat-card red">
-                            <div class="stat-icon"><i class="fas fa-times-circle"></i></div>
-                            <div class="stat-label">Alpha</div>
-                            <div class="stat-value" id="alpha">0</div>
+            <!-- QR -->
+            <section id="page-qr" class="page-section">
+                <h1 class="page-title"><i class="fas fa-qrcode"></i> Absensi Scan QR Code</h1>
+                <p class="page-subtitle">Scan QR Code siswa untuk melakukan absensi</p>
+                <div class="qr-container">
+                    <div class="qr-header">
+                        <h3><i class="fas fa-camera"></i> Scanner QR Code</h3>
+                        <div>
+                            <button class="btn btn-primary btn-sm" onclick="startQrScanner()"><i class="fas fa-play"></i> Mulai Scan</button>
+                            <button class="btn btn-danger btn-sm" onclick="stopQrScanner()"><i class="fas fa-stop"></i> Stop</button>
                         </div>
                     </div>
-                    <div style="background:white; border-radius:var(--radius); border:1px solid var(--gray-200); padding:20px 24px; box-shadow:var(--shadow);">
-                        <h3 style="margin-bottom:12px;"><i class="fas fa-info-circle" style="color:var(--primary);"></i> Selamat Datang, Guru Pendidikan Pancasila!</h3>
-                        <p class="text-muted">Gunakan menu di samping untuk mengelola pembelajaran. Fitur tersedia: Absensi QR Code, Daftar Kehadiran, Agenda Harian, Materi Ajar lengkap per Kelas (SD I-VI, SMP VII-IX, SMA X-XII), Administrasi, Kartu Pelajar dengan QR Code, dan Impor/Ekspor Data.</p>
-                        <p class="text-muted" style="margin-top:8px;"><strong>SRT 39 Garut</strong> • Sekolah Rakyat Terintegrasi 39 Garut • Tahun Ajaran 2026/2027</p>
-                        <p class="text-muted" style="margin-top:4px;"><i class="fas fa-users"></i> Total siswa: <span id="totalSiswa2">0</span> (SD: <span id="totalSD">0</span>, SMP: <span id="totalSMP">0</span>)</p>
+                    <div class="qr-scanner-box" id="qrScannerBox">
+                        <div id="qr-reader"></div>
+                        <div class="qr-overlay"></div>
                     </div>
-                </section>
-
-                <!-- ===== ABSENSI QR ===== -->
-                <section id="page-qr" class="page-section">
-                    <h1 class="page-title"><i class="fas fa-qrcode"></i> Absensi Scan QR Code</h1>
-                    <p class="page-subtitle">Scan QR Code siswa untuk melakukan absensi</p>
-
-                    <div class="qr-container">
-                        <div class="qr-header">
-                            <h3><i class="fas fa-camera"></i> Scanner QR Code</h3>
-                            <div>
-                                <button class="btn btn-primary btn-sm" onclick="startQrScanner()"><i class="fas fa-play"></i> Mulai Scan</button>
-                                <button class="btn btn-danger btn-sm" onclick="stopQrScanner()"><i class="fas fa-stop"></i> Stop</button>
-                            </div>
-                        </div>
-                        <div class="qr-scanner-box" id="qrScannerBox">
-                            <div id="qr-reader"></div>
-                            <div class="qr-overlay"></div>
-                        </div>
-                        <div id="qrStatus" class="qr-status">Klik "Mulai Scan" untuk mengaktifkan kamera dan memindai QR Code.</div>
-                        <div id="qrResult" style="margin-top:12px; text-align:center; font-weight:600;"></div>
+                    <div id="qrStatus" class="qr-status">Klik "Mulai Scan" untuk mengaktifkan kamera dan memindai QR Code.</div>
+                    <div id="qrResult" style="margin-top:12px; text-align:center; font-weight:600;"></div>
+                </div>
+                <div class="qr-container">
+                    <div class="qr-header">
+                        <h3><i class="fas fa-qrcode"></i> Hasil Scan & Absen</h3>
                     </div>
-
-                    <div class="qr-container">
-                        <div class="qr-header">
-                            <h3><i class="fas fa-qrcode"></i> Hasil Scan & Absen</h3>
-                        </div>
-                        <div id="qrAbsenForm" style="display:none; background:var(--gray-50); padding:16px; border-radius:var(--radius-sm);">
-                            <p><strong>Data Siswa:</strong> <span id="qrNamaSiswa">-</span> (NISN: <span id="qrNisnSiswa">-</span>)</p>
-                            <p><strong>Jenjang:</strong> <span id="qrJenjangSiswa">-</span></p>
-                            <div class="flex-center" style="margin-top:12px;">
-                                <select id="qrStatusAbsen" style="padding:8px 14px; border:2px solid var(--gray-200); border-radius:var(--radius-sm);">
-                                    <option value="Hadir">Hadir</option>
-                                    <option value="Izin">Izin</option>
-                                    <option value="Sakit">Sakit</option>
-                                    <option value="Alpha">Alpha</option>
-                                </select>
-                                <button class="btn btn-success" onclick="konfirmasiAbsenQR()"><i class="fas fa-check"></i> Konfirmasi Absen</button>
-                            </div>
-                        </div>
-                        <div id="qrEmptyState" class="text-muted text-center" style="padding:20px;">
-                            Belum ada hasil scan. Silakan scan QR Code siswa.
-                        </div>
-                    </div>
-
-                    <!-- Generate QR -->
-                    <div class="qr-container" style="max-width:100%;">
-                        <div class="qr-header">
-                            <h3><i class="fas fa-download"></i> Generate & Unduh QR Code Siswa</h3>
-                            <span style="font-size:12px; color:var(--gray-500);"><i class="fas fa-globe"></i> via qrzap.fun</span>
-                        </div>
-                        <p class="text-muted">QR Code berisi NISN, Nama, dan Jenjang. Dihasilkan menggunakan layanan gratis <strong>qrzap.fun</strong>.</p>
-                        <div class="flex-center" style="margin-top:12px; flex-wrap:wrap;">
-                            <select id="qrGenerateKelas" style="padding:8px 14px; border:2px solid var(--gray-200); border-radius:var(--radius-sm);">
-                                <option value="SD">SD (SRD)</option>
-                                <option value="SMP">SMP (SRMP)</option>
+                    <div id="qrAbsenForm" style="display:none; background:var(--gray-50); padding:16px; border-radius:var(--radius-sm);">
+                        <p><strong>Data Siswa:</strong> <span id="qrNamaSiswa">-</span> (NISN: <span id="qrNisnSiswa">-</span>)</p>
+                        <p><strong>Jenjang:</strong> <span id="qrJenjangSiswa">-</span></p>
+                        <div class="flex-center" style="margin-top:12px;">
+                            <select id="qrStatusAbsen" style="padding:8px 14px; border:2px solid var(--gray-200); border-radius:var(--radius-sm);">
+                                <option value="Hadir">Hadir</option>
+                                <option value="Izin">Izin</option>
+                                <option value="Sakit">Sakit</option>
+                                <option value="Alpha">Alpha</option>
                             </select>
-                            <button class="btn btn-primary" onclick="generateQRForClass()"><i class="fas fa-qrcode"></i> Generate QR untuk Kelas</button>
-                            <button class="btn btn-warning" onclick="clearQRCards()"><i class="fas fa-trash"></i> Hapus Semua</button>
-                        </div>
-                        <div id="qrGeneratedArea" class="qr-grid"></div>
-                        <div id="qrGenStatus" class="text-muted text-center mt-12"></div>
-                    </div>
-                </section>
-
-                <!-- ===== DAFTAR KEHADIRAN ===== -->
-                <section id="page-kehadiran" class="page-section">
-                    <h1 class="page-title"><i class="fas fa-clipboard-list"></i> Daftar Kehadiran Murid</h1>
-                    <p class="page-subtitle">Rekap kehadiran siswa Pendidikan Pancasila</p>
-                    <div class="filter-bar">
-                        <select id="filterKelas" onchange="renderKehadiran()">
-                            <option value="all">Semua Kelas</option>
-                            <option value="SD">SD</option>
-                            <option value="SMP">SMP</option>
-                        </select>
-                        <input type="date" id="filterTanggal" onchange="renderKehadiran()" />
-                        <button class="btn btn-primary btn-sm" onclick="renderKehadiran()"><i class="fas fa-filter"></i> Filter</button>
-                        <button class="btn btn-success btn-sm" onclick="eksporKehadiran()"><i class="fas fa-file-excel"></i> Ekspor Excel</button>
-                    </div>
-                    <div class="table-wrap">
-                        <div class="table-header">
-                            <h3><i class="fas fa-users"></i> Rekap Kehadiran</h3>
-                            <span class="text-muted" id="kehadiranCount">0 siswa</span>
-                        </div>
-                        <div style="overflow-x:auto;">
-                            <table>
-                                <thead>
-                                    <tr><th>No</th><th>Nama</th><th>Jenjang</th><th>Status</th><th>Tanggal</th><th>Metode</th></tr>
-                                </thead>
-                                <tbody id="kehadiranTableBody">
-                                    <tr><td colspan="6" class="text-center text-muted">Belum ada data kehadiran</td></tr>
-                                </tbody>
-                            </table>
+                            <button class="btn btn-success" onclick="konfirmasiAbsenQR()"><i class="fas fa-check"></i> Konfirmasi Absen</button>
                         </div>
                     </div>
-                </section>
-
-                <!-- ===== AGENDA ===== -->
-                <section id="page-agenda" class="page-section">
-                    <h1 class="page-title"><i class="fas fa-calendar-day"></i> Agenda Harian Guru</h1>
-                    <p class="page-subtitle">Catatan kegiatan pembelajaran hari ini</p>
-                    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:20px;">
-                        <button class="btn btn-primary" onclick="tampilkanModalAgenda()"><i class="fas fa-plus"></i> Tambah Agenda</button>
+                    <div id="qrEmptyState" class="text-muted text-center" style="padding:20px;">
+                        Belum ada hasil scan. Silakan scan QR Code siswa.
                     </div>
-                    <div id="agendaList">
-                        <p class="text-muted">Belum ada agenda. Tambahkan agenda baru.</p>
+                </div>
+                <div class="qr-container" style="max-width:100%;">
+                    <div class="qr-header">
+                        <h3><i class="fas fa-download"></i> Generate & Unduh QR Code Siswa</h3>
+                        <span style="font-size:12px; color:var(--gray-500);"><i class="fas fa-globe"></i> via qrzap.fun</span>
                     </div>
-                </section>
-
-                <!-- ===== MATERI ===== -->
-                <section id="page-materi" class="page-section">
-                    <h1 class="page-title"><i class="fas fa-book"></i> Materi Ajar Pendidikan Pancasila</h1>
-                    <p class="page-subtitle">Unggah dan kelola file materi (PDF/PPT) untuk setiap kelas.</p>
-
-                    <!-- Filter -->
-                    <div class="filter-bar">
-                        <select id="filterMateriJenjang" onchange="renderMateri()">
-                            <option value="all">Semua Jenjang</option>
+                    <p class="text-muted">QR Code berisi NISN, Nama, dan Jenjang. Dihasilkan menggunakan layanan gratis <strong>qrzap.fun</strong>.</p>
+                    <div class="flex-center" style="margin-top:12px; flex-wrap:wrap;">
+                        <select id="qrGenerateKelas" style="padding:8px 14px; border:2px solid var(--gray-200); border-radius:var(--radius-sm);">
                             <option value="SD">SD (SRD)</option>
                             <option value="SMP">SMP (SRMP)</option>
-                            <option value="SMA">SMA (SRMA)</option>
                         </select>
-                        <select id="filterMateriKelas" onchange="renderMateri()">
-                            <option value="all">Semua Kelas</option>
-                            <option value="1">Kelas I</option><option value="2">Kelas II</option>
-                            <option value="3">Kelas III</option><option value="4">Kelas IV</option>
-                            <option value="5">Kelas V</option><option value="6">Kelas VI</option>
-                            <option value="7">Kelas VII</option><option value="8">Kelas VIII</option>
-                            <option value="9">Kelas IX</option>
-                            <option value="10">Kelas X</option><option value="11">Kelas XI</option>
-                            <option value="12">Kelas XII</option>
-                        </select>
+                        <button class="btn btn-primary" onclick="generateQRForClass()"><i class="fas fa-qrcode"></i> Generate QR untuk Kelas</button>
+                        <button class="btn btn-warning" onclick="clearQRCards()"><i class="fas fa-trash"></i> Hapus Semua</button>
                     </div>
+                    <div id="qrGeneratedArea" class="qr-grid"></div>
+                    <div id="qrGenStatus" class="text-muted text-center mt-12"></div>
+                </div>
+            </section>
 
-                    <!-- Daftar Materi -->
-                    <div id="materiList"></div>
-
-                    <!-- Form Upload -->
-<div class="admin-card" style="margin-top:24px;">
-    <div class="admin-title"><i class="fas fa-upload"></i> Unggah Materi Baru</div>
-    <p class="text-muted">Upload file PDF atau PPT (maks. 5MB).</p>
-    <div class="grid-2">
-        <div class="form-group">
-            <label>Judul Materi</label>
-            <input type="text" id="uploadJudul" placeholder="Misal: Bab 1 Pancasila" />
-        </div>
-        <div class="form-group">
-            <label>Kelas</label>
-            <select id="uploadKelas">
-                <option value="1">Kelas I</option><option value="2">Kelas II</option>
-                <option value="3">Kelas III</option><option value="4">Kelas IV</option>
-                <option value="5">Kelas V</option><option value="6">Kelas VI</option>
-                <option value="7">Kelas VII</option><option value="8">Kelas VIII</option>
-                <option value="9">Kelas IX</option>
-                <option value="10">Kelas X</option><option value="11">Kelas XI</option>
-                <option value="12">Kelas XII</option>
-            </select>
-        </div>
-    </div>
-    <div class="grid-2">
-        <div class="form-group">
-            <label>Jenjang</label>
-            <select id="uploadJenjang">
-                <option value="SD">SD (SRD)</option>
-                <option value="SMP">SMP (SRMP)</option>
-                <option value="SMA">SMA (SRMA)</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Deskripsi (opsional)</label>
-            <input type="text" id="uploadDeskripsi" placeholder="Deskripsi singkat" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label>Pilih File (PDF / PPT)</label>
-        <input type="file" id="uploadFile" accept=".pdf,.ppt,.pptx" />
-    </div>
-    <button class="btn btn-success" onclick="uploadMateri()"><i class="fas fa-upload"></i> Unggah Materi</button>
-    <div id="uploadProgress" style="margin-top:12px; display:none;">
-        <div style="background:var(--gray-200); border-radius:20px; height:8px; overflow:hidden;">
-            <div id="uploadProgressBar" style="width:0%; background:var(--primary); height:8px; transition:width 0.3s;"></div>
-        </div>
-        <p id="uploadStatusText" style="font-size:12px; color:var(--gray-600); margin-top:4px;">Mengunggah...</p>
-    </div>
-</div>
-                
-                <!-- ===== ADMINISTRASI ===== -->
-                <section id="page-admin" class="page-section">
-                    <h1 class="page-title"><i class="fas fa-tasks"></i> Administrasi Pembelajaran</h1>
-                    <p class="page-subtitle">Nilai, catatan, dan administrasi lainnya</p>
-                    <div class="admin-card">
-                        <div class="admin-title"><i class="fas fa-file-alt"></i> Catatan Pembelajaran</div>
-                        <div class="form-group">
-                            <label>Judul Catatan</label>
-                            <input type="text" id="catatanJudul" placeholder="Misal: Refleksi Pembelajaran Bab 1" />
-                        </div>
-                        <div class="form-group">
-                            <label>Isi Catatan</label>
-                            <textarea id="catatanIsi" rows="3" placeholder="Tulis catatan pembelajaran..."></textarea>
-                        </div>
-                        <button class="btn btn-primary" onclick="simpanCatatan()"><i class="fas fa-save"></i> Simpan Catatan</button>
-                        <div style="margin-top:16px;" id="catatanList">
-                            <p class="text-muted">Belum ada catatan.</p>
-                        </div>
+            <!-- Kehadiran -->
+            <section id="page-kehadiran" class="page-section">
+                <h1 class="page-title"><i class="fas fa-clipboard-list"></i> Daftar Kehadiran Murid</h1>
+                <p class="page-subtitle">Rekap kehadiran siswa Pendidikan Pancasila</p>
+                <div class="filter-bar">
+                    <select id="filterKelas" onchange="renderKehadiran()">
+                        <option value="all">Semua Kelas</option>
+                        <option value="SD">SD</option>
+                        <option value="SMP">SMP</option>
+                    </select>
+                    <input type="date" id="filterTanggal" onchange="renderKehadiran()" />
+                    <button class="btn btn-primary btn-sm" onclick="renderKehadiran()"><i class="fas fa-filter"></i> Filter</button>
+                    <button class="btn btn-success btn-sm" onclick="eksporKehadiran()"><i class="fas fa-file-excel"></i> Ekspor Excel</button>
+                </div>
+                <div class="table-wrap">
+                    <div class="table-header">
+                        <h3><i class="fas fa-users"></i> Rekap Kehadiran</h3>
+                        <span class="text-muted" id="kehadiranCount">0 siswa</span>
                     </div>
-                    <div class="admin-card">
-                        <div class="admin-title"><i class="fas fa-chart-simple"></i> Rekap Nilai</div>
-                        <div class="filter-bar">
-                            <select id="nilaiKelas" onchange="renderNilai()">
-                                <option value="all">Semua Kelas</option>
-                                <option value="SD">SD</option>
-                                <option value="SMP">SMP</option>
-                            </select>
-                            <button class="btn btn-success btn-sm" onclick="eksporNilai()"><i class="fas fa-file-excel"></i> Ekspor Nilai</button>
-                        </div>
-                        <div style="overflow-x:auto;">
-                            <table>
-                                <thead>
-                                    <tr><th>No</th><th>Nama</th><th>Jenjang</th><th>Nilai</th><th>Keterangan</th></tr>
-                                </thead>
-                                <tbody id="nilaiTableBody">
-                                    <tr><td colspan="5" class="text-center text-muted">Belum ada data nilai</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div style="overflow-x:auto;">
+                        <table>
+                            <thead><tr><th>No</th><th>Nama</th><th>Jenjang</th><th>Status</th><th>Tanggal</th><th>Metode</th></tr></thead>
+                            <tbody id="kehadiranTableBody"><tr><td colspan="6" class="text-center text-muted">Belum ada data kehadiran</td></tr></tbody>
+                        </table>
                     </div>
-                </section>
+                </div>
+            </section>
 
-                <!-- ===== KARTU PELAJAR ===== -->
-                <section id="page-kartu-pelajar" class="page-section">
-                    <h1 class="page-title"><i class="fas fa-id-card"></i> Kartu Pelajar Siswa</h1>
-                    <p class="page-subtitle">Generate dan cetak kartu pelajar dengan QR Code otomatis</p>
+            <!-- Agenda -->
+            <section id="page-agenda" class="page-section">
+                <h1 class="page-title"><i class="fas fa-calendar-day"></i> Agenda Harian Guru</h1>
+                <p class="page-subtitle">Catatan kegiatan pembelajaran hari ini</p>
+                <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:20px;">
+                    <button class="btn btn-primary" onclick="tampilkanModalAgenda()"><i class="fas fa-plus"></i> Tambah Agenda</button>
+                </div>
+                <div id="agendaList"><p class="text-muted">Belum ada agenda. Tambahkan agenda baru.</p></div>
+            </section>
 
-                    <div class="kartu-pelajar-container">
-
-                        <!-- FORM SIDE -->
-                        <div class="kartu-form-side">
-                            <h3 style="font-weight:600; font-size:16px; margin-bottom:12px;"><i class="fas fa-user-edit"></i> Pilih & Isi Data Siswa</h3>
-
-                            <div class="form-group">
-                                <label>Pilih Siswa</label>
-                                <select id="kartuSelectSiswa" onchange="onKartuSiswaChange()">
-                                    <option value="">-- Pilih Siswa --</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Tempat Lahir</label>
-                                <input type="text" id="kartuTempatLahir" placeholder="Misal: Garut" />
-                            </div>
-                            <div class="form-group">
-                                <label>Tanggal Lahir</label>
-                                <input type="date" id="kartuTanggalLahir" />
-                            </div>
-                            <div class="form-group">
-                                <label>Kelas (detail)</label>
-                                <input type="text" id="kartuKelasDetail" placeholder="Misal: VI-A atau 7B" />
-                            </div>
-                            <div class="form-group">
-                                <label>Alamat</label>
-                                <textarea id="kartuAlamat" rows="2" placeholder="Alamat lengkap siswa"></textarea>
-                            </div>
-
-                            <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:8px;">
-                                <button class="btn btn-primary" onclick="generateKartuPelajar()"><i class="fas fa-id-card"></i> Buat Kartu</button>
-                                <button class="btn btn-success" onclick="printKartuPelajar()"><i class="fas fa-print"></i> Cetak</button>
-                                <button class="btn btn-warning" onclick="generateAllKartu()"><i class="fas fa-layer-group"></i> Generate Semua</button>
-                            </div>
-
-                            <div style="margin-top:16px; border-top:1px solid var(--gray-200); padding-top:16px;">
-                                <h4 style="font-weight:600; font-size:14px; color:var(--gray-700);"><i class="fas fa-list"></i> Daftar Kartu Tersimpan</h4>
-                                <div id="kartuSavedList" style="margin-top:8px; max-height:240px; overflow-y:auto;">
-                                    <p class="text-muted">Belum ada kartu yang disimpan.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- PREVIEW SIDE -->
-                        <div class="kartu-preview-side">
-                            <div id="kartuPreviewContainer">
-                                <!-- Kartu akan dirender di sini -->
-                                <div style="background:var(--gray-100); border-radius:var(--radius); padding:40px 20px; text-align:center; width:100%; max-width:420px; border:2px dashed var(--gray-300);">
-                                    <i class="fas fa-id-card" style="font-size:48px; color:var(--gray-400);"></i>
-                                    <p style="margin-top:12px; color:var(--gray-500);">Pilih siswa dan isi data, lalu klik <strong>"Buat Kartu"</strong></p>
-                                </div>
-                            </div>
-                            <div class="kartu-actions">
-                                <button class="btn btn-primary btn-sm" onclick="downloadKartuPelajar()"><i class="fas fa-download"></i> Unduh PNG</button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ===== IMPOR / EKSPOR ===== -->
-                <section id="page-impor" class="page-section">
-                    <h1 class="page-title"><i class="fas fa-file-import"></i> Impor / Ekspor Data</h1>
-                    <p class="page-subtitle">Impor dan ekspor data menggunakan format Excel (.xlsx)</p>
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
-                        <div class="admin-card">
-                            <div class="admin-title"><i class="fas fa-file-import"></i> Impor Data Siswa</div>
-                            <div class="file-upload-area" onclick="document.getElementById('fileInput').click()">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <p>Klik untuk upload file Excel</p>
-                                <p style="font-size:12px; color:var(--gray-500);">Format: .xlsx dengan kolom: Nama, NISN, Jenjang</p>
-                            </div>
-                            <input type="file" id="fileInput" accept=".xlsx,.xls" style="display:none;" onchange="imporData(event)" />
-                            <div id="imporStatus" style="margin-top:12px;"></div>
-                        </div>
-                        <div class="admin-card">
-                            <div class="admin-title"><i class="fas fa-file-export"></i> Ekspor Data & Template</div>
-                            <p class="text-muted">Ekspor data atau unduh template</p>
-                            <div class="template-grid">
-                                <button class="btn btn-success" onclick="eksporSiswa()"><i class="fas fa-file-excel"></i> Ekspor Siswa</button>
-                                <button class="btn btn-primary" onclick="eksporKehadiran()"><i class="fas fa-file-excel"></i> Ekspor Kehadiran</button>
-                                <button class="btn btn-warning" onclick="eksporNilai()"><i class="fas fa-file-excel"></i> Ekspor Nilai</button>
-                                <button class="btn btn-outline" onclick="unduhTemplateSiswa()"><i class="fas fa-download"></i> Template Siswa</button>
-                                <button class="btn btn-outline" onclick="unduhTemplateKehadiran()"><i class="fas fa-download"></i> Template Kehadiran</button>
-                                <button class="btn btn-outline" onclick="unduhTemplateNilai()"><i class="fas fa-download"></i> Template Nilai</button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-            </main>
-        </div>
-    </div>
-
-    <!-- ===== MODAL AGENDA ===== -->
-    <div class="modal-overlay" id="modalAgenda">
-        <div class="modal-box">
-            <button class="modal-close" onclick="tutupModalAgenda()">&times;</button>
-            <div class="modal-title"><i class="fas fa-calendar-plus"></i> Tambah Agenda</div>
-            <div class="form-group">
-                <label>Judul Agenda</label>
-                <input type="text" id="agendaJudul" placeholder="Misal: Pembelajaran Bab 2" />
-            </div>
-            <div class="form-group">
-                <label>Deskripsi</label>
-                <textarea id="agendaDeskripsi" rows="3" placeholder="Detail kegiatan..."></textarea>
-            </div>
-            <div class="form-group">
-                <label>Tanggal</label>
-                <input type="date" id="agendaTanggal" />
-            </div>
-            <button class="btn btn-primary" onclick="simpanAgenda()"><i class="fas fa-save"></i> Simpan</button>
-        </div>
-    </div>
-
-    <!-- ===== MODAL EDIT MATERI ===== -->
-    <div class="modal-overlay" id="modalEditMateri">
-        <div class="modal-box">
-            <button class="modal-close" onclick="tutupModalEditMateri()">&times;</button>
-            <div class="modal-title"><i class="fas fa-edit"></i> Edit Materi Ajar</div>
-            <input type="hidden" id="editMateriId" />
-            <div class="form-group">
-                <label>Judul Materi</label>
-                <input type="text" id="editJudul" placeholder="Judul materi" />
-            </div>
-            <div class="grid-2">
-                <div class="form-group">
-                    <label>Kelas</label>
-                    <select id="editKelas">
+            <!-- Materi -->
+            <section id="page-materi" class="page-section">
+                <h1 class="page-title"><i class="fas fa-book"></i> Materi Ajar Pendidikan Pancasila</h1>
+                <p class="page-subtitle">Unggah dan kelola file materi (PDF/PPT) untuk setiap kelas.</p>
+                <div class="filter-bar">
+                    <select id="filterMateriJenjang" onchange="renderMateri()">
+                        <option value="all">Semua Jenjang</option>
+                        <option value="SD">SD (SRD)</option>
+                        <option value="SMP">SMP (SRMP)</option>
+                        <option value="SMA">SMA (SRMA)</option>
+                    </select>
+                    <select id="filterMateriKelas" onchange="renderMateri()">
+                        <option value="all">Semua Kelas</option>
                         <option value="1">Kelas I</option><option value="2">Kelas II</option>
                         <option value="3">Kelas III</option><option value="4">Kelas IV</option>
                         <option value="5">Kelas V</option><option value="6">Kelas VI</option>
@@ -1759,1154 +223,215 @@
                         <option value="12">Kelas XII</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label>Jenjang</label>
-                    <select id="editJenjang">
-                        <option value="SD">SD (SRD)</option>
-                        <option value="SMP">SMP (SRMP)</option>
-                        <option value="SMA">SMA (SRMA)</option>
-                    </select>
+                <div id="materiList"></div>
+                <div class="admin-card" style="margin-top:24px;">
+                    <div class="admin-title"><i class="fas fa-upload"></i> Unggah Materi Baru</div>
+                    <p class="text-muted">Upload file PDF atau PPT (maks. 5MB).</p>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Judul Materi</label>
+                            <input type="text" id="uploadJudul" placeholder="Misal: Bab 1 Pancasila" />
+                        </div>
+                        <div class="form-group">
+                            <label>Kelas</label>
+                            <select id="uploadKelas">
+                                <option value="1">Kelas I</option><option value="2">Kelas II</option>
+                                <option value="3">Kelas III</option><option value="4">Kelas IV</option>
+                                <option value="5">Kelas V</option><option value="6">Kelas VI</option>
+                                <option value="7">Kelas VII</option><option value="8">Kelas VIII</option>
+                                <option value="9">Kelas IX</option>
+                                <option value="10">Kelas X</option><option value="11">Kelas XI</option>
+                                <option value="12">Kelas XII</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Jenjang</label>
+                            <select id="uploadJenjang">
+                                <option value="SD">SD (SRD)</option>
+                                <option value="SMP">SMP (SRMP)</option>
+                                <option value="SMA">SMA (SRMA)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Deskripsi (opsional)</label>
+                            <input type="text" id="uploadDeskripsi" placeholder="Deskripsi singkat" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Pilih File (PDF / PPT)</label>
+                        <input type="file" id="uploadFile" accept=".pdf,.ppt,.pptx" />
+                    </div>
+                    <button class="btn btn-success" onclick="uploadMateri()"><i class="fas fa-upload"></i> Unggah Materi</button>
+                    <div id="uploadProgress" style="margin-top:12px; display:none;">
+                        <div style="background:var(--gray-200); border-radius:20px; height:8px; overflow:hidden;">
+                            <div id="uploadProgressBar" style="width:0%; background:var(--primary); height:8px; transition:width 0.3s;"></div>
+                        </div>
+                        <p id="uploadStatusText" style="font-size:12px; color:var(--gray-600); margin-top:4px;">Mengunggah...</p>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label>Deskripsi Singkat</label>
-                <input type="text" id="editDeskripsi" placeholder="Deskripsi materi" />
-            </div>
-            <div class="form-group">
-                <label>Isi Materi (HTML / Teks)</label>
-                <textarea id="editIsi" rows="6" placeholder="Konten materi"></textarea>
-            </div>
-            <div style="display:flex; gap:12px; justify-content:flex-end; margin-top:16px;">
-                <button class="btn btn-outline" onclick="tutupModalEditMateri()">Batal</button>
-                <button class="btn btn-primary" onclick="simpanEditMateri()"><i class="fas fa-save"></i> Simpan Perubahan</button>
-            </div>
-        </div>
-    </div>
+            </section>
 
-    <!-- ===== JAVASCRIPT ===== -->
-    <script>
-        // ============================================================
-        // DATA SISWA (dari screenshot)
-        // ============================================================
-        const siswaData = [
-            { nama: "ADE MUSTOPA", nisn: "3139453861", jenjang: "SD" },
-            { nama: "AGUS RAMDANI", nisn: "0104915906", jenjang: "SMP" },
-            { nama: "AHMAD PADILAH", nisn: "3137836817", jenjang: "SD" },
-            { nama: "AI SITI NUROHMAH", nisn: "3158260386", jenjang: "SD" },
-            { nama: "ANDIKA NUROHMAN", nisn: "0141419382", jenjang: "SD" },
-            { nama: "ANISA SAPUTRI", nisn: "0123595071", jenjang: "SMP" },
-            { nama: "ARDIANSYAH SAPUTRA", nisn: "3162522983", jenjang: "SD" },
-            { nama: "ARIF FIRMANSYAH", nisn: "3120690349", jenjang: "SD" },
-            { nama: "ARMAN MAULANA", nisn: "3132152714", jenjang: "SMP" },
-            { nama: "DEPAHRI PUTRA RAMADAN", nisn: "3111636292", jenjang: "SMP" },
-            { nama: "DERIMUHAMMAD", nisn: "3122527422", jenjang: "SMP" },
-            { nama: "DEWANGGNA NUGRAHA", nisn: "3124835417", jenjang: "SMP" },
-            { nama: "DEWI TANIA", nisn: "3124764226", jenjang: "SD" },
-            { nama: "ELSA SABILA NURHALIMAH", nisn: "3130228888", jenjang: "SMP" },
-            { nama: "EVA FAUZIAH", nisn: "0094884752", jenjang: "SMP" },
-            { nama: "FANESA ANASTASYA", nisn: "0106857181", jenjang: "SMP" },
-            { nama: "FEBI", nisn: "0129226857", jenjang: "SD" },
-            { nama: "HISMA HOLIPATUL PADILAH", nisn: "0113316745", jenjang: "SMP" },
-            { nama: "IHSAN MAULANA", nisn: "3126090468", jenjang: "SMP" },
-            { nama: "INDRIA DELIA PUTRI", nisn: "97311050", jenjang: "SMP" },
-            { nama: "IRNA RAODOTUL ZANAH", nisn: "3133143373", jenjang: "SMP" },
-            { nama: "IRSAL KHAERUNA", nisn: "3146716444", jenjang: "SD" },
-            { nama: "LESTI JULIANTI", nisn: "3128365677", jenjang: "SMP" },
-            { nama: "M RIZKY MAULANA", nisn: "3172776475", jenjang: "SD" },
-            { nama: "M. FATIR", nisn: "0102903616", jenjang: "SMP" },
-            { nama: "MOCH AKBAR TRI HERMAWAN", nisn: "0106566909", jenjang: "SMP" },
-            { nama: "MOH PAISAL APRILIANSAH", nisn: "0147560005", jenjang: "SD" },
-            { nama: "MUHAMAD FATTAN SAPUTRA", nisn: "3155276593", jenjang: "SD" },
-            { nama: "MUHAMAD HANIF ALIYUDIN", nisn: "102243542", jenjang: "SMP" },
-            { nama: "MUHAMAD HASANUDIN", nisn: "0113191027", jenjang: "SMP" },
-            { nama: "MUHAMAD REHAN NURUL JANAH", nisn: "0111987988", jenjang: "SMP" },
-            { nama: "MUHAMAD RISKI ABDULLOH", nisn: "3161059263", jenjang: "SD" },
-            { nama: "MUHAMAD RIVAL ALFARIZI", nisn: "3169279715", jenjang: "SD" },
-            { nama: "MUHAMAD SAMIN NUGRAHA", nisn: "0119673298", jenjang: "SMP" },
-            { nama: "MUHAMAD SANDI", nisn: "0115109325", jenjang: "SMP" },
-            { nama: "MUHAMMAD IDRUS PAHMI JAHARSAH", nisn: "0115015547", jenjang: "SMP" },
-            { nama: "MUHAMMAD RAEHAN", nisn: "3094108589", jenjang: "SMP" },
-            { nama: "MUHAMMAD ZAKI ARIPIN", nisn: "0127300770", jenjang: "SMP" },
-            { nama: "MUSNAN FIRDAUS", nisn: "3108593390", jenjang: "SMP" },
-            { nama: "NAZHAN", nisn: "0102332909", jenjang: "SD" },
-            { nama: "NOVI RAHMADANI", nisn: "0127825608", jenjang: "SMP" },
-            { nama: "PARHAN HERIYANSAH", nisn: "3137252816", jenjang: "SMP" },
-            { nama: "PERDIANSAH PRATAMA", nisn: "0128988677", jenjang: "SMP" },
-            { nama: "PIRMANSYAH RAMDANI", nisn: "3108187441", jenjang: "SMP" },
-            { nama: "PONI YULIA", nisn: "0124893928", jenjang: "SD" },
-            { nama: "RAIHAN SAPUTRA", nisn: "0119552685", jenjang: "SMP" },
-            { nama: "RAISA AURELIA PUTRI", nisn: "3142169447", jenjang: "SD" },
-            { nama: "RAISYA NURPADILAH", nisn: "0104449370", jenjang: "SMP" },
-            { nama: "RANI", nisn: "3128636723", jenjang: "SMP" },
-            { nama: "RAYAA RAFSANJANI", nisn: "3151327926", jenjang: "SD" },
-            { nama: "REGI", nisn: "0092815396", jenjang: "SMP" },
-            { nama: "REHAN", nisn: "0098060608", jenjang: "SMP" },
-            { nama: "REZA HANAFIYAH", nisn: "3129196277", jenjang: "SMP" },
-            { nama: "RINA", nisn: "3129604730", jenjang: "SMP" },
-            { nama: "RISKY", nisn: "0103304248", jenjang: "SMP" },
-            { nama: "RIYAD FADILAH", nisn: "0131133087", jenjang: "SD" },
-            { nama: "RIYAN AGUNG FAUZI", nisn: "3129425558", jenjang: "SD" },
-            { nama: "RIZKI MIRAJ NAWAWI", nisn: "3120958649", jenjang: "SD" },
-            { nama: "SABIT MAULANA", nisn: "3117684281", jenjang: "SMP" },
-            { nama: "SALMAN SAEPUL BAGRI", nisn: "0115635878", jenjang: "SMP" },
-            { nama: "SALSA BILA", nisn: "0124232598", jenjang: "SMP" },
-            { nama: "SALWA AULIA ZAKIAWAN", nisn: "0109385868", jenjang: "SMP" },
-            { nama: "SELLI KHAIRUNNISA", nisn: "3124008773", jenjang: "SMP" },
-            { nama: "SIFA NURAINI", nisn: "0103955647", jenjang: "SMP" },
-            { nama: "SITI FADILAH", nisn: "3154325333", jenjang: "SD" },
-            { nama: "SITIMASITOH", nisn: "3125474904", jenjang: "SMP" },
-            { nama: "SITIPASWA", nisn: "3131493765", jenjang: "SMP" },
-            { nama: "SRIMULYANI", nisn: "0108334564", jenjang: "SMP" },
-            { nama: "SUDIRMAN", nisn: "0119440168", jenjang: "SMP" },
-            { nama: "SYIFANURHAYATI", nisn: "0103927661", jenjang: "SMP" },
-            { nama: "YAN YAN ABDUL HADI", nisn: "0106183939", jenjang: "SMP" },
-            { nama: "YANA MULYANA", nisn: "3138754482", jenjang: "SD" },
-            { nama: "YUSUP AWALUDIN", nisn: "0114870689", jenjang: "SMP" },
-            { nama: "ZAKI MUHAMAD KUSUMAH", nisn: "3133946425", jenjang: "SD" },
-            { nama: "ZIDAN ABDUL JAILANI", nisn: "3169526039", jenjang: "SD" }
-        ];
-        
-        // ============================================================
-        // STATE
-        // ============================================================
-        let currentUser = null;
-        let kehadiranData = JSON.parse(localStorage.getItem('kehadiranPancasila')) || [];
-        let agendaData = JSON.parse(localStorage.getItem('agendaPancasila')) || [];
-        let catatanData = JSON.parse(localStorage.getItem('catatanPancasila')) || [];
-        let nilaiData = JSON.parse(localStorage.getItem('nilaiPancasila')) || [];
-        let uploadedMateri = JSON.parse(localStorage.getItem('uploadedMateriPancasila')) || [];
-        let qrScannerInstance = null;
-        let scannedSiswa = null;
-        let editingMateriId = null;
-
-        // Data tambahan untuk kartu pelajar (disimpan per NISN)
-        let kartuData = JSON.parse(localStorage.getItem('kartuPelajarData')) || {};
-
-        // ============================================================
-        // UTILITY
-        // ============================================================
-        function showToast(message, type = 'info') {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.className = 'toast ' + type;
-            toast.classList.add('show');
-            clearTimeout(toast._timer);
-            toast._timer = setTimeout(() => toast.classList.remove('show'), 3500);
-        }
-
-        // ============================================================
-        // LOGIN
-        // ============================================================
-        function handleLogin() {
-            const u = document.getElementById('loginUser').value.trim();
-            const p = document.getElementById('loginPass').value.trim();
-            if (u === 'guru' && p === 'pancasila') {
-                document.getElementById('loginPage').style.display = 'none';
-                document.getElementById('app').style.display = 'block';
-                currentUser = 'guru';
-                initApp();
-                showToast('Login berhasil! Selamat datang, Guru Pancasila.', 'success');
-            } else {
-                document.getElementById('loginError').style.display = 'block';
-                setTimeout(() => { document.getElementById('loginError').style.display = 'none'; }, 3000);
-            }
-        }
-
-        function handleLogout() {
-            if (confirm('Yakin ingin logout?')) {
-                document.getElementById('app').style.display = 'none';
-                document.getElementById('loginPage').style.display = 'flex';
-                currentUser = null;
-                stopQrScanner();
-                showToast('Logout berhasil.', 'warning');
-            }
-        }
-
-        // ============================================================
-        // INIT
-        // ============================================================
-        function initApp() {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('filterTanggal').value = today;
-            document.getElementById('agendaTanggal').value = today;
-            updateStats();
-            renderKehadiran();
-            renderAgenda();
-            renderMateri();
-            renderCatatan();
-            renderNilai();
-            renderUploadedMateri();
-            updateTotalSiswa();
-            populateKartuSelect();
-            renderKartuSavedList();
-        }
-
-        function updateTotalSiswa() {
-            const total = siswaData.length;
-            const sd = siswaData.filter(s => s.jenjang === 'SD').length;
-            const smp = siswaData.filter(s => s.jenjang === 'SMP').length;
-            document.getElementById('totalSiswa').textContent = total;
-            document.getElementById('totalSiswa2').textContent = total;
-            document.getElementById('totalSD').textContent = sd;
-            document.getElementById('totalSMP').textContent = smp;
-        }
-
-        function updateStats() {
-            const today = new Date().toISOString().split('T')[0];
-            const todayHadir = kehadiranData.filter(k => k.tanggal === today && k.status === 'Hadir');
-            const todayIzinSakit = kehadiranData.filter(k => k.tanggal === today && (k.status === 'Izin' || k.status ===
-                'Sakit'));
-            const todayAlpha = kehadiranData.filter(k => k.tanggal === today && k.status === 'Alpha');
-            document.getElementById('hadirHariIni').textContent = todayHadir.length || 0;
-            document.getElementById('izinSakit').textContent = todayIzinSakit.length || 0;
-            document.getElementById('alpha').textContent = todayAlpha.length || 0;
-        }
-
-        // ============================================================
-        // NAVIGATION
-        // ============================================================
-        function navigateTo(page) {
-            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
-            const target = document.getElementById('page-' + page);
-            if (target) target.classList.add('active');
-            document.querySelectorAll('.sidebar .menu-item').forEach(el => el.classList.remove('active'));
-            const menuItem = document.querySelector(`.sidebar .menu-item[data-page="${page}"]`);
-            if (menuItem) menuItem.classList.add('active');
-            if (page !== 'qr') stopQrScanner();
-            if (page === 'kehadiran') renderKehadiran();
-            if (page === 'agenda') renderAgenda();
-            if (page === 'admin') { renderCatatan();
-                renderNilai(); }
-            if (page === 'materi') renderMateri();
-            if (page === 'dashboard') updateStats();
-            if (page === 'kartu-pelajar') { populateKartuSelect();
-                renderKartuSavedList(); }
-        }
-
-        // ============================================================
-        // QR CODE SCANNER
-        // ============================================================
-        function startQrScanner() {
-            if (qrScannerInstance) { showToast('Scanner sudah berjalan.', 'warning'); return; }
-            document.getElementById('qrStatus').textContent = '⏳ Mengaktifkan kamera...';
-            document.getElementById('qrResult').textContent = '';
-            try {
-                qrScannerInstance = new Html5Qrcode("qr-reader");
-                qrScannerInstance.start({ facingMode: "environment" }, { fps: 10, qrbox: { width: 250, height: 250 } },
-                    onQrScanSuccess, onQrScanError);
-                document.getElementById('qrStatus').textContent = '✅ Kamera aktif. Arahkan ke QR Code siswa.';
-                document.getElementById('qrStatus').style.color = 'var(--success)';
-            } catch (err) {
-                document.getElementById('qrStatus').textContent = '❌ Gagal memulai kamera: ' + err.message;
-                document.getElementById('qrStatus').style.color = 'var(--danger)';
-                showToast('Gagal mengakses kamera: ' + err.message, 'error');
-            }
-        }
-
-        function stopQrScanner() {
-            if (qrScannerInstance) {
-                qrScannerInstance.stop().then(() => {
-                    qrScannerInstance.clear();
-                    qrScannerInstance = null;
-                    document.getElementById('qrStatus').textContent = '⏸️ Scanner dimatikan.';
-                    document.getElementById('qrStatus').style.color = 'var(--gray-600)';
-                }).catch(err => console.warn(err));
-            }
-        }
-
-        function onQrScanSuccess(decodedText) {
-            try {
-                const parts = decodedText.split('|');
-                if (parts.length !== 3) { showToast('QR Code tidak valid!', 'error'); return; }
-                const nisn = parts[0].trim(),
-                    nama = parts[1].trim(),
-                    jenjang = parts[2].trim();
-                const siswa = siswaData.find(s => s.nisn === nisn && s.nama === nama && s.jenjang === jenjang);
-                if (!siswa) {
-                    document.getElementById('qrResult').innerHTML =
-                    `<span style="color:var(--danger);">❌ Siswa tidak terdaftar: ${nama}</span>`;
-                    showToast('Siswa tidak terdaftar!', 'error');
-                    return;
-                }
-                scannedSiswa = siswa;
-                document.getElementById('qrNamaSiswa').textContent = siswa.nama;
-                document.getElementById('qrNisnSiswa').textContent = siswa.nisn;
-                document.getElementById('qrJenjangSiswa').textContent = siswa.jenjang;
-                document.getElementById('qrAbsenForm').style.display = 'block';
-                document.getElementById('qrEmptyState').style.display = 'none';
-                document.getElementById('qrResult').innerHTML =
-                `<span style="color:var(--success);">✅ Scan berhasil: ${siswa.nama}</span>`;
-                stopQrScanner();
-                showToast(`QR Code terdeteksi: ${siswa.nama}`, 'success');
-            } catch (e) { showToast('Gagal memproses QR Code: ' + e.message, 'error'); }
-        }
-
-        function onQrScanError(err) {}
-
-        function konfirmasiAbsenQR() {
-            if (!scannedSiswa) { showToast('Scan QR Code terlebih dahulu!', 'error'); return; }
-            const status = document.getElementById('qrStatusAbsen').value;
-            const today = new Date().toISOString().split('T')[0];
-            const sudah = kehadiranData.some(k => k.nisn === scannedSiswa.nisn && k.tanggal === today);
-            if (sudah) { showToast(`${scannedSiswa.nama} sudah absen hari ini.`, 'warning'); return; }
-            kehadiranData.push({
-                nama: scannedSiswa.nama,
-                nisn: scannedSiswa.nisn,
-                jenjang: scannedSiswa.jenjang,
-                status: status,
-                tanggal: today,
-                metode: 'QR Code',
-                bukti: 'qr_scan'
-            });
-            localStorage.setItem('kehadiranPancasila', JSON.stringify(kehadiranData));
-            updateStats();
-            renderKehadiran();
-            showToast(`✅ Absen ${status} untuk ${scannedSiswa.nama} berhasil!`, 'success');
-            scannedSiswa = null;
-            document.getElementById('qrAbsenForm').style.display = 'none';
-            document.getElementById('qrEmptyState').style.display = 'block';
-            document.getElementById('qrResult').innerHTML = '';
-        }
-
-        // ============================================================
-        // GENERATE QR CODE
-        // ============================================================
-        function generateQRForClass() {
-            const jenjang = document.getElementById('qrGenerateKelas').value;
-            const siswaJenjang = siswaData.filter(s => s.jenjang === jenjang);
-            const container = document.getElementById('qrGeneratedArea');
-            const status = document.getElementById('qrGenStatus');
-            if (siswaJenjang.length === 0) {
-                showToast('Tidak ada siswa untuk jenjang ini.', 'warning');
-                status.textContent = '⚠️ Tidak ada siswa untuk jenjang ini.';
-                return;
-            }
-            container.innerHTML = '';
-            status.textContent = `⏳ Menghasilkan ${siswaJenjang.length} QR Code via qrzap.fun...`;
-            let count = 0;
-            siswaJenjang.forEach((s) => {
-                const data = `${s.nisn}|${s.nama}|${s.jenjang}`;
-                const card = document.createElement('div');
-                card.className = 'qr-card';
-                const img = document.createElement('img');
-                img.src =
-                    `https://qrzap.fun/api/generate?type=text&text=${encodeURIComponent(data)}&size=200&margin=4`;
-                img.alt = `QR Code ${s.nama}`;
-                img.loading = 'lazy';
-                const label = document.createElement('p');
-                label.className = 'qr-name';
-                label.textContent = s.nama;
-                const nisnLabel = document.createElement('p');
-                nisnLabel.className = 'qr-nisn';
-                nisnLabel.textContent = `NISN: ${s.nisn}`;
-                const downloadBtn = document.createElement('button');
-                downloadBtn.className = 'btn-download';
-                downloadBtn.innerHTML = '<i class="fas fa-download"></i> Unduh';
-                downloadBtn.onclick = function(e) {
-                    e.stopPropagation();
-                    downloadQRCode(img.src, s.nama, s.nisn);
-                };
-                card.appendChild(img);
-                card.appendChild(label);
-                card.appendChild(nisnLabel);
-                card.appendChild(downloadBtn);
-                container.appendChild(card);
-                count++;
-            });
-            if (count > 0) {
-                const downloadAllBtn = document.createElement('button');
-                downloadAllBtn.className = 'btn btn-success btn-download-all';
-                downloadAllBtn.innerHTML = `<i class="fas fa-download"></i> Unduh Semua QR Code (${count})`;
-                downloadAllBtn.onclick = function() { downloadAllQRCodes(); };
-                container.appendChild(downloadAllBtn);
-                status.innerHTML = `<span style="color:var(--success);">✅ ${count} QR Code berhasil dibuat via qrzap.fun.</span>`;
-                showToast(`✅ ${count} QR Code berhasil dibuat!`, 'success');
-            } else {
-                status.innerHTML = `<span style="color:var(--danger);">❌ Gagal membuat QR Code. Coba lagi.</span>`;
-            }
-        }
-
-        function downloadQRCode(src, nama, nisn) {
-            try {
-                const link = document.createElement('a');
-                const sanitizedNama = nama.replace(/\s+/g, '_').substring(0, 30);
-                link.download = `QR_${sanitizedNama}_${nisn}.png`;
-                link.href = src;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                showToast(`✅ QR Code ${nama} berhasil diunduh!`, 'success');
-            } catch (err) {
-                showToast('Gagal mengunduh: ' + err.message, 'error');
-            }
-        }
-
-        function downloadAllQRCodes() {
-            const cards = document.querySelectorAll('.qr-card');
-            const validCards = [];
-            cards.forEach(card => {
-                const img = card.querySelector('img');
-                const nameEl = card.querySelector('.qr-name');
-                if (img && nameEl) {
-                    validCards.push({ src: img.src, nama: nameEl.textContent });
-                }
-            });
-            if (validCards.length === 0) {
-                showToast('Tidak ada QR Code untuk diunduh.', 'warning');
-                return;
-            }
-            let idx = 0;
-
-            function downloadNext() {
-                if (idx >= validCards.length) {
-                    showToast(`✅ Semua ${validCards.length} QR Code berhasil diunduh!`, 'success');
-                    return;
-                }
-                const item = validCards[idx];
-                try {
-                    const link = document.createElement('a');
-                    const sanitized = item.nama.replace(/\s+/g, '_').substring(0, 30);
-                    link.download = `QR_${sanitized}.png`;
-                    link.href = item.src;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                } catch (err) { console.error(err); }
-                idx++;
-                setTimeout(downloadNext, 400);
-            }
-            showToast(`⏳ Mengunduh ${validCards.length} QR Code...`, 'warning');
-            downloadNext();
-        }
-
-        function clearQRCards() {
-            document.getElementById('qrGeneratedArea').innerHTML = '';
-            document.getElementById('qrGenStatus').textContent = '';
-            showToast('Semua QR Code telah dihapus.', 'warning');
-        }
-
-        // ============================================================
-        // KEHADIRAN
-        // ============================================================
-        function renderKehadiran() {
-            const kelas = document.getElementById('filterKelas').value;
-            const tanggal = document.getElementById('filterTanggal').value;
-            const tbody = document.getElementById('kehadiranTableBody');
-            let data = [...kehadiranData];
-            if (kelas !== 'all') data = data.filter(d => d.jenjang === kelas);
-            if (tanggal) data = data.filter(d => d.tanggal === tanggal);
-            if (data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">Belum ada data kehadiran</td></tr>';
-                document.getElementById('kehadiranCount').textContent = '0 siswa';
-                return;
-            }
-            data.sort((a, b) => a.nama.localeCompare(b.nama));
-            let html = '';
-            data.forEach((d, i) => {
-                const badge = `<span class="badge-status ${d.status.toLowerCase()}">${d.status}</span>`;
-                html +=
-                    `<tr><td>${i+1}</td><td>${d.nama}</td><td>${d.jenjang}</td><td>${badge}</td><td>${d.tanggal}</td><td>${d.metode || '-'}</td></tr>`;
-            });
-            tbody.innerHTML = html;
-            document.getElementById('kehadiranCount').textContent = data.length + ' siswa';
-        }
-
-        // ============================================================
-        // AGENDA
-        // ============================================================
-        function renderAgenda() {
-            const container = document.getElementById('agendaList');
-            if (agendaData.length === 0) {
-                container.innerHTML = '<p class="text-muted">Belum ada agenda. Tambahkan agenda baru.</p>';
-                return;
-            }
-            const sorted = [...agendaData].sort((a, b) => b.tanggal.localeCompare(a.tanggal));
-            let html = '';
-            sorted.forEach((a, idx) => {
-                html += `<div class="agenda-item">
-                    <div class="agenda-info">
-                        <div class="agenda-date"><i class="far fa-calendar-alt"></i> ${a.tanggal}</div>
-                        <div class="agenda-title">${a.judul}</div>
-                        <div class="agenda-desc">${a.deskripsi || ''}</div>
+            <!-- Administrasi -->
+            <section id="page-admin" class="page-section">
+                <h1 class="page-title"><i class="fas fa-tasks"></i> Administrasi Pembelajaran</h1>
+                <p class="page-subtitle">Nilai, catatan, dan administrasi lainnya</p>
+                <div class="admin-card">
+                    <div class="admin-title"><i class="fas fa-file-alt"></i> Catatan Pembelajaran</div>
+                    <div class="form-group">
+                        <label>Judul Catatan</label>
+                        <input type="text" id="catatanJudul" placeholder="Misal: Refleksi Pembelajaran Bab 1" />
                     </div>
-                    <div class="agenda-actions">
-                        <button class="btn btn-danger btn-sm" onclick="hapusAgenda(${idx})"><i class="fas fa-trash"></i></button>
+                    <div class="form-group">
+                        <label>Isi Catatan</label>
+                        <textarea id="catatanIsi" rows="3" placeholder="Tulis catatan pembelajaran..."></textarea>
                     </div>
-                </div>`;
-            });
-            container.innerHTML = html;
-        }
-
-        function tampilkanModalAgenda() {
-            document.getElementById('modalAgenda').classList.add('show');
-            document.getElementById('agendaJudul').value = '';
-            document.getElementById('agendaDeskripsi').value = '';
-            document.getElementById('agendaTanggal').value = new Date().toISOString().split('T')[0];
-        }
-
-        function tutupModalAgenda() { document.getElementById('modalAgenda').classList.remove('show'); }
-
-        function simpanAgenda() {
-            const judul = document.getElementById('agendaJudul').value.trim();
-            const deskripsi = document.getElementById('agendaDeskripsi').value.trim();
-            const tanggal = document.getElementById('agendaTanggal').value;
-            if (!judul || !tanggal) { showToast('Judul dan tanggal wajib diisi!', 'error'); return; }
-            agendaData.push({ judul, deskripsi, tanggal });
-            localStorage.setItem('agendaPancasila', JSON.stringify(agendaData));
-            renderAgenda();
-            tutupModalAgenda();
-            showToast('Agenda berhasil ditambahkan!', 'success');
-        }
-
-        function hapusAgenda(idx) {
-            if (confirm('Hapus agenda ini?')) {
-                agendaData.splice(idx, 1);
-                localStorage.setItem('agendaPancasila', JSON.stringify(agendaData));
-                renderAgenda();
-                showToast('Agenda dihapus.', 'warning');
-            }
-        }
-
-        // ============================================================
-        // MATERI
-        // ============================================================
-        function getAllMateri() {
-            const map = new Map();
-            defaultMateriPancasila.forEach(m => {
-                m.isUploaded = false;
-                m.isEdited = false;
-                map.set(m.id, { ...m });
-            });
-            uploadedMateri.forEach(m => {
-                if (map.has(m.id)) {
-                    const existing = map.get(m.id);
-                    map.set(m.id, { ...existing, ...m, isUploaded: true, isEdited: m.isEdited || true });
-                } else {
-                    map.set(m.id, { ...m, isUploaded: true, isEdited: m.isEdited || false });
-                }
-            });
-            return Array.from(map.values());
-        }
-
-        function renderMateri() {
-            const filterJenjang = document.getElementById('filterMateriJenjang').value;
-            const filterKelas = document.getElementById('filterMateriKelas').value;
-            const container = document.getElementById('materiList');
-            let allMateri = getAllMateri();
-            if (filterJenjang !== 'all') allMateri = allMateri.filter(m => m.jenjang === filterJenjang);
-            if (filterKelas !== 'all') allMateri = allMateri.filter(m => m.kelas == filterKelas);
-            if (allMateri.length === 0) {
-                container.innerHTML = '<p class="text-muted">Tidak ada materi untuk filter ini.</p>';
-                return;
-            }
-            allMateri.sort((a, b) => a.kelas - b.kelas);
-            let html = '';
-            allMateri.forEach(m => {
-                const badgeClass = m.jenjang === 'SD' ? 'badge-sd' : m.jenjang === 'SMP' ? 'badge-smp' : 'badge-sma';
-                const isEdited = m.isEdited || m.isUploaded;
-                const editBadge = isEdited ?
-                    '<span class="badge-level badge-edited" style="font-size:10px;">✏️ Diedit</span>' : '';
-                const uploadBadge = m.isUploaded && !m.isEdited ?
-                    '<span class="badge-level" style="background:var(--success);font-size:10px;">📤 Upload</span>' : '';
-                html += `<div class="material-card">
-                    <div class="material-title">
-                        <span>${m.judul}</span>
-                        <span>
-                            <span class="badge-level ${badgeClass}">${m.jenjang}</span>
-                            <span class="badge-level" style="background:var(--gray-600);">Kelas ${m.kelas}</span>
-                            ${uploadBadge}
-                            ${editBadge}
-                        </span>
+                    <button class="btn btn-primary" onclick="simpanCatatan()"><i class="fas fa-save"></i> Simpan Catatan</button>
+                    <div style="margin-top:16px;" id="catatanList"><p class="text-muted">Belum ada catatan.</p></div>
+                </div>
+                <div class="admin-card">
+                    <div class="admin-title"><i class="fas fa-chart-simple"></i> Rekap Nilai</div>
+                    <div class="filter-bar">
+                        <select id="nilaiKelas" onchange="renderNilai()">
+                            <option value="all">Semua Kelas</option>
+                            <option value="SD">SD</option>
+                            <option value="SMP">SMP</option>
+                        </select>
+                        <button class="btn btn-success btn-sm" onclick="eksporNilai()"><i class="fas fa-file-excel"></i> Ekspor Nilai</button>
                     </div>
-                    <div class="material-desc">${m.deskripsi}</div>
-                    <div class="material-body" id="materiBody_${m.id}">
-                        ${m.konten}
-                        ${m.sumber ? `<div class="sumber">${m.sumber}</div>` : ''}
+                    <div style="overflow-x:auto;">
+                        <table>
+                            <thead><tr><th>No</th><th>Nama</th><th>Jenjang</th><th>Nilai</th><th>Keterangan</th></tr></thead>
+                            <tbody id="nilaiTableBody"><tr><td colspan="5" class="text-center text-muted">Belum ada data nilai</td></tr></tbody>
+                        </table>
                     </div>
-                    <div class="material-actions">
-                        <button class="btn btn-primary btn-sm" onclick="toggleMateri(${m.id})"><i class="fas fa-eye"></i> Lihat</button>
-                        <button class="btn btn-warning btn-sm" onclick="bukaEditMateri(${m.id})"><i class="fas fa-edit"></i> Edit</button>
-                        ${m.isUploaded ? `<button class="btn btn-danger btn-sm" onclick="hapusMateriUpload(${m.id})"><i class="fas fa-trash"></i> Hapus</button>` : ''}
-                        ${!m.isUploaded ? `<button class="btn btn-outline btn-sm" onclick="duplikatMateri(${m.id})"><i class="fas fa-copy"></i> Duplikat</button>` : ''}
-                    </div>
-                </div>`;
-            });
-            container.innerHTML = html;
-        }
+                </div>
+            </section>
 
-        function toggleMateri(id) {
-            const body = document.getElementById('materiBody_' + id);
-            if (body) body.classList.toggle('open');
-        }
-
-        function bukaEditMateri(id) {
-            const all = getAllMateri();
-            const materi = all.find(m => m.id === id);
-            if (!materi) { showToast('Materi tidak ditemukan!', 'error'); return; }
-            editingMateriId = id;
-            document.getElementById('editMateriId').value = id;
-            document.getElementById('editJudul').value = materi.judul || '';
-            document.getElementById('editKelas').value = materi.kelas || 1;
-            document.getElementById('editJenjang').value = materi.jenjang || 'SD';
-            document.getElementById('editDeskripsi').value = materi.deskripsi || '';
-            document.getElementById('editIsi').value = materi.konten ? materi.konten.replace(/<[^>]+>/g, '') : '';
-            document.getElementById('modalEditMateri').classList.add('show');
-        }
-
-        function tutupModalEditMateri() {
-            document.getElementById('modalEditMateri').classList.remove('show');
-            editingMateriId = null;
-        }
-
-        function simpanEditMateri() {
-            const id = parseInt(document.getElementById('editMateriId').value);
-            const judul = document.getElementById('editJudul').value.trim();
-            const kelas = parseInt(document.getElementById('editKelas').value);
-            const jenjang = document.getElementById('editJenjang').value;
-            const deskripsi = document.getElementById('editDeskripsi').value.trim();
-            const isi = document.getElementById('editIsi').value.trim();
-            if (!judul || !isi) { showToast('Judul dan isi materi wajib diisi!', 'error'); return; }
-            const idx = uploadedMateri.findIndex(m => m.id === id);
-            if (idx !== -1) {
-                uploadedMateri[idx] = {
-                    ...uploadedMateri[idx],
-                    judul,
-                    kelas,
-                    jenjang,
-                    deskripsi: deskripsi || uploadedMateri[idx].deskripsi,
-                    konten: `<p>${isi.replace(/\n/g, '<br>')}</p>`,
-                    isEdited: true
-                };
-            } else {
-                uploadedMateri.push({
-                    id: id,
-                    judul,
-                    kelas,
-                    jenjang,
-                    deskripsi: deskripsi || 'Materi yang telah diedit.',
-                    konten: `<p>${isi.replace(/\n/g, '<br>')}</p>`,
-                    isUploaded: true,
-                    isEdited: true
-                });
-            }
-            localStorage.setItem('uploadedMateriPancasila', JSON.stringify(uploadedMateri));
-            tutupModalEditMateri();
-            renderMateri();
-            renderUploadedMateri();
-            showToast('✅ Materi berhasil diperbarui!', 'success');
-        }
-
-        function duplikatMateri(id) {
-            const all = getAllMateri();
-            const materi = all.find(m => m.id === id);
-            if (!materi) { showToast('Materi tidak ditemukan!', 'error'); return; }
-            const newId = Date.now() + Math.random() * 1000;
-            const newMateri = {
-                id: newId,
-                kelas: materi.kelas,
-                jenjang: materi.jenjang,
-                judul: materi.judul + ' (Salinan)',
-                deskripsi: materi.deskripsi + ' (Salinan)',
-                konten: materi.konten,
-                isUploaded: true,
-                isEdited: true
-            };
-            uploadedMateri.push(newMateri);
-            localStorage.setItem('uploadedMateriPancasila', JSON.stringify(uploadedMateri));
-            renderMateri();
-            renderUploadedMateri();
-            showToast('✅ Duplikat materi berhasil dibuat!', 'success');
-        }
-
-        function hapusMateriUpload(id) {
-            if (!confirm('Hapus materi yang diunggah ini?')) return;
-            const idx = uploadedMateri.findIndex(m => m.id === id);
-            if (idx !== -1) {
-                uploadedMateri.splice(idx, 1);
-                localStorage.setItem('uploadedMateriPancasila', JSON.stringify(uploadedMateri));
-                renderMateri();
-                renderUploadedMateri();
-                showToast('Materi dihapus.', 'warning');
-            } else {
-                showToast('Materi tidak ditemukan di daftar unggahan.', 'error');
-            }
-        }
-
-        function tambahMateriUpload() {
-            const judul = document.getElementById('uploadJudul').value.trim();
-            const kelas = parseInt(document.getElementById('uploadKelas').value);
-            const jenjang = document.getElementById('uploadJenjang').value;
-            const deskripsi = document.getElementById('uploadDeskripsi').value.trim();
-            const konten = document.getElementById('uploadIsi').value.trim();
-            if (!judul || !konten) {
-                showToast('Judul dan isi materi wajib diisi!', 'error');
-                return;
-            }
-            const newMateri = {
-                id: Date.now() + Math.random() * 1000,
-                kelas: kelas,
-                jenjang: jenjang,
-                judul: judul,
-                deskripsi: deskripsi || 'Materi yang diunggah oleh guru.',
-                konten: `<p>${konten.replace(/\n/g, '<br>')}</p>`,
-                isUploaded: true,
-                isEdited: true
-            };
-            uploadedMateri.push(newMateri);
-            localStorage.setItem('uploadedMateriPancasila', JSON.stringify(uploadedMateri));
-            document.getElementById('uploadJudul').value = '';
-            document.getElementById('uploadDeskripsi').value = '';
-            document.getElementById('uploadIsi').value = '';
-            renderUploadedMateri();
-            renderMateri();
-            showToast('✅ Materi berhasil diunggah!', 'success');
-        }
-
-        function renderUploadedMateri() {
-            const container = document.getElementById('uploadedList');
-            const uploaded = uploadedMateri.filter(m => m.isUploaded);
-            if (uploaded.length === 0) {
-                container.innerHTML = '<p class="text-muted">Belum ada materi yang diunggah.</p>';
-                return;
-            }
-            let html = '';
-            uploaded.forEach((m) => {
-                html += `<div class="upload-item">
-                    <div>
-                        <span class="upload-title">${m.judul}</span>
-                        <span class="upload-meta"> - Kelas ${m.kelas} ${m.jenjang}</span>
-                        ${m.isEdited ? '<span class="upload-meta" style="color:var(--warning);"> ✏️ diedit</span>' : ''}
-                    </div>
-                    <div>
-                        <button class="btn btn-danger btn-sm" onclick="hapusMateriUpload(${m.id})"><i class="fas fa-trash"></i> Hapus</button>
-                    </div>
-                </div>`;
-            });
-            container.innerHTML = html;
-        }
-
-        // ============================================================
-        // CATATAN
-        // ============================================================
-        function simpanCatatan() {
-            const judul = document.getElementById('catatanJudul').value.trim();
-            const isi = document.getElementById('catatanIsi').value.trim();
-            if (!judul || !isi) { showToast('Judul dan isi catatan wajib diisi!', 'error'); return; }
-            catatanData.push({ judul, isi, tanggal: new Date().toISOString().split('T')[0] });
-            localStorage.setItem('catatanPancasila', JSON.stringify(catatanData));
-            document.getElementById('catatanJudul').value = '';
-            document.getElementById('catatanIsi').value = '';
-            renderCatatan();
-            showToast('Catatan berhasil disimpan!', 'success');
-        }
-
-        function renderCatatan() {
-            const container = document.getElementById('catatanList');
-            if (catatanData.length === 0) {
-                container.innerHTML = '<p class="text-muted">Belum ada catatan.</p>';
-                return;
-            }
-            let html = '';
-            [...catatanData].reverse().forEach((c, idx) => {
-                html += `<div class="agenda-item" style="border-left-color:var(--success);">
-                    <div class="agenda-info">
-                        <div class="agenda-date"><i class="far fa-calendar-alt"></i> ${c.tanggal}</div>
-                        <div class="agenda-title">${c.judul}</div>
-                        <div class="agenda-desc">${c.isi}</div>
-                    </div>
-                    <button class="btn btn-danger btn-sm" onclick="hapusCatatan(${idx})"><i class="fas fa-trash"></i></button>
-                </div>`;
-            });
-            container.innerHTML = html;
-        }
-
-        function hapusCatatan(idx) {
-            if (confirm('Hapus catatan ini?')) {
-                catatanData.splice(idx, 1);
-                localStorage.setItem('catatanPancasila', JSON.stringify(catatanData));
-                renderCatatan();
-                showToast('Catatan dihapus.', 'warning');
-            }
-        }
-
-        // ============================================================
-        // NILAI
-        // ============================================================
-        function renderNilai() {
-            const kelas = document.getElementById('nilaiKelas').value;
-            const tbody = document.getElementById('nilaiTableBody');
-            let data = [...nilaiData];
-            if (kelas !== 'all') data = data.filter(d => d.jenjang === kelas);
-            if (data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">Belum ada data nilai</td></tr>';
-                return;
-            }
-            let html = '';
-            data.forEach((d, i) => {
-                const color = d.nilai >= 75 ? 'var(--success)' : d.nilai >= 60 ? 'var(--warning)' : 'var(--danger)';
-                html +=
-                    `<tr><td>${i+1}</td><td>${d.nama}</td><td>${d.jenjang}</td><td><strong style="color:${color};">${d.nilai}</strong></td><td>${d.keterangan || '-'}</td></tr>`;
-            });
-            tbody.innerHTML = html;
-        }
-
-        // ============================================================
-        // IMPOR / EKSPOR
-        // ============================================================
-        function imporData(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = new Uint8Array(e.target.result);
-                    const workbook = XLSX.read(data, { type: 'array' });
-                    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-                    const json = XLSX.utils.sheet_to_json(sheet);
-                    let imported = 0;
-                    json.forEach(row => {
-                        const nama = (row['Nama'] || row['nama'] || '').toString().trim();
-                        const nisn = (row['NISN'] || row['nisn'] || '').toString().trim();
-                        const jenjang = (row['Jenjang'] || row['jenjang'] || '').toString().trim().toUpperCase();
-                        if (nama && jenjang && (jenjang === 'SD' || jenjang === 'SMP')) {
-                            const exists = siswaData.some(s => s.nisn === nisn && s.nama === nama);
-                            if (!exists) { siswaData.push({ nama, nisn, jenjang });
-                                imported++; }
-                        }
-                    });
-                    document.getElementById('imporStatus').innerHTML =
-                        `<span style="color:var(--success);">✅ Berhasil mengimpor ${imported} data siswa baru.</span>`;
-                    updateTotalSiswa();
-                    showToast(`Impor selesai! ${imported} siswa ditambahkan.`, 'success');
-                } catch (err) {
-                    document.getElementById('imporStatus').innerHTML =
-                        `<span style="color:var(--danger);">❌ Gagal membaca file: ${err.message}</span>`;
-                    showToast('Gagal impor data: ' + err.message, 'error');
-                }
-            };
-            reader.readAsArrayBuffer(file);
-            event.target.value = '';
-        }
-
-        function eksporSiswa() {
-            const data = siswaData.map(s => ({ Nama: s.nama, NISN: s.nisn, Jenjang: s.jenjang }));
-            const ws = XLSX.utils.json_to_sheet(data);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Siswa');
-            XLSX.writeFile(wb, 'Data_Siswa_SRT39Garut.xlsx');
-            showToast('Ekspor data siswa berhasil!', 'success');
-        }
-
-        function eksporKehadiran() {
-            const data = kehadiranData.map(k => ({ Nama: k.nama, NISN: k.nisn, Jenjang: k.jenjang, Status: k.status,
-                Tanggal: k.tanggal, Metode: k.metode || '-' }));
-            if (data.length === 0) { showToast('Tidak ada data kehadiran.', 'warning'); return; }
-            const ws = XLSX.utils.json_to_sheet(data);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Kehadiran');
-            XLSX.writeFile(wb, 'Kehadiran_SRT39Garut.xlsx');
-            showToast('Ekspor kehadiran berhasil!', 'success');
-        }
-
-        function eksporNilai() {
-            const data = nilaiData.map(n => ({ Nama: n.nama, NISN: n.nisn, Jenjang: n.jenjang, Nilai: n.nilai,
-                Keterangan: n.keterangan || '-' }));
-            if (data.length === 0) { showToast('Tidak ada data nilai.', 'warning'); return; }
-            const ws = XLSX.utils.json_to_sheet(data);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Nilai');
-            XLSX.writeFile(wb, 'Nilai_SRT39Garut.xlsx');
-            showToast('Ekspor nilai berhasil!', 'success');
-        }
-
-        function unduhTemplateSiswa() {
-            const template = [{ Nama: 'Contoh Siswa SD', NISN: '1234567890', Jenjang: 'SD' },
-                { Nama: 'Contoh Siswa SMP', NISN: '0987654321', Jenjang: 'SMP' }
-            ];
-            const ws = XLSX.utils.json_to_sheet(template);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Template');
-            XLSX.writeFile(wb, 'Template_Siswa_SRT39Garut.xlsx');
-            showToast('Template siswa diunduh!', 'success');
-        }
-
-        function unduhTemplateKehadiran() {
-            const template = [{ Nama: 'Contoh Siswa', NISN: '1234567890', Jenjang: 'SD', Status: 'Hadir',
-                Tanggal: '2026-09-01', Metode: 'QR Code' }];
-            const ws = XLSX.utils.json_to_sheet(template);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Template_Kehadiran');
-            XLSX.writeFile(wb, 'Template_Kehadiran_SRT39Garut.xlsx');
-            showToast('Template kehadiran diunduh!', 'success');
-        }
-
-        function unduhTemplateNilai() {
-            const template = [{ Nama: 'Contoh Siswa', NISN: '1234567890', Jenjang: 'SD', Nilai: 85,
-                Keterangan: 'Baik' }];
-            const ws = XLSX.utils.json_to_sheet(template);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Template_Nilai');
-            XLSX.writeFile(wb, 'Template_Nilai_SRT39Garut.xlsx');
-            showToast('Template nilai diunduh!', 'success');
-        }
-
-        // ============================================================
-        // KARTU PELAJAR
-        // ============================================================
-        function populateKartuSelect() {
-            const select = document.getElementById('kartuSelectSiswa');
-            const currentVal = select.value;
-            select.innerHTML = '<option value="">-- Pilih Siswa --</option>';
-            const sorted = [...siswaData].sort((a, b) => a.nama.localeCompare(b.nama));
-            sorted.forEach(s => {
-                const opt = document.createElement('option');
-                opt.value = s.nisn;
-                opt.textContent = `${s.nama} (${s.jenjang}) - ${s.nisn}`;
-                select.appendChild(opt);
-            });
-            if (currentVal) select.value = currentVal;
-            onKartuSiswaChange();
-        }
-
-        function onKartuSiswaChange() {
-            const nisn = document.getElementById('kartuSelectSiswa').value;
-            if (!nisn) {
-                document.getElementById('kartuTempatLahir').value = '';
-                document.getElementById('kartuTanggalLahir').value = '';
-                document.getElementById('kartuKelasDetail').value = '';
-                document.getElementById('kartuAlamat').value = '';
-                return;
-            }
-            const saved = kartuData[nisn] || {};
-            document.getElementById('kartuTempatLahir').value = saved.tempatLahir || '';
-            document.getElementById('kartuTanggalLahir').value = saved.tanggalLahir || '';
-            document.getElementById('kartuKelasDetail').value = saved.kelasDetail || '';
-            document.getElementById('kartuAlamat').value = saved.alamat || '';
-        }
-
-        function generateKartuPelajar() {
-            const nisn = document.getElementById('kartuSelectSiswa').value;
-            if (!nisn) { showToast('Pilih siswa terlebih dahulu!', 'error'); return; }
-            const siswa = siswaData.find(s => s.nisn === nisn);
-            if (!siswa) { showToast('Siswa tidak ditemukan!', 'error'); return; }
-
-            const tempatLahir = document.getElementById('kartuTempatLahir').value.trim();
-            const tanggalLahir = document.getElementById('kartuTanggalLahir').value;
-            const kelasDetail = document.getElementById('kartuKelasDetail').value.trim();
-            const alamat = document.getElementById('kartuAlamat').value.trim();
-
-            // Simpan data kartu
-            kartuData[nisn] = {
-                tempatLahir,
-                tanggalLahir,
-                kelasDetail,
-                alamat,
-                lastGenerated: new Date().toISOString()
-            };
-            localStorage.setItem('kartuPelajarData', JSON.stringify(kartuData));
-
-            // Format TTL
-            let ttl = tempatLahir;
-            if (tanggalLahir) {
-                const date = new Date(tanggalLahir);
-                const options = { day: 'numeric', month: 'long', year: 'numeric' };
-                ttl += `, ${date.toLocaleDateString('id-ID', options)}`;
-            }
-
-            // Kelas display
-            const kelasDisplay = kelasDetail || `${siswa.jenjang}`;
-
-            // Data QR
-            const qrData = `${siswa.nisn}|${siswa.nama}|${siswa.jenjang}`;
-            const qrUrl =
-                `https://qrzap.fun/api/generate?type=text&text=${encodeURIComponent(qrData)}&size=250&margin=4`;
-
-            // Build card HTML
-            const container = document.getElementById('kartuPreviewContainer');
-            container.innerHTML = `
-                <div class="kartu-pelajar-card" id="kartuPelajarCard">
-                    <div class="card-header">
-                        <div class="kemdikbud"><i class="fas fa-flag"></i> KEMENTERIAN SOSIAL REPUBLIK INDONESIA</div>
-                        <div class="school-name">Sekolah Rakyat Terintegrasi <span>39 Garut</span></div>
-                        <div class="school-address">Jl. Raya Samarang, Cintarakyat, Kec. Samarang, Kab. Garut, Jawa Barat 44161</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-title">KARTU PELAJAR SISWA</div>
-                        <div class="card-field"><span class="label">Nama</span><span class="value">${siswa.nama}</span></div>
-                        <div class="card-field"><span class="label">NISN</span><span class="value">${siswa.nisn}</span></div>
-                        <div class="card-field"><span class="label">T.T.L</span><span class="value">${ttl || '-'}</span></div>
-                        <div class="card-field"><span class="label">Kelas</span><span class="value">${kelasDisplay}</span></div>
-                        <div class="card-field"><span class="label">Alamat</span><span class="value">${alamat || '-'}</span></div>
-                        <div class="card-qr-section">
-                            <div class="card-qr-box">
-                                <img src="${qrUrl}" alt="QR Code ${siswa.nama}" id="kartuQrImg" crossorigin="anonymous" />
+            <!-- Kartu Pelajar -->
+            <section id="page-kartu-pelajar" class="page-section">
+                <h1 class="page-title"><i class="fas fa-id-card"></i> Kartu Pelajar Siswa</h1>
+                <p class="page-subtitle">Generate dan cetak kartu pelajar dengan QR Code otomatis</p>
+                <div class="kartu-pelajar-container">
+                    <div class="kartu-form-side">
+                        <h3 style="font-weight:600; font-size:16px; margin-bottom:12px;"><i class="fas fa-user-edit"></i> Pilih & Isi Data Siswa</h3>
+                        <div class="form-group">
+                            <label>Pilih Siswa</label>
+                            <select id="kartuSelectSiswa" onchange="onKartuSiswaChange()">
+                                <option value="">-- Pilih Siswa --</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Tempat Lahir</label><input type="text" id="kartuTempatLahir" placeholder="Misal: Garut" /></div>
+                        <div class="form-group"><label>Tanggal Lahir</label><input type="date" id="kartuTanggalLahir" /></div>
+                        <div class="form-group"><label>Kelas (detail)</label><input type="text" id="kartuKelasDetail" placeholder="Misal: VI-A atau 7B" /></div>
+                        <div class="form-group"><label>Alamat</label><textarea id="kartuAlamat" rows="2" placeholder="Alamat lengkap siswa"></textarea></div>
+                        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:8px;">
+                            <button class="btn btn-primary" onclick="generateKartuPelajar()"><i class="fas fa-id-card"></i> Buat Kartu</button>
+                            <button class="btn btn-success" onclick="printKartuPelajar()"><i class="fas fa-print"></i> Cetak</button>
+                            <button class="btn btn-warning" onclick="generateAllKartu()"><i class="fas fa-layer-group"></i> Generate Semua</button>
+                        </div>
+                        <div style="margin-top:16px; border-top:1px solid var(--gray-200); padding-top:16px;">
+                            <h4 style="font-weight:600; font-size:14px; color:var(--gray-700);"><i class="fas fa-list"></i> Daftar Kartu Tersimpan</h4>
+                            <div id="kartuSavedList" style="margin-top:8px; max-height:240px; overflow-y:auto;">
+                                <p class="text-muted">Belum ada kartu yang disimpan.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <i class="fas fa-id-card"></i> Identitas Resmi • SRT 39 Garut • ${new Date().toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' })}
+                    <div class="kartu-preview-side">
+                        <div id="kartuPreviewContainer">
+                            <div style="background:var(--gray-100); border-radius:var(--radius); padding:40px 20px; text-align:center; width:100%; max-width:420px; border:2px dashed var(--gray-300);">
+                                <i class="fas fa-id-card" style="font-size:48px; color:var(--gray-400);"></i>
+                                <p style="margin-top:12px; color:var(--gray-500);">Pilih siswa dan isi data, lalu klik <strong>"Buat Kartu"</strong></p>
+                            </div>
+                        </div>
+                        <div class="kartu-actions">
+                            <button class="btn btn-primary btn-sm" onclick="downloadKartuPelajar()"><i class="fas fa-download"></i> Unduh PNG</button>
+                        </div>
                     </div>
                 </div>
-            `;
-            showToast(`✅ Kartu pelajar untuk ${siswa.nama} berhasil dibuat!`, 'success');
-            renderKartuSavedList();
-        }
+            </section>
 
-        function printKartuPelajar() {
-            const card = document.getElementById('kartuPelajarCard');
-            if (!card) { showToast('Buat kartu terlebih dahulu!', 'error'); return; }
-            const originalTitle = document.title;
-            document.title = 'Kartu Pelajar SRT 39 Garut';
-            const printWindow = window.open('', '_blank', 'width=600,height=700');
-            if (!printWindow) {
-                showToast('Mohon izinkan pop-up untuk mencetak.', 'warning');
-                return;
-            }
-            const styles = document.querySelector('style').innerHTML;
-            printWindow.document.write(`
-                <html><head><title>Kartu Pelajar</title>
-                <style>${styles}</style>
-                <style>
-                    body { background: #f0f0f0; display:flex; justify-content:center; align-items:center; min-height:100vh; margin:0; padding:20px; }
-                    .kartu-pelajar-card { max-width:400px; margin:0 auto; }
-                    .card-qr-box img { width:120px; height:120px; }
-                </style>
-                </head><body>
-                    ${card.outerHTML}
-                    <script>
-                        window.onload = function() { setTimeout(function() { window.print(); window.close(); }, 600); };
-                    <\/script>
-                </body></html>
-            `);
-            printWindow.document.close();
-            document.title = originalTitle;
-        }
-
-        function downloadKartuPelajar() {
-            const card = document.getElementById('kartuPelajarCard');
-            if (!card) { showToast('Buat kartu terlebih dahulu!', 'error'); return; }
-            const nama = card.querySelector('.card-field .value')?.textContent || 'siswa';
-            showToast('⏳ Mengunduh kartu pelajar...', 'warning');
-
-            // Gunakan html2canvas jika tersedia, fallback ke screenshot sederhana
-            if (typeof html2canvas !== 'undefined') {
-                html2canvas(card, { scale: 2, useCORS: true, backgroundColor: '#ffffff' }).then(canvas => {
-                    const link = document.createElement('a');
-                    link.download = `Kartu_Pelajar_${nama.replace(/\s+/g, '_')}.png`;
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                    showToast('✅ Kartu pelajar berhasil diunduh!', 'success');
-                }).catch(err => {
-                    console.error(err);
-                    showToast('Gagal mengunduh: ' + err.message, 'error');
-                });
-            } else {
-                // Fallback: load html2canvas from CDN
-                const script = document.createElement('script');
-                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-                script.onload = function() {
-                    html2canvas(card, { scale: 2, useCORS: true, backgroundColor: '#ffffff' }).then(canvas => {
-                        const link = document.createElement('a');
-                        link.download = `Kartu_Pelajar_${nama.replace(/\s+/g, '_')}.png`;
-                        link.href = canvas.toDataURL('image/png');
-                        link.click();
-                        showToast('✅ Kartu pelajar berhasil diunduh!', 'success');
-                    }).catch(err => {
-                        console.error(err);
-                        showToast('Gagal mengunduh: ' + err.message, 'error');
-                    });
-                };
-                script.onerror = function() {
-                    showToast('❌ Gagal memuat library html2canvas. Coba gunakan fitur Cetak.', 'error');
-                };
-                document.head.appendChild(script);
-            }
-        }
-
-        function generateAllKartu() {
-            const total = siswaData.length;
-            if (total === 0) { showToast('Tidak ada siswa.', 'warning'); return; }
-            showToast(`⏳ Membuat kartu untuk ${total} siswa...`, 'warning');
-            let count = 0;
-            siswaData.forEach(s => {
-                const saved = kartuData[s.nisn] || {};
-                kartuData[s.nisn] = {
-                    tempatLahir: saved.tempatLahir || '',
-                    tanggalLahir: saved.tanggalLahir || '',
-                    kelasDetail: saved.kelasDetail || `${s.jenjang}`,
-                    alamat: saved.alamat || '',
-                    lastGenerated: new Date().toISOString()
-                };
-                count++;
-            });
-            localStorage.setItem('kartuPelajarData', JSON.stringify(kartuData));
-            renderKartuSavedList();
-            // Generate preview for first student
-            const firstNisn = siswaData[0]?.nisn;
-            if (firstNisn) {
-                document.getElementById('kartuSelectSiswa').value = firstNisn;
-                onKartuSiswaChange();
-                generateKartuPelajar();
-            }
-            showToast(`✅ Kartu untuk ${count} siswa berhasil disimpan!`, 'success');
-        }
-
-        function renderKartuSavedList() {
-            const container = document.getElementById('kartuSavedList');
-            const keys = Object.keys(kartuData);
-            if (keys.length === 0) {
-                container.innerHTML = '<p class="text-muted">Belum ada kartu yang disimpan.</p>';
-                return;
-            }
-            let html = '';
-            keys.forEach(nisn => {
-                const siswa = siswaData.find(s => s.nisn === nisn);
-                if (!siswa) return;
-                const data = kartuData[nisn];
-                html += `<div class="kartu-list-item" onclick="loadKartu('${nisn}')">
-                    <div>
-                        <div class="kartu-list-name">${siswa.nama}</div>
-                        <div class="kartu-list-meta">${nisn} • ${data.kelasDetail || siswa.jenjang}</div>
+            <!-- Impor/Ekspor -->
+            <section id="page-impor" class="page-section">
+                <h1 class="page-title"><i class="fas fa-file-import"></i> Impor / Ekspor Data</h1>
+                <p class="page-subtitle">Impor dan ekspor data menggunakan format Excel (.xlsx)</p>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+                    <div class="admin-card">
+                        <div class="admin-title"><i class="fas fa-file-import"></i> Impor Data Siswa</div>
+                        <div class="file-upload-area" onclick="document.getElementById('fileInput').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Klik untuk upload file Excel</p>
+                            <p style="font-size:12px; color:var(--gray-500);">Format: .xlsx dengan kolom: Nama, NISN, Jenjang</p>
+                        </div>
+                        <input type="file" id="fileInput" accept=".xlsx,.xls" style="display:none;" onchange="imporData(event)" />
+                        <div id="imporStatus" style="margin-top:12px;"></div>
                     </div>
-                    <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); loadKartu('${nisn}')"><i class="fas fa-eye"></i></button>
-                </div>`;
-            });
-            container.innerHTML = html;
-        }
+                    <div class="admin-card">
+                        <div class="admin-title"><i class="fas fa-file-export"></i> Ekspor Data & Template</div>
+                        <p class="text-muted">Ekspor data atau unduh template</p>
+                        <div class="template-grid">
+                            <button class="btn btn-success" onclick="eksporSiswa()"><i class="fas fa-file-excel"></i> Ekspor Siswa</button>
+                            <button class="btn btn-primary" onclick="eksporKehadiran()"><i class="fas fa-file-excel"></i> Ekspor Kehadiran</button>
+                            <button class="btn btn-warning" onclick="eksporNilai()"><i class="fas fa-file-excel"></i> Ekspor Nilai</button>
+                            <button class="btn btn-outline" onclick="unduhTemplateSiswa()"><i class="fas fa-download"></i> Template Siswa</button>
+                            <button class="btn btn-outline" onclick="unduhTemplateKehadiran()"><i class="fas fa-download"></i> Template Kehadiran</button>
+                            <button class="btn btn-outline" onclick="unduhTemplateNilai()"><i class="fas fa-download"></i> Template Nilai</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
 
-        function loadKartu(nisn) {
-            document.getElementById('kartuSelectSiswa').value = nisn;
-            onKartuSiswaChange();
-            generateKartuPelajar();
-        }
+<!-- Modal Agenda -->
+<div class="modal-overlay" id="modalAgenda">
+    <div class="modal-box">
+        <button class="modal-close" onclick="tutupModalAgenda()">&times;</button>
+        <div class="modal-title"><i class="fas fa-calendar-plus"></i> Tambah Agenda</div>
+        <div class="form-group"><label>Judul Agenda</label><input type="text" id="agendaJudul" placeholder="Misal: Pembelajaran Bab 2" /></div>
+        <div class="form-group"><label>Deskripsi</label><textarea id="agendaDeskripsi" rows="3" placeholder="Detail kegiatan..."></textarea></div>
+        <div class="form-group"><label>Tanggal</label><input type="date" id="agendaTanggal" /></div>
+        <button class="btn btn-primary" onclick="simpanAgenda()"><i class="fas fa-save"></i> Simpan</button>
+    </div>
+</div>
 
-        // ============================================================
-        // INIT ON LOAD
-        // ============================================================
-        document.addEventListener('DOMContentLoaded', function() {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('filterTanggal').value = today;
-            document.getElementById('agendaTanggal').value = today;
-            updateTotalSiswa();
-            renderMateri();
-            renderKehadiran();
-            renderAgenda();
-            renderCatatan();
-            renderNilai();
-            renderUploadedMateri();
-            updateStats();
-            populateKartuSelect();
-            renderKartuSavedList();
-        });
+<!-- Modal Edit Materi -->
+<div class="modal-overlay" id="modalEditMateri">
+    <div class="modal-box">
+        <button class="modal-close" onclick="tutupModalEditMateri()">&times;</button>
+        <div class="modal-title"><i class="fas fa-edit"></i> Edit Materi Ajar</div>
+        <input type="hidden" id="editMateriId" />
+        <div class="form-group"><label>Judul Materi</label><input type="text" id="editJudul" placeholder="Judul materi" /></div>
+        <div class="grid-2">
+            <div class="form-group"><label>Kelas</label><select id="editKelas">
+                <option value="1">Kelas I</option><option value="2">Kelas II</option>
+                <option value="3">Kelas III</option><option value="4">Kelas IV</option>
+                <option value="5">Kelas V</option><option value="6">Kelas VI</option>
+                <option value="7">Kelas VII</option><option value="8">Kelas VIII</option>
+                <option value="9">Kelas IX</option>
+                <option value="10">Kelas X</option><option value="11">Kelas XI</option>
+                <option value="12">Kelas XII</option>
+            </select></div>
+            <div class="form-group"><label>Jenjang</label><select id="editJenjang">
+                <option value="SD">SD (SRD)</option>
+                <option value="SMP">SMP (SRMP)</option>
+                <option value="SMA">SMA (SRMA)</option>
+            </select></div>
+        </div>
+        <div class="form-group"><label>Deskripsi Singkat</label><input type="text" id="editDeskripsi" placeholder="Deskripsi materi" /></div>
+        <div class="form-group"><label>Isi Materi (HTML / Teks)</label><textarea id="editIsi" rows="6" placeholder="Konten materi"></textarea></div>
+        <div style="display:flex; gap:12px; justify-content:flex-end; margin-top:16px;">
+            <button class="btn btn-outline" onclick="tutupModalEditMateri()">Batal</button>
+            <button class="btn btn-primary" onclick="simpanEditMateri()"><i class="fas fa-save"></i> Simpan Perubahan</button>
+        </div>
+    </div>
+</div>
 
-        document.getElementById('loginPage').style.display = 'flex';
-        document.getElementById('app').style.display = 'none';
-
-        console.log('📚 e-Learning Pendidikan Pancasila SRT 39 Garut');
-        console.log('👨‍🏫 Login: guru / pancasila');
-        console.log('📊 Total siswa:', siswaData.length);
-        console.log('🆔 Fitur Kartu Pelajar dengan QR Code aktif!');
-        console.log('🔹 QR Code via qrzap.fun (gratis, tanpa API key)');
-    </script>
+<!-- Load JS -->
+<script src="data.js"></script>
+<script src="utils.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

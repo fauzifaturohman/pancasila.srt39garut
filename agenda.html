@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agenda Harian - Pancasila Class</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">📚 Pancasila Class</a>
+            <ul class="nav-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="attendance.html">Daftar Hadir</a></li>
+                <li><a href="agenda.html">Agenda Harian</a></li>
+                <li><a href="manage-semester.html">Kelola Semester</a></li>
+                <li><a href="import-export.html">Impor/Ekspor</a></li>
+                <li><a href="login.html" id="logoutBtn">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1>📝 Agenda Harian Guru</h1>
+
+        <!-- Form tambah agenda -->
+        <section class="agenda-form">
+            <h2>Tambah Catatan</h2>
+            <form id="agendaForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nama Guru</label>
+                        <input type="text" id="agGuru" required />
+                    </div>
+                    <div class="form-group">
+                        <label>NIP</label>
+                        <input type="text" id="agNip" required />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Mata Pelajaran</label>
+                        <input type="text" id="agMapel" value="Pendidikan Pancasila" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Semester</label>
+                        <select id="agSemester" required></select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Hari / Tanggal</label>
+                        <input type="date" id="agTanggal" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Jam Ke-</label>
+                        <input type="number" id="agJam" min="1" max="12" required />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Kelas</label>
+                        <input type="text" id="agKelas" required />
+                    </div>
+                    <div class="form-group">
+                        <label>CP / TP</label>
+                        <input type="text" id="agCp" placeholder="Capaian Pembelajaran / Tujuan Pembelajaran" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Keterangan</label>
+                    <textarea id="agKeterangan" rows="3" placeholder="Catatan kejadian di kelas..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Simpan Agenda</button>
+            </form>
+        </section>
+
+        <!-- Daftar agenda -->
+        <section class="agenda-list">
+            <h2>Daftar Agenda</h2>
+            <div id="agendaContainer">
+                <!-- Akan diisi oleh JS -->
+            </div>
+        </section>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/drive.js"></script>
+    <script src="js/agenda.js"></script>
+    <script>
+        if (!sessionStorage.getItem('loggedIn')) window.location.href = 'login.html';
+
+        // Cek role — hanya guru yang bisa mengakses agenda
+        if (sessionStorage.getItem('role') !== 'guru') {
+            alert('Fitur agenda hanya untuk guru.');
+            window.location.href = 'dashboard.html';
+        }
+
+        loadSemesterOptionsAgenda();
+        loadAgenda();
+
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>

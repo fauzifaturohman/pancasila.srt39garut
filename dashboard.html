@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Pancasila Class</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">📚 Pancasila Class</a>
+            <ul class="nav-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="attendance.html">Daftar Hadir</a></li>
+                <li><a href="agenda.html">Agenda Harian</a></li>
+                <li><a href="manage-semester.html">Kelola Semester</a></li>
+                <li><a href="import-export.html">Impor/Ekspor</a></li>
+                <li><a href="login.html" id="logoutBtn">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1>📊 Dashboard</h1>
+        <p id="welcomeMsg" class="welcome-text"></p>
+
+        <div class="dashboard-grid">
+            <div class="stat-card">
+                <h3>📋 Total Kehadiran</h3>
+                <p id="totalHadir">0</p>
+                <small>Hari ini</small>
+            </div>
+            <div class="stat-card">
+                <h3>📝 Agenda Hari Ini</h3>
+                <p id="totalAgenda">0</p>
+                <small>Catatan aktif</small>
+            </div>
+            <div class="stat-card">
+                <h3>🏫 Semester Aktif</h3>
+                <p id="totalSemester">0</p>
+                <small>Periode berjalan</small>
+            </div>
+        </div>
+
+        <!-- Ringkasan cepat -->
+        <section class="quick-actions">
+            <h2>Aksi Cepat</h2>
+            <div class="action-buttons">
+                <a href="attendance.html" class="btn btn-primary">📋 Daftar Hadir</a>
+                <a href="agenda.html" class="btn btn-secondary">📝 Agenda</a>
+                <a href="import-export.html" class="btn btn-success">📂 Impor/Ekspor</a>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/drive.js"></script>
+    <script>
+        // Cek login
+        if (!sessionStorage.getItem('loggedIn')) {
+            window.location.href = 'login.html';
+        }
+
+        const username = sessionStorage.getItem('username') || 'Pengguna';
+        const role = sessionStorage.getItem('role') || 'siswa';
+        document.getElementById('welcomeMsg').textContent =
+            role === 'guru' ? `Selamat datang, Guru ${username}!` : `Halo, ${username}!`;
+
+        // Load statistik dari Google Drive
+        async function loadStats() {
+            try {
+                const data = await loadFromDrive('pancasila_data.json');
+                if (data) {
+                    document.getElementById('totalHadir').textContent = data.attendanceCount || 0;
+                    document.getElementById('totalAgenda').textContent = data.agendaCount || 0;
+                    document.getElementById('totalSemester').textContent = data.semesterCount || 0;
+                }
+            } catch (e) {
+                console.log('Belum ada data tersimpan');
+            }
+        }
+        loadStats();
+
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>

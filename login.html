@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Sistem Kelas Pancasila</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-box">
+            <h1>📚 Pancasila Class</h1>
+            <p class="subtitle">Sistem Kelas Pendidikan Pancasila</p>
+
+            <!-- Pilihan role -->
+            <div class="role-selector">
+                <button class="role-btn active" data-role="siswa">Siswa</button>
+                <button class="role-btn" data-role="guru">Guru</button>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Masukkan username" required />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Masukkan password" required />
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+
+            <!-- Petunjuk login untuk siswa -->
+            <div id="siswaHint" class="login-hint">
+                <p>🔑 <strong>Petunjuk Login Siswa:</strong></p>
+                <p>Username: <code>namalengkap</code> (contoh: <code>budisantoso</code>)</p>
+                <p>Password: <code>pancasila</code></p>
+            </div>
+
+            <p id="loginError" class="error-msg" style="display:none;">Username atau password salah!</p>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>
+        // Toggle role
+        document.querySelectorAll('.role-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const role = this.dataset.role;
+                document.getElementById('siswaHint').style.display = (role === 'siswa') ? 'block' : 'none';
+            });
+        });
+
+        // Handle login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const role = document.querySelector('.role-btn.active').dataset.role;
+
+            const result = handleLogin(username, password, role);
+            if (result.success) {
+                sessionStorage.setItem('loggedIn', 'true');
+                sessionStorage.setItem('username', username);
+                sessionStorage.setItem('role', role);
+                window.location.href = 'dashboard.html';
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

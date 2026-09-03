@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kelola Semester - Pancasila Class</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">📚 Pancasila Class</a>
+            <ul class="nav-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="attendance.html">Daftar Hadir</a></li>
+                <li><a href="agenda.html">Agenda Harian</a></li>
+                <li><a href="manage-semester.html">Kelola Semester</a></li>
+                <li><a href="import-export.html">Impor/Ekspor</a></li>
+                <li><a href="login.html" id="logoutBtn">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1>🏫 Kelola Semester</h1>
+
+        <div class="semester-controls">
+            <div class="form-group">
+                <label>Nama Semester</label>
+                <input type="text" id="newSemesterName" placeholder="Contoh: Semester Ganjil 2026/2027" />
+            </div>
+            <button class="btn btn-primary" onclick="addSemester()">+ Tambah Semester</button>
+        </div>
+
+        <div id="semesterList" class="semester-list">
+            <!-- Akan diisi oleh JS -->
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/drive.js"></script>
+    <script src="js/semester.js"></script>
+    <script>
+        if (!sessionStorage.getItem('loggedIn')) window.location.href = 'login.html';
+        loadSemesterList();
+
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>

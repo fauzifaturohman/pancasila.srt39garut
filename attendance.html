@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daftar Hadir - Pancasila Class</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">📚 Pancasila Class</a>
+            <ul class="nav-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="attendance.html">Daftar Hadir</a></li>
+                <li><a href="agenda.html">Agenda Harian</a></li>
+                <li><a href="manage-semester.html">Kelola Semester</a></li>
+                <li><a href="import-export.html">Impor/Ekspor</a></li>
+                <li><a href="login.html" id="logoutBtn">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1>📋 Daftar Hadir Murid</h1>
+
+        <!-- Filter -->
+        <div class="filter-bar">
+            <select id="filterJenjang">
+                <option value="SD">SD</option>
+                <option value="SMP A">SMP A</option>
+                <option value="SMP B">SMP B</option>
+                <option value="SMA">SMA</option>
+            </select>
+            <select id="filterSemester">
+                <option value="">Pilih Semester</option>
+            </select>
+            <button class="btn btn-primary" onclick="loadAttendance()">Tampilkan</button>
+            <button class="btn btn-success" onclick="addAttendanceRow()">+ Tambah Murid</button>
+        </div>
+
+        <!-- Tabel daftar hadir -->
+        <div class="table-wrapper">
+            <table id="attendanceTable">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th colspan="20">Tanggal / Bulan</th>
+                        <th>%</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="attendanceBody">
+                    <!-- Data akan diisi oleh JS -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/drive.js"></script>
+    <script src="js/xlsx-handler.js"></script>
+    <script src="js/attendance.js"></script>
+    <script>
+        if (!sessionStorage.getItem('loggedIn')) window.location.href = 'login.html';
+
+        // Load daftar semester
+        loadSemesterOptions();
+
+        // Load data awal
+        loadAttendance();
+
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>

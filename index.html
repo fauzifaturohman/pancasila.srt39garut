@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistem Kelas Pendidikan Pancasila</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">📚 Pancasila Class</a>
+            <ul class="nav-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="attendance.html">Daftar Hadir</a></li>
+                <li><a href="agenda.html">Agenda Harian</a></li>
+                <li><a href="manage-semester.html">Kelola Semester</a></li>
+                <li><a href="import-export.html">Impor/Ekspor</a></li>
+                <li><a href="login.html" id="logoutBtn">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="hero">
+            <h1>Selamat Datang di Sistem Kelas</h1>
+            <p>Pendidikan Pancasila — SRD s.d. SRMA</p>
+            <div class="hero-cards">
+                <div class="card" onclick="location.href='attendance.html'">
+                    <span>📋</span>
+                    <h3>Daftar Hadir</h3>
+                    <p>Kelola kehadiran murid per semester</p>
+                </div>
+                <div class="card" onclick="location.href='agenda.html'">
+                    <span>📝</span>
+                    <h3>Agenda Harian</h3>
+                    <p>Catat kegiatan & kejadian di kelas</p>
+                </div>
+                <div class="card" onclick="location.href='import-export.html'">
+                    <span>📂</span>
+                    <h3>Impor / Ekspor</h3>
+                    <p>Upload & download template .xlsx</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script>
+        // Cek status login
+        if (!sessionStorage.getItem('loggedIn')) {
+            window.location.href = 'login.html';
+        }
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>

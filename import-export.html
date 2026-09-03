@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Impor/Ekspor - Pancasila Class</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">📚 Pancasila Class</a>
+            <ul class="nav-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="attendance.html">Daftar Hadir</a></li>
+                <li><a href="agenda.html">Agenda Harian</a></li>
+                <li><a href="manage-semester.html">Kelola Semester</a></li>
+                <li><a href="import-export.html">Impor/Ekspor</a></li>
+                <li><a href="login.html" id="logoutBtn">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1>📂 Impor & Ekspor Data</h1>
+
+        <div class="import-export-grid">
+            <!-- Download Template -->
+            <div class="card">
+                <h3>📄 Download Template</h3>
+                <p>Unduh template .xlsx untuk mengisi data daftar hadir</p>
+                <button class="btn btn-primary" onclick="downloadTemplate()">Download Template</button>
+            </div>
+
+            <!-- Impor File -->
+            <div class="card">
+                <h3>⬆ Impor File</h3>
+                <p>Upload file .xlsx untuk mengisi data kehadiran</p>
+                <input type="file" id="fileInput" accept=".xlsx" />
+                <button class="btn btn-success" onclick="importFile()">Impor</button>
+            </div>
+
+            <!-- Ekspor Data -->
+            <div class="card">
+                <h3>⬇ Ekspor Data</h3>
+                <p>Download semua data kehadiran dalam format .xlsx</p>
+                <button class="btn btn-secondary" onclick="exportData()">Ekspor</button>
+            </div>
+
+            <!-- Backup ke Google Drive -->
+            <div class="card">
+                <h3>☁ Backup ke Google Drive</h3>
+                <p>Simpan data ke folder Google Drive yang telah ditentukan</p>
+                <button class="btn btn-warning" onclick="backupToDrive()">Backup Sekarang</button>
+            </div>
+        </div>
+
+        <div id="importStatus" class="status-msg"></div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/drive.js"></script>
+    <script src="js/xlsx-handler.js"></script>
+    <script>
+        if (!sessionStorage.getItem('loggedIn')) window.location.href = 'login.html';
+
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>

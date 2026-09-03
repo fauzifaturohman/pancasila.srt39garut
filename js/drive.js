@@ -1,8 +1,8 @@
 // ===== GOOGLE DRIVE INTEGRATION =====
 
 const DRIVE_FOLDER_ID = '1Wbd9hG_rQEcaCPfQE_A7YfONNC2ibPrC';
-const CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID'; // Ganti dengan Client ID Anda
-const API_KEY = 'YOUR_GOOGLE_API_KEY';     // Ganti dengan API Key Anda
+const CLIENT_ID = '367217277960-o1dcmqoojvvi13f3lpklcrvad3kn8d0j.apps.googleusercontent.com'; // Ganti dengan Client ID Anda
+const API_KEY = 'AIzaSyA93ZHux4d7j9DQM24ALrD754j5QxlVcXs';     // Ganti dengan API Key Anda
 
 let tokenClient;
 let accessToken = null;
